@@ -41,7 +41,7 @@ For more information on WTSS, see:
 
 - `wlts.py <https://github.com/brazil-data-cube/wlts.py>`_: it is a Python client library that supports the communication to a WTSS service.
 
-- `WLTS Specification <https://github.com/brazil-data-cube/wlts-spec>`_: the WTSS specification using `OpenAPI 3.0 <https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md>`_ notation.
+- `WLTS Specification <https://github.com/brazil-data-cube/wlts-spec>`_: the WLTS specification using `OpenAPI 3.0 <https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md>`_ notation.
 
 
 
