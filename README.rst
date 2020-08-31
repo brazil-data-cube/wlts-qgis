@@ -33,11 +33,10 @@ This is an implementation of the `Web Land Trajectory Service specification <htt
 **W**\ eb **L**\ and **T**\ rajectory **S**\ ervice (WLTS)  is a service that aims to facilitate the access to these various "land use and cover" data collections through a tailored API. The result is tool that allows researchers and specialists to spend their time in the analytical process, once the API provides the integration of these datasets and brings the concept of Land Use and Cover Trajectories as a high level abstraction. The WLTS approach is to use a data model that defines a minimum set of temporal and spatial information to represent different sources and types of data. WLTS can be used in a range of application, such as in validation of land cover data sets, in the selection of trainning samples to support Machine Learning algorithms used in the generation of new classification maps.
 
 
-In WTSS a coverage is a three dimensional array associate to spatial and temporal reference systems.
 
 
 
-For more information on WTSS, see:
+For more information on WLTS, see:
 
 - `wlts.py <https://github.com/brazil-data-cube/wlts.py>`_: it is a Python client library that supports the communication to a WTSS service.
 

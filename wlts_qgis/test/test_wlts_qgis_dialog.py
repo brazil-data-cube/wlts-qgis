@@ -9,25 +9,25 @@
 """
 
 __author__ = 'brazildatacube@inpe.br'
-__date__ = '2020-08-28'
+__date__ = '2020-08-31'
 __copyright__ = 'Copyright 2020, INPE'
 
 import unittest
 
 from qgis.PyQt.QtGui import QDialogButtonBox, QDialog
 
-from wlts_viewer_dialog import WltsVieweDialog
+from wlts_qgis_dialog import WltsQgisDialog
 
 from utilities import get_qgis_app
 QGIS_APP = get_qgis_app()
 
 
-class WltsVieweDialogTest(unittest.TestCase):
+class WltsQgisDialogTest(unittest.TestCase):
     """Test dialog works."""
 
     def setUp(self):
         """Runs before each test."""
-        self.dialog = WltsVieweDialog(None)
+        self.dialog = WltsQgisDialog(None)
 
     def tearDown(self):
         """Runs after each test."""
@@ -49,7 +49,7 @@ class WltsVieweDialogTest(unittest.TestCase):
         self.assertEqual(result, QDialog.Rejected)
 
 if __name__ == "__main__":
-    suite = unittest.makeSuite(WltsVieweDialogTest)
+    suite = unittest.makeSuite(WltsQgisDialogTest)
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(suite)
 

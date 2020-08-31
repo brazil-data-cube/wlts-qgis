@@ -9,7 +9,7 @@
 """
 
 __author__ = 'brazildatacube@inpe.br'
-__date__ = '2020-08-28'
+__date__ = '2020-08-31'
 __copyright__ = 'Copyright 2020, INPE'
 
 import unittest
@@ -18,7 +18,7 @@ from qgis.PyQt.QtGui import QIcon
 
 
 
-class WltsVieweDialogTest(unittest.TestCase):
+class WltsQgisDialogTest(unittest.TestCase):
     """Test rerources work."""
 
     def setUp(self):
@@ -31,12 +31,12 @@ class WltsVieweDialogTest(unittest.TestCase):
 
     def test_icon_png(self):
         """Test we can click OK."""
-        path = ':/plugins/WltsViewe/icon.png'
+        path = ':/plugins/WltsQgis/icon.png'
         icon = QIcon(path)
         self.assertFalse(icon.isNull())
 
 if __name__ == "__main__":
-    suite = unittest.makeSuite(WltsVieweResourcesTest)
+    suite = unittest.makeSuite(WltsQgisResourcesTest)
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(suite)
 

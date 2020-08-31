@@ -1,9 +1,9 @@
 #/***************************************************************************
-# WltsViewe
+# WltsQgis
 #
 # Web Land Trajectory Service
 #							 -------------------
-#		begin				: 2020-08-28
+#		begin				: 2020-08-31
 #		git sha				: $Format:%H$
 #		copyright			: (C) 2020 by INPE
 #		email				: brazildatacube@inpe.br
@@ -38,15 +38,15 @@ LOCALES =
 # translation
 SOURCES = \
 	__init__.py \
-	wlts_viewer.py wlts_viewer_dialog.py
+	wlts_qgis.py wlts_qgis_dialog.py
 
-PLUGINNAME = wlts_viewer
+PLUGINNAME = wlts_qgis
 
 PY_FILES = \
 	__init__.py \
-	wlts_viewer.py wlts_viewer_dialog.py
+	wlts_qgis.py wlts_qgis_dialog.py
 
-UI_FILES = wlts_viewer_dialog_base.ui
+UI_FILES = wlts_qgis_dialog_base.ui
 
 EXTRAS = metadata.txt icon.png
 

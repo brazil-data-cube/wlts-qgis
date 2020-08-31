@@ -1,6 +1,6 @@
 <ui version="4.0" >
- <class>WltsVieweDialogBase</class>
- <widget class="QDialog" name="WltsVieweDialogBase" >
+ <class>WltsQgisDialogBase</class>
+ <widget class="QDialog" name="WltsQgisDialogBase" >
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -34,7 +34,7 @@
   <connection>
    <sender>button_box</sender>
    <signal>accepted()</signal>
-   <receiver>WltsVieweDialogBase</receiver>
+   <receiver>WltsQgisDialogBase</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="source_label" >
@@ -50,7 +50,7 @@
   <connection>
    <sender>button_box</sender>
    <signal>rejected()</signal>
-   <receiver>WltsVieweDialogBase</receiver>
+   <receiver>WltsQgisDialogBase</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="source_label" >

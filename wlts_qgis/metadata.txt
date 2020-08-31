@@ -10,7 +10,7 @@ version=0.1
 author=INPE
 email=brazildatacube@inpe.br
 
-about=Web Land Trajectory Service.
+about=Provide a brief description of the plugin and its purpose.
 
 tracker=https://github.com/brazil-data-cube/wlts-qgis/issues
 repository=https://github.com/brazil-data-cube/wlts-qgis
