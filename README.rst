@@ -12,16 +12,16 @@ Python QGIS Plugin for Web Land Trajectory Service
 ==================================================
 
 .. image:: https://img.shields.io/badge/license-MIT-green
-        :target: 
+        :target: https://github.com//brazil-data-cube/wlts-qgis/blob/master/LICENSE
         :alt: Software License
 
 .. image:: https://img.shields.io/badge/lifecycle-experimental-orange.svg
         :target: https://www.tidyverse.org/lifecycle/#experimental
         :alt: Software Life Cycle
 
-.. image:: https://badges.gitter.im/brazil-data-cube/community.png
-        :target: https://gitter.im/brazil-data-cube/community#
-        :alt: Join the chat
+.. image:: https://img.shields.io/discord/689541907621085198?logo=discord&logoColor=ffffff&color=7389D8
+        :target: https://discord.com/channels/689541907621085198#
+        :alt: Join us at Discord
 
 
 About
@@ -42,6 +42,10 @@ For more information on WLTS, see:
 
 - `WLTS Specification <https://github.com/brazil-data-cube/wlts-spec>`_: the WLTS specification using `OpenAPI 3.0 <https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md>`_ notation.
 
+Installation
+============
+
+See `INSTALL.rst <./INSTALL.rst>`_.
 
 
 License
