@@ -179,15 +179,39 @@ class WltsQgis:
                 action)
             self.iface.removeToolBarIcon(action)
 
+    def get_selection(self):
+        print(self.dlg.coverage_selection.currentText())
+
+    def init_wlts(self):
+        service = wlts.wlts('http://brazildatacube.dpi.inpe.br/dev/wlts')
+        collections = service.list_collections().get('collections')
+        self.dlg.coverage_selection.addItems(collections)
+        self.dlg.coverage_selection.activated.connect(self.get_selection)
+
+    def display_point(self, pointTool):
+        """Get the mouse possition and storage as selected location"""
+        try:
+            print(float(pointTool.x()), float(pointTool.y()))
+        except AttributeError:
+            pass
+
+    def addCanvasControlPoint(self):
+        """Generate a canvas area to get mouse position"""
+        self.canvas = self.iface.mapCanvas()
+        self.point_tool = QgsMapToolEmitPoint(self.canvas)
+        self.point_tool.canvasClicked.connect(self.display_point)
+        self.canvas.setMapTool(self.point_tool)
+        self.display_point(self.point_tool)
+
 
     def run(self):
         """Run method that performs all the real work"""
 
         # Create the dialog with elements (after translation) and keep reference
         # Only create GUI ONCE in callback, so that it will only load when the plugin is started
-        if self.first_start == True:
-            self.first_start = False
-            self.dlg = WltsQgisDialog()
+        self.dlg = WltsQgisDialog()
+        self.init_wlts()
+        self.addCanvasControlPoint()
 
         # show the dialog
         self.dlg.show()
