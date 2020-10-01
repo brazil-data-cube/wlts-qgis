@@ -82,18 +82,17 @@ class WltsQgis:
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
         return QCoreApplication.translate('WltsQgis', message)
 
-
     def add_action(
-        self,
-        icon_path,
-        text,
-        callback,
-        enabled_flag=True,
-        add_to_menu=True,
-        add_to_toolbar=True,
-        status_tip=None,
-        whats_this=None,
-        parent=None):
+            self,
+            icon_path,
+            text,
+            callback,
+            enabled_flag=True,
+            add_to_menu=True,
+            add_to_toolbar=True,
+            status_tip=None,
+            whats_this=None,
+            parent=None):
         """Add a toolbar icon to the toolbar.
 
         :param icon_path: Path to the icon for this action. Can be a resource
@@ -170,7 +169,6 @@ class WltsQgis:
         # will be set False in run()
         self.first_start = True
 
-
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
@@ -179,14 +177,37 @@ class WltsQgis:
                 action)
             self.iface.removeToolBarIcon(action)
 
-    def get_selection(self):
-        print(self.dlg.coverage_selection.currentText())
+    def init_services(self):
+        service = []
+        service = [
+            str(wlts.wlts('http://brazildatacube.dpi.inpe.br/dev/wlts'))]
+        self.dlg.service_selection.addItems(service)
 
-    def init_wlts(self):
+    def initCheckBox(self):
+        self.widget = QWidget()
+        self.vbox = QVBoxLayout()
+
         service = wlts.wlts('http://brazildatacube.dpi.inpe.br/dev/wlts')
         collections = service.list_collections().get('collections')
-        self.dlg.coverage_selection.addItems(collections)
-        self.dlg.coverage_selection.activated.connect(self.get_selection)
+        self.checks = {}
+
+        for collection in collections:
+            self.checks[collection] = QCheckBox(str(collection))
+            self.vbox.addWidget(self.checks.get(collection))
+
+        self.widget.setLayout(self.vbox)
+        self.dlg.bands_scroll.setWidgetResizable(True)
+        self.dlg.bands_scroll.setWidget(self.widget)
+
+    def getSelected(self):
+        selected_collections = []
+
+        for key in list(self.checks.keys()):
+
+            if self.checks.get(key).isChecked():
+                selected_collections.append(key)
+
+        print(selected_collections)
 
     def display_point(self, pointTool):
         """Get the mouse possition and storage as selected location"""
@@ -203,7 +224,6 @@ class WltsQgis:
         self.canvas.setMapTool(self.point_tool)
         self.display_point(self.point_tool)
 
-
     def run(self):
         """Run method that performs all the real work"""
 
@@ -212,6 +232,8 @@ class WltsQgis:
         self.dlg = WltsQgisDialog()
         self.init_wlts()
         self.addCanvasControlPoint()
+        self.initCheckBox()
+        self.dlg.search.clicked.connect(self.getSelected)
 
         # show the dialog
         self.dlg.show()
