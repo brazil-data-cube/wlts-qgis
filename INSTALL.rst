@@ -9,13 +9,19 @@
 Installation
 ============
 
-The Python QGIS Plugin for WTSS depends essentially on:
+The Python QGIS Plugin for WLTS depends essentially on:
+
 
 - `QGIS version +3 <https://qgis.org/en/site/>`_
 - `QT Creator version +5 <https://www.qt.io/download>`_
 - `Python version +3 <https://www.python.org/>`_
 
+
 Development installation
+
+- `Plugin Builder Tool +3 <http://g-sherman.github.io/plugin_build_tool/>`_
+
+Development Installation
 ------------------------
 
 Clone the software repository:
@@ -31,11 +37,45 @@ Go to the source code folder:
 
         $ cd wlts-qgis/wlts_qgis
 
+
 Deploy:
+=======
+Linux
+*****
+
+Use ``pb_tool`` to compile and deploy the plugin in Linux OS:
+
 
 .. code-block:: shell
 
     $ pb_tool deploy --plugin_path /home/{USER}/.local/share/QGIS/QGIS3/profiles/default/python/plugins
+
+
+=======
+
+Windows
+*******
+
+To deploy the plugin in Windows OS add Python and QGIS Python Scripts to the **PATH** environmental variable such as:
+
+.. code-block:: text
+
+    C:\Users\user\AppData\Local\Programs\Python\Python{version}\Scripts
+
+    C:\Program Files\QGIS {version}\apps\Python37\Scripts
+
+Now you can work from the command line.
+
+On prompt use ``pb_tool`` to compile and deploy WLTS-QGIS plugin:
+
+.. code-block:: text
+
+   > pb_tool deploy --plugin_path C:\Users\user\AppData\Roaming\QGIS\QGIS{version}\profiles\default\python\plugins
+
+
+Run QGIS and open the Plugin Manager and enable the WLTS-QGIS.
+
+
 
 .. note::
 
@@ -57,4 +97,6 @@ Deploy:
 
         pip install pyqt5-tools
 
+
         pip install pb-tool
+
