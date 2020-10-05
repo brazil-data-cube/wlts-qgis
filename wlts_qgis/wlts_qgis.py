@@ -180,15 +180,15 @@ class WltsQgis:
     def init_services(self):
         service = []
         service = [
-            str(wlts.wlts('http://brazildatacube.dpi.inpe.br/dev/wlts'))]
+            str(wlts.WLTS('http://brazildatacube.dpi.inpe.br/dev/wlts'))]
         self.dlg.service_selection.addItems(service)
 
     def initCheckBox(self):
         self.widget = QWidget()
         self.vbox = QVBoxLayout()
 
-        service = wlts.wlts('http://brazildatacube.dpi.inpe.br/dev/wlts')
-        collections = service.list_collections().get('collections')
+        service = wlts.WLTS'http://brazildatacube.dpi.inpe.br/dev/wlts')
+        collections = service.collections
         self.checks = {}
 
         for collection in collections:
@@ -209,10 +209,34 @@ class WltsQgis:
 
         print(selected_collections)
 
+    def getSelected(self):
+        self.selected_collections = []
+
+        for key in list(self.checks.keys()):
+
+            if self.checks.get(key).isChecked():
+                self.selected_collections.append(key)
+
+        print(self.selected_collections)
+
+    def getTrajectory(self):
+        # Change to the WLTS URL you want to use.
+        service = wlts.WLTS('http://brazildatacube.dpi.inpe.br/dev/wlts')
+
+        # Example of trajectory operation
+        tj = service.tj(latitude=self.selected_location.get('lat'), longitude=self.selected_location.get('long'), collections=",".join(self.selected_collections))
+
+        print(tj)
+
     def display_point(self, pointTool):
         """Get the mouse possition and storage as selected location"""
         try:
             print(float(pointTool.x()), float(pointTool.y()))
+            self.selected_location = {
+                'lat' : float(pointTool.y()),
+                'long' : float(pointTool.x())
+            }
+            self.getTrajectory()
         except AttributeError:
             pass
 
