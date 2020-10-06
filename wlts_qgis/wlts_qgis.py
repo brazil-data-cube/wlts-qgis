@@ -178,17 +178,14 @@ class WltsQgis:
             self.iface.removeToolBarIcon(action)
 
     def init_services(self):
-        service = []
-        service = [
-            str(wlts.WLTS('http://brazildatacube.dpi.inpe.br/dev/wlts'))]
-        self.dlg.service_selection.addItems(service)
+        self.service = wlts.WLTS('http://brazildatacube.dpi.inpe.br/dev/wlts')
+        self.dlg.service_selection.addItem("WLTS", service)
 
     def initCheckBox(self):
         self.widget = QWidget()
         self.vbox = QVBoxLayout()
 
-        service = wlts.WLTS'http://brazildatacube.dpi.inpe.br/dev/wlts')
-        collections = service.collections
+        collections = self.service.collections
         self.checks = {}
 
         for collection in collections:
@@ -220,11 +217,8 @@ class WltsQgis:
         print(self.selected_collections)
 
     def getTrajectory(self):
-        # Change to the WLTS URL you want to use.
-        service = wlts.WLTS('http://brazildatacube.dpi.inpe.br/dev/wlts')
-
         # Example of trajectory operation
-        tj = service.tj(latitude=self.selected_location.get('lat'), longitude=self.selected_location.get('long'), collections=",".join(self.selected_collections))
+        tj = self.service.tj(latitude=self.selected_location.get('lat'), longitude=self.selected_location.get('long'), collections=",".join(self.selected_collections))
 
         print(tj)
 
