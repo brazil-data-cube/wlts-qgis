@@ -234,13 +234,36 @@ class WltsQgis:
         except AttributeError:
             pass
 
-    def addCanvasControlPoint(self):
-        """Generate a canvas area to get mouse position"""
-        self.canvas = self.iface.mapCanvas()
-        self.point_tool = QgsMapToolEmitPoint(self.canvas)
-        self.point_tool.canvasClicked.connect(self.display_point)
-        self.canvas.setMapTool(self.point_tool)
-        self.display_point(self.point_tool)
+	def addCanvasControlPoint(self):
+	    """Generate a canvas area to get mouse position"""
+	    self.canvas = self.iface.mapCanvas()
+	    self.point_tool = QgsMapToolEmitPoint(self.canvas)
+	    self.point_tool.canvasClicked.connect(self.display_point)
+	    self.canvas.setMapTool(self.point_tool)
+	    self.display_point(self.point_tool)
+	    
+    def exportCSV(self):
+    """Export to file system times series data in CSV"""
+    try:
+        name = QFileDialog.getSaveFileName(
+            parent=self.dlg,
+            caption='Save as CSV',
+            directory=('{coverage}.csv').format(
+                coverage=str(self.selected_collections),
+            ),
+            filter='*.csv'
+        )
+        trajectory = self.tj
+        self.generateCSV(name[0], trajectory)
+    except AttributeError as error:
+        print('Error')
+
+	def generateCSV(self, file_name, trajectory):
+	    try:
+	        df = trajectory.df()
+	        df.to_csv(file_name, sep=';', index = False, header=True)
+	    except FileNotFoundError:
+	        pass
 
     def run(self):
         """Run method that performs all the real work"""
@@ -252,6 +275,7 @@ class WltsQgis:
         self.addCanvasControlPoint()
         self.initCheckBox()
         self.dlg.search.clicked.connect(self.getSelected)
+        self.dlg.export_as_csv.clicked.connect(self.exportCSV)
 
         # show the dialog
         self.dlg.show()
