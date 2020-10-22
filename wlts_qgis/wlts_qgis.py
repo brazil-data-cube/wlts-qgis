@@ -220,7 +220,6 @@ class WltsQgis:
         # Example of trajectory operation
         tj = self.service.tj(latitude=self.selected_location.get('lat'), longitude=self.selected_location.get('long'), collections=",".join(self.selected_collections))
 
-        print(tj)
 
     def display_point(self, pointTool):
         """Get the mouse possition and storage as selected location"""
@@ -231,6 +230,7 @@ class WltsQgis:
                 'long' : float(pointTool.x())
             }
             self.getTrajectory()
+            self.plot()
         except AttributeError:
             pass
 
@@ -241,7 +241,7 @@ class WltsQgis:
 	    self.point_tool.canvasClicked.connect(self.display_point)
 	    self.canvas.setMapTool(self.point_tool)
 	    self.display_point(self.point_tool)
-	    
+
     def exportCSV(self):
     """Export to file system times series data in CSV"""
     try:
@@ -264,6 +264,27 @@ class WltsQgis:
 	        df.to_csv(file_name, sep=';', index = False, header=True)
 	    except FileNotFoundError:
 	        pass
+
+	def plot(self):
+        print("Carregando")
+        df = pd.DataFrame()
+        df['x'] = np.arange(0,11)
+        df['y'] = df['x']*2
+
+        fig = plt.figure(figsize=(8,5))
+
+        ax1 = fig.add_subplot(121)
+        ax1.scatter(x=df['x'],y=df['y'])
+
+        df_trajectory =  self.tj.df()
+        ax2 = fig.add_subplot(122)
+        font_size=14
+        bbox=[0, 0, 1, 1]
+        ax2.axis('off')
+        mpl_table = ax2.table(cellText = df_trajectory.values, rowLabels = df_trajectory.index, bbox=bbox, colLabels=df_trajectory.columns)
+        mpl_table.auto_set_font_size(True)
+        mpl_table.set_fontsize(font_size)
+        plt.show()
 
     def run(self):
         """Run method that performs all the real work"""
