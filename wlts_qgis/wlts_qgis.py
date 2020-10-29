@@ -265,20 +265,13 @@ class WltsQgis:
 	    except FileNotFoundError:
 	        pass
 
-	def plot(self):
+    def plot(self):
         print("Carregando")
-        df = pd.DataFrame()
-        df['x'] = np.arange(0,11)
-        df['y'] = df['x']*2
-
         fig = plt.figure(figsize=(8,5))
 
-        ax1 = fig.add_subplot(121)
-        ax1.scatter(x=df['x'],y=df['y'])
-
         df_trajectory =  self.tj.df()
-        ax2 = fig.add_subplot(122)
-        font_size=14
+        ax2 = fig.add_subplot()
+        font_size=18
         bbox=[0, 0, 1, 1]
         ax2.axis('off')
         mpl_table = ax2.table(cellText = df_trajectory.values, rowLabels = df_trajectory.index, bbox=bbox, colLabels=df_trajectory.columns)
