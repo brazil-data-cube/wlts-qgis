@@ -266,19 +266,21 @@ class WltsQgis:
 	        pass
 
     def plot(self):
-        print("Carregando")
-        fig = plt.figure(figsize=(8,5))
+        try:
+            print("Carregando")
+            fig = plt.figure(figsize=(8,5))
 
-        df_trajectory =  self.tj.df()
-        ax2 = fig.add_subplot()
-        font_size=18
-        bbox=[0, 0, 1, 1]
-        ax2.axis('off')
-        mpl_table = ax2.table(cellText = df_trajectory.values, rowLabels = df_trajectory.index, bbox=bbox, colLabels=df_trajectory.columns)
-        mpl_table.auto_set_font_size(True)
-        mpl_table.set_fontsize(font_size)
-        plt.show()
-
+            df_trajectory =  self.tj.df()
+            ax2 = fig.add_subplot()
+            font_size=18
+            bbox=[0, 0, 1, 1]
+            ax2.axis('off')
+            mpl_table = ax2.table(cellText = df_trajectory.values, rowLabels = df_trajectory.index, bbox=bbox, colLabels=df_trajectory.columns)
+            mpl_table.auto_set_font_size(True)
+            mpl_table.set_fontsize(font_size)
+            plt.show()
+        except:
+            print("Sem informações.")
     def run(self):
         """Run method that performs all the real work"""
 
