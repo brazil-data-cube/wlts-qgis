@@ -214,7 +214,12 @@ class WltsQgis:
             if self.checks.get(key).isChecked():
                 self.selected_collections.append(key)
 
+        self.start_date=str(self.dlg.start_date.date().toString('yyyy-MM-dd'))
+        self.end_date=str(self.dlg.end_date.date().toString('yyyy-MM-dd'))
+
         print(self.selected_collections)
+        print("Start date: " + str(self.dlg.start_date.date().toString('yyyy-MM-dd')))
+        print("End date: " + str(self.dlg.end_date.date().toString('yyyy-MM-dd')))
 
     def getTrajectory(self):
         # Example of trajectory operation
