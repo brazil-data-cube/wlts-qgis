@@ -223,7 +223,11 @@ class WltsQgis:
 
     def getTrajectory(self):
         # Example of trajectory operation
-        tj = self.service.tj(latitude=self.selected_location.get('lat'), longitude=self.selected_location.get('long'), collections=",".join(self.selected_collections))
+        tj = self.service.tj(latitude=self.selected_location.get('lat'), 
+            longitude=self.selected_location.get('long'), 
+            collections=",".join(self.selected_collections),
+            start_date=self.start_date, 
+            end_date=self.end_date)
 
     def getDate(self):
         self.dlg.start_date.setDate(QDate(1999,1,1))
