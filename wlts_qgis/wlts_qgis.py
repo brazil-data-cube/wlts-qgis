@@ -267,7 +267,10 @@ class WltsQgis:
 
     def plot(self):
         try:
-            print("Carregando")
+            plt.clf()
+            plt.cla()
+            plt.close()
+
             fig = plt.figure(figsize=(8,5))
 
             df_trajectory =  self.tj.df()
@@ -281,6 +284,7 @@ class WltsQgis:
             plt.show()
         except:
             print("Sem informações.")
+            
     def run(self):
         """Run method that performs all the real work"""
 
