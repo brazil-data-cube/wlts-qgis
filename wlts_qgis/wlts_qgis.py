@@ -220,6 +220,9 @@ class WltsQgis:
         # Example of trajectory operation
         tj = self.service.tj(latitude=self.selected_location.get('lat'), longitude=self.selected_location.get('long'), collections=",".join(self.selected_collections))
 
+    def getDate(self):
+        self.dlg.start_date.setDate(QDate(1999,1,1))
+        self.dlg.end_date.setDate(QDate(2020,1,1))
 
     def display_point(self, pointTool):
         """Get the mouse possition and storage as selected location"""
@@ -284,7 +287,7 @@ class WltsQgis:
             plt.show()
         except:
             print("Sem informações.")
-            
+
     def run(self):
         """Run method that performs all the real work"""
 
