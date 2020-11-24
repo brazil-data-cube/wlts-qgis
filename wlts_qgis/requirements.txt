@@ -1,0 +1,7 @@
+pyqt5-tools
+pb-tool
+numpy
+matplotlib
+pytest==6.0.1
+git+https://github.com/brazil-data-cube/wlts.py
+

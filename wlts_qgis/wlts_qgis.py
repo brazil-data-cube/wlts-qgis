@@ -82,18 +82,17 @@ class WltsQgis:
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
         return QCoreApplication.translate('WltsQgis', message)
 
-
     def add_action(
-        self,
-        icon_path,
-        text,
-        callback,
-        enabled_flag=True,
-        add_to_menu=True,
-        add_to_toolbar=True,
-        status_tip=None,
-        whats_this=None,
-        parent=None):
+            self,
+            icon_path,
+            text,
+            callback,
+            enabled_flag=True,
+            add_to_menu=True,
+            add_to_toolbar=True,
+            status_tip=None,
+            whats_this=None,
+            parent=None):
         """Add a toolbar icon to the toolbar.
 
         :param icon_path: Path to the icon for this action. Can be a resource
@@ -170,7 +169,6 @@ class WltsQgis:
         # will be set False in run()
         self.first_start = True
 
-
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
@@ -179,15 +177,137 @@ class WltsQgis:
                 action)
             self.iface.removeToolBarIcon(action)
 
+    def init_services(self):
+        self.service = wlts.WLTS('http://brazildatacube.dpi.inpe.br/dev/wlts')
+        self.dlg.service_selection.addItem("WLTS", service)
+
+    def initCheckBox(self):
+        self.widget = QWidget()
+        self.vbox = QVBoxLayout()
+
+        collections = self.service.collections
+        self.checks = {}
+
+        for collection in collections:
+            self.checks[collection] = QCheckBox(str(collection))
+            self.vbox.addWidget(self.checks.get(collection))
+
+        self.widget.setLayout(self.vbox)
+        self.dlg.bands_scroll.setWidgetResizable(True)
+        self.dlg.bands_scroll.setWidget(self.widget)
+
+    def getSelected(self):
+        selected_collections = []
+
+        for key in list(self.checks.keys()):
+
+            if self.checks.get(key).isChecked():
+                selected_collections.append(key)
+
+        print(selected_collections)
+
+    def getSelected(self):
+        self.selected_collections = []
+
+        for key in list(self.checks.keys()):
+
+            if self.checks.get(key).isChecked():
+                self.selected_collections.append(key)
+
+        self.start_date=str(self.dlg.start_date.date().toString('yyyy-MM-dd'))
+        self.end_date=str(self.dlg.end_date.date().toString('yyyy-MM-dd'))
+
+        print(self.selected_collections)
+        print("Start date: " + str(self.dlg.start_date.date().toString('yyyy-MM-dd')))
+        print("End date: " + str(self.dlg.end_date.date().toString('yyyy-MM-dd')))
+
+    def getTrajectory(self):
+        # Example of trajectory operation
+        tj = self.service.tj(latitude=self.selected_location.get('lat'), 
+            longitude=self.selected_location.get('long'), 
+            collections=",".join(self.selected_collections),
+            start_date=self.start_date, 
+            end_date=self.end_date)
+
+    def getDate(self):
+        self.dlg.start_date.setDate(QDate(1999,1,1))
+        self.dlg.end_date.setDate(QDate(2020,1,1))
+
+    def display_point(self, pointTool):
+        """Get the mouse possition and storage as selected location"""
+        try:
+            print(float(pointTool.x()), float(pointTool.y()))
+            self.selected_location = {
+                'lat' : float(pointTool.y()),
+                'long' : float(pointTool.x())
+            }
+            self.getTrajectory()
+            self.plot()
+        except AttributeError:
+            pass
+
+	def addCanvasControlPoint(self):
+	    """Generate a canvas area to get mouse position"""
+	    self.canvas = self.iface.mapCanvas()
+	    self.point_tool = QgsMapToolEmitPoint(self.canvas)
+	    self.point_tool.canvasClicked.connect(self.display_point)
+	    self.canvas.setMapTool(self.point_tool)
+	    self.display_point(self.point_tool)
+
+    def exportCSV(self):
+    """Export to file system times series data in CSV"""
+    try:
+        name = QFileDialog.getSaveFileName(
+            parent=self.dlg,
+            caption='Save as CSV',
+            directory=('{collection}.csv').format(
+                collection=str(self.selected_collections),
+            ),
+            filter='*.csv'
+        )
+        trajectory = self.tj
+        self.generateCSV(name[0], trajectory)
+    except AttributeError as error:
+        print('Error')
+
+	def generateCSV(self, file_name, trajectory):
+	    try:
+	        df = trajectory.df()
+	        df.to_csv(file_name, sep=';', index = False, header=True)
+	    except FileNotFoundError:
+	        pass
+
+    def plot(self):
+        try:
+            plt.clf()
+            plt.cla()
+            plt.close()
+
+            fig = plt.figure(figsize=(8,5))
+
+            df_trajectory =  self.tj.df()
+            ax2 = fig.add_subplot()
+            font_size=18
+            bbox=[0, 0, 1, 1]
+            ax2.axis('off')
+            mpl_table = ax2.table(cellText = df_trajectory.values, rowLabels = df_trajectory.index, bbox=bbox, colLabels=df_trajectory.columns)
+            mpl_table.auto_set_font_size(True)
+            mpl_table.set_fontsize(font_size)
+            plt.show()
+        except:
+            print("Sem informações.")
 
     def run(self):
         """Run method that performs all the real work"""
 
         # Create the dialog with elements (after translation) and keep reference
         # Only create GUI ONCE in callback, so that it will only load when the plugin is started
-        if self.first_start == True:
-            self.first_start = False
-            self.dlg = WltsQgisDialog()
+        self.dlg = WltsQgisDialog()
+        self.init_wlts()
+        self.addCanvasControlPoint()
+        self.initCheckBox()
+        self.dlg.search.clicked.connect(self.getSelected)
+        self.dlg.export_as_csv.clicked.connect(self.exportCSV)
 
         # show the dialog
         self.dlg.show()
