@@ -260,8 +260,8 @@ class WltsQgis:
         name = QFileDialog.getSaveFileName(
             parent=self.dlg,
             caption='Save as CSV',
-            directory=('{coverage}.csv').format(
-                coverage=str(self.selected_collections),
+            directory=('{collection}.csv').format(
+                collection=str(self.selected_collections),
             ),
             filter='*.csv'
         )
