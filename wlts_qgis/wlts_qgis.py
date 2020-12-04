@@ -37,6 +37,7 @@ import os.path
 
 import wlts
 import csv
+import json
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -191,12 +192,13 @@ class WltsQgis:
 
     def initButtons(self):
         """Init the main buttons to manage services and the results"""
-        self.dlg.save_service.clicked.connect(self.saveService)
-        self.dlg.delete_service.clicked.connect(self.deleteService)
-        self.dlg.edit_service.clicked.connect(self.editService)
-        self.dlg.export_as_python.clicked.connect(self.exportPython)
+        # self.dlg.save_service.clicked.connect(self.saveService)
+        # self.dlg.delete_service.clicked.connect(self.deleteService)
+        # self.dlg.edit_service.clicked.connect(self.editService)
+        # self.dlg.export_as_python.clicked.connect(self.exportPython)
         self.dlg.export_as_csv.clicked.connect(self.exportCSV)
         self.dlg.export_as_json.clicked.connect(self.exportJSON)
+        self.dlg.search.clicked.connect(self.getSelected)
 
     def initServices(self):
         self.service = wlts.WLTS('http://brazildatacube.dpi.inpe.br/dev/wlts')
@@ -286,6 +288,23 @@ class WltsQgis:
         except AttributeError as error:
             print('Error')
 
+    def exportJSON(self):
+        """Export to file system trajectory data in JSON"""
+        try:
+            name = QFileDialog.getSaveFileName(
+                parent=self.dlg,
+                caption='Save as JSON',
+                directory=('{collection}.json').format(
+                    collection=str(self.selected_collections),
+                ),
+                filter='*.json'
+            )
+            trajectory = self.tj
+            with open(name[0], 'w') as outfile:
+                json.dump(trajectory, outfile)
+        except AttributeError as error:
+            print('Error')
+
     def plot(self):
 
         try:
@@ -322,8 +341,7 @@ class WltsQgis:
         self.addCanvasControlPoint()
         self.initServices()
         self.initCheckBox()
-        self.dlg.search.clicked.connect(self.getSelected)
-        self.dlg.export_as_csv.clicked.connect(self.exportCSV)
+        self.initButtons()
         self.getDate()
         # show the dialog
         self.dlg.show()
