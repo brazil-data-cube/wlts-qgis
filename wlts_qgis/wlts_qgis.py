@@ -40,9 +40,7 @@ import os.path
 import wlts
 import csv
 
-# plot
 import matplotlib.pyplot as plt
-import pandas as pd
 import numpy as np
 
 from datetime import datetime, date
@@ -275,7 +273,7 @@ class WltsQgis:
         self.displayPoint(self.point_tool)
 
     def exportCSV(self):
-        """Export to file system times series data in CSV"""
+        """Export to file system trajectory data in CSV"""
         try:
             name = QFileDialog.getSaveFileName(
                 parent=self.dlg,
