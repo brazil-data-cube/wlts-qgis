@@ -201,10 +201,14 @@ class WltsQgis:
         self.dlg.search.clicked.connect(self.getSelected)
 
     def initServices(self):
-        self.service = wlts.WLTS('http://brazildatacube.dpi.inpe.br/dev/wlts')
-        self.dlg.service_selection.addItem("WLTS - Brazil Data Cube", self.service)
-
+        """Start accessing the service"""
+        try:
+            self.service = wlts.WLTS('http://brazildatacube.dpi.inpe.br/dev/wlts')
+            self.dlg.service_selection.addItem("WLTS - Brazil Data Cube", self.service)
+        except AttributeError:
+            pass
     def initCheckBox(self):
+        """Start the checkbox with the collections that are active in the service"""
         self.widget = QWidget()
         self.vbox = QVBoxLayout()
 
@@ -220,6 +224,7 @@ class WltsQgis:
         self.dlg.bands_scroll.setWidget(self.widget)
 
     def getSelected(self):
+        """Get the collections that have been selected"""
         self.selected_collections = []
 
         for key in list(self.checks.keys()):
@@ -236,6 +241,7 @@ class WltsQgis:
 
 
     def getTrajectory(self):
+        """Get the trajectory from the filters that were selected"""
         self.tj = self.service.tj(latitude=self.selected_location.get('lat'), 
             longitude=self.selected_location.get('long'), 
             collections=",".join(self.selected_collections),
