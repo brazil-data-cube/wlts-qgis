@@ -21,15 +21,28 @@
  *                                                                         *
  ***************************************************************************/
 """
-from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
-from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QAction
+
+from qgis.core import QgsProject
+from qgis.gui import QgsMapToolEmitPoint
+
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 # Initialize Qt resources from file resources.py
 from .resources import *
 # Import the code for the dialog
 from .wlts_qgis_dialog import WltsQgisDialog
 import os.path
+
+import wlts
+import csv
+import json
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+from datetime import datetime, date
 
 
 class WltsQgis:
@@ -177,11 +190,25 @@ class WltsQgis:
                 action)
             self.iface.removeToolBarIcon(action)
 
-    def init_services(self):
-        self.service = wlts.WLTS('http://brazildatacube.dpi.inpe.br/dev/wlts')
-        self.dlg.service_selection.addItem("WLTS", service)
+    def initButtons(self):
+        """Init the main buttons to manage services and the results"""
+        # self.dlg.save_service.clicked.connect(self.saveService)
+        # self.dlg.delete_service.clicked.connect(self.deleteService)
+        # self.dlg.edit_service.clicked.connect(self.editService)
+        # self.dlg.export_as_python.clicked.connect(self.exportPython)
+        self.dlg.export_as_csv.clicked.connect(self.exportCSV)
+        self.dlg.export_as_json.clicked.connect(self.exportJSON)
+        self.dlg.search.clicked.connect(self.getSelected)
 
+    def initServices(self):
+        """Start accessing the service"""
+        try:
+            self.service = wlts.WLTS('http://brazildatacube.dpi.inpe.br/dev/wlts')
+            self.dlg.service_selection.addItem("WLTS - Brazil Data Cube", self.service)
+        except AttributeError:
+            pass
     def initCheckBox(self):
+        """Start the checkbox with the collections that are active in the service"""
         self.widget = QWidget()
         self.vbox = QVBoxLayout()
 
@@ -197,16 +224,7 @@ class WltsQgis:
         self.dlg.bands_scroll.setWidget(self.widget)
 
     def getSelected(self):
-        selected_collections = []
-
-        for key in list(self.checks.keys()):
-
-            if self.checks.get(key).isChecked():
-                selected_collections.append(key)
-
-        print(selected_collections)
-
-    def getSelected(self):
+        """Get the collections that have been selected"""
         self.selected_collections = []
 
         for key in list(self.checks.keys()):
@@ -221,19 +239,23 @@ class WltsQgis:
         print("Start date: " + str(self.dlg.start_date.date().toString('yyyy-MM-dd')))
         print("End date: " + str(self.dlg.end_date.date().toString('yyyy-MM-dd')))
 
+
     def getTrajectory(self):
-        # Example of trajectory operation
-        tj = self.service.tj(latitude=self.selected_location.get('lat'), 
+        """Get the trajectory from the filters that were selected"""
+        self.tj = self.service.tj(latitude=self.selected_location.get('lat'), 
             longitude=self.selected_location.get('long'), 
             collections=",".join(self.selected_collections),
             start_date=self.start_date, 
             end_date=self.end_date)
 
+        
+        print(self.tj)
+
     def getDate(self):
         self.dlg.start_date.setDate(QDate(1999,1,1))
         self.dlg.end_date.setDate(QDate(2020,1,1))
 
-    def display_point(self, pointTool):
+    def displayPoint(self, pointTool):
         """Get the mouse possition and storage as selected location"""
         try:
             print(float(pointTool.x()), float(pointTool.y()))
@@ -243,41 +265,54 @@ class WltsQgis:
             }
             self.getTrajectory()
             self.plot()
+            
         except AttributeError:
             pass
+        
 
-	def addCanvasControlPoint(self):
-	    """Generate a canvas area to get mouse position"""
-	    self.canvas = self.iface.mapCanvas()
-	    self.point_tool = QgsMapToolEmitPoint(self.canvas)
-	    self.point_tool.canvasClicked.connect(self.display_point)
-	    self.canvas.setMapTool(self.point_tool)
-	    self.display_point(self.point_tool)
+    def addCanvasControlPoint(self):
+        """Generate a canvas area to get mouse position"""
+        self.canvas = self.iface.mapCanvas()
+        self.point_tool = QgsMapToolEmitPoint(self.canvas)
+        self.point_tool.canvasClicked.connect(self.displayPoint)
+        self.canvas.setMapTool(self.point_tool)
+        self.displayPoint(self.point_tool)
 
     def exportCSV(self):
-    """Export to file system times series data in CSV"""
-    try:
-        name = QFileDialog.getSaveFileName(
-            parent=self.dlg,
-            caption='Save as CSV',
-            directory=('{collection}.csv').format(
-                collection=str(self.selected_collections),
-            ),
-            filter='*.csv'
-        )
-        trajectory = self.tj
-        self.generateCSV(name[0], trajectory)
-    except AttributeError as error:
-        print('Error')
+        """Export to file system trajectory data in CSV"""
+        try:
+            name = QFileDialog.getSaveFileName(
+                parent=self.dlg,
+                caption='Save as CSV',
+                directory=('{collection}.csv').format(
+                    collection=str(self.selected_collections),
+                ),
+                filter='*.csv'
+            )
+            trajectory = self.tj
+            self.generateCSV(name[0], trajectory)
+        except AttributeError as error:
+            print('Error')
 
-	def generateCSV(self, file_name, trajectory):
-	    try:
-	        df = trajectory.df()
-	        df.to_csv(file_name, sep=';', index = False, header=True)
-	    except FileNotFoundError:
-	        pass
+    def exportJSON(self):
+        """Export to file system trajectory data in JSON"""
+        try:
+            name = QFileDialog.getSaveFileName(
+                parent=self.dlg,
+                caption='Save as JSON',
+                directory=('{collection}.json').format(
+                    collection=str(self.selected_collections),
+                ),
+                filter='*.json'
+            )
+            trajectory = self.tj
+            with open(name[0], 'w') as outfile:
+                json.dump(trajectory, outfile)
+        except AttributeError as error:
+            print('Error')
 
     def plot(self):
+
         try:
             plt.clf()
             plt.cla()
@@ -296,19 +331,24 @@ class WltsQgis:
             plt.show()
         except:
             print("Sem informações.")
+        
+    def generateCSV(self, file_name, trajectory):
+        try:
+            df = trajectory.df()
+            df.to_csv(file_name, sep=';', index = False, header=True)
+        except FileNotFoundError:
+            pass
 
     def run(self):
         """Run method that performs all the real work"""
-
-        # Create the dialog with elements (after translation) and keep reference
-        # Only create GUI ONCE in callback, so that it will only load when the plugin is started
+        # Init Application
         self.dlg = WltsQgisDialog()
-        self.init_wlts()
+        # self.init_wlts()
         self.addCanvasControlPoint()
+        self.initServices()
         self.initCheckBox()
-        self.dlg.search.clicked.connect(self.getSelected)
-        self.dlg.export_as_csv.clicked.connect(self.exportCSV)
-
+        self.initButtons()
+        self.getDate()
         # show the dialog
         self.dlg.show()
         # Run the dialog event loop

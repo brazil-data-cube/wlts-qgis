@@ -6,18 +6,439 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>725</width>
-    <height>496</height>
+    <width>745</width>
+    <height>545</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>WLTS</string>
   </property>
+  <widget class="QTabWidget" name="main_tabs">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>741</width>
+     <height>511</height>
+    </rect>
+   </property>
+   <property name="tabPosition">
+    <enum>QTabWidget::North</enum>
+   </property>
+   <property name="tabShape">
+    <enum>QTabWidget::Rounded</enum>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
+   </property>
+   <widget class="QWidget" name="services_tab">
+    <attribute name="title">
+     <string>Services</string>
+    </attribute>
+    <widget class="QGroupBox" name="registry">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>401</width>
+       <height>461</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>REGISTERED SERVICES</string>
+     </property>
+     <widget class="QTreeView" name="data">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>381</width>
+        <height>271</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>370</y>
+        <width>381</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Service Name</string>
+      </property>
+      <widget class="QLineEdit" name="service_name">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>20</y>
+         <width>381</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="save_service">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>430</y>
+        <width>123</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add</string>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="host">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>310</y>
+        <width>381</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Host</string>
+      </property>
+      <widget class="QLineEdit" name="service_host">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>20</y>
+         <width>381</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="metadata">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>10</y>
+       <width>311</width>
+       <height>391</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>SERVICES METADATA</string>
+     </property>
+     <widget class="QLabel" name="service_metadata">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>291</width>
+        <height>351</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="active_service_options">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>410</y>
+       <width>311</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Active Service</string>
+     </property>
+     <widget class="QPushButton" name="edit_service">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>131</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Edit</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="delete_service">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>30</y>
+        <width>121</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Remove</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="time_series_tab">
+    <attribute name="title">
+     <string>WLTS</string>
+    </attribute>
+    <widget class="QGroupBox" name="history">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>10</y>
+       <width>251</width>
+       <height>341</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>COORDINATES HISTORY</string>
+     </property>
+     <widget class="QListWidget" name="history_list">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>231</width>
+        <height>301</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="attribute_group">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>100</y>
+       <width>451</width>
+       <height>361</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Select Collection</string>
+     </property>
+     <widget class="QGroupBox" name="bands_group">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>431</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QScrollArea" name="bands_scroll">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>431</width>
+         <height>171</height>
+        </rect>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="band_list">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>429</width>
+          <height>169</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="start_date_group">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>210</y>
+        <width>431</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Start Date:</string>
+      </property>
+      <widget class="QDateEdit" name="start_date">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>20</y>
+         <width>431</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="dateTime">
+        <datetime>
+         <hour>0</hour>
+         <minute>0</minute>
+         <second>0</second>
+         <year>1999</year>
+         <month>1</month>
+         <day>1</day>
+        </datetime>
+       </property>
+       <property name="displayFormat">
+        <string>dd/MM/yyyy</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="end_date_group">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>270</y>
+        <width>431</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>End Date:</string>
+      </property>
+      <widget class="QDateEdit" name="end_date">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>20</y>
+         <width>431</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="dateTime">
+        <datetime>
+         <hour>0</hour>
+         <minute>0</minute>
+         <second>0</second>
+         <year>2020</year>
+         <month>1</month>
+         <day>1</day>
+        </datetime>
+       </property>
+       <property name="displayFormat">
+        <string>dd/MM/yyyy</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="search">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>330</y>
+        <width>89</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>SEARCH</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="services_group">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>451</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Active Service</string>
+     </property>
+     <widget class="QComboBox" name="service_selection">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>431</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="exporting_files">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>400</y>
+       <width>251</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Export data as</string>
+     </property>
+     <widget class="QPushButton" name="export_as_csv">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>30</y>
+        <width>71</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>CSV</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="export_as_json">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>81</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>JSON</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="export_as_python">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>30</y>
+        <width>71</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PYTHON</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
   <widget class="QDialogButtonBox" name="button_box">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>460</y>
+     <x>400</x>
+     <y>510</y>
      <width>341</width>
      <height>32</height>
     </rect>
@@ -28,379 +449,6 @@
    <property name="standardButtons">
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
-  </widget>
-  <widget class="QTabWidget" name="main_tab">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>0</y>
-     <width>711</width>
-     <height>461</height>
-    </rect>
-   </property>
-   <property name="currentIndex">
-    <number>1</number>
-   </property>
-   <widget class="QWidget" name="tab">
-    <attribute name="title">
-     <string>Tab 1</string>
-    </attribute>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>381</width>
-       <height>271</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>REGISTERED SERVICES</string>
-     </property>
-     <widget class="QTreeView" name="treeView">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>20</y>
-        <width>381</width>
-        <height>251</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>290</y>
-       <width>381</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Host</string>
-     </property>
-     <widget class="QLineEdit" name="lineEdit">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>20</y>
-        <width>381</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>340</y>
-       <width>381</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>GroupBox</string>
-     </property>
-     <widget class="QLineEdit" name="lineEdit_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>20</y>
-        <width>381</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QPushButton" name="pushButton">
-     <property name="geometry">
-      <rect>
-       <x>300</x>
-       <y>400</y>
-       <width>89</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Add</string>
-     </property>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_4">
-     <property name="geometry">
-      <rect>
-       <x>410</x>
-       <y>10</y>
-       <width>281</width>
-       <height>351</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>SERVICES METADATA</string>
-     </property>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_5">
-     <property name="geometry">
-      <rect>
-       <x>410</x>
-       <y>370</y>
-       <width>281</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Active Service</string>
-     </property>
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>131</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Edit</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_3">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>20</y>
-        <width>121</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Renome</string>
-      </property>
-     </widget>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="tab_2">
-    <attribute name="title">
-     <string>Tab 2</string>
-    </attribute>
-    <widget class="QGroupBox" name="groupBox_6">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>10</y>
-       <width>401</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Active Service</string>
-     </property>
-     <widget class="QComboBox" name="comboBox">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>20</y>
-        <width>401</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_7">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>60</y>
-       <width>401</width>
-       <height>171</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Select Collection</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>230</y>
-       <width>311</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Clique para se obter coordenadas pelo mouse</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_4">
-     <property name="geometry">
-      <rect>
-       <x>320</x>
-       <y>240</y>
-       <width>21</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_8">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>260</y>
-       <width>401</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Latitude</string>
-     </property>
-     <widget class="QLineEdit" name="lineEdit_3">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>20</y>
-        <width>401</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_9">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>320</y>
-       <width>401</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Logitude</string>
-     </property>
-     <widget class="QLineEdit" name="lineEdit_4">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>20</y>
-        <width>401</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_10">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>370</y>
-       <width>181</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Start Date:</string>
-     </property>
-     <widget class="QDateEdit" name="dateEdit">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>20</y>
-        <width>181</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_11">
-     <property name="geometry">
-      <rect>
-       <x>210</x>
-       <y>370</y>
-       <width>191</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>GroupBox</string>
-     </property>
-     <widget class="QDateEdit" name="dateEdit_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>20</y>
-        <width>191</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_12">
-     <property name="geometry">
-      <rect>
-       <x>410</x>
-       <y>0</y>
-       <width>291</width>
-       <height>341</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>COORDINATES HISTORY</string>
-     </property>
-     <widget class="QListWidget" name="listWidget">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>20</y>
-        <width>291</width>
-        <height>321</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_13">
-     <property name="geometry">
-      <rect>
-       <x>410</x>
-       <y>350</y>
-       <width>291</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Export data as</string>
-     </property>
-     <widget class="QPushButton" name="pushButton_5">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>30</y>
-        <width>141</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>JSON</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_6">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>30</y>
-        <width>141</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>CSV</string>
-      </property>
-     </widget>
-    </widget>
-   </widget>
   </widget>
  </widget>
  <resources/>

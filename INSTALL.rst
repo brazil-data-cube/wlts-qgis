@@ -16,10 +16,13 @@ The Python QGIS Plugin for WLTS depends essentially on:
 - `Python version +3 <https://www.python.org/>`_
 - `Plugin Builder Tool +3 <http://g-sherman.github.io/plugin_build_tool/>`_
 
-Development Installation
-------------------------
+Development Installation - GitHub
+---------------------------------
 
-Clone the software repository:
+Clone the Software Repository
++++++++++++++++++++++++++++++
+
+Use ``git`` to clone the software repository:
 
 .. code-block:: shell
 
@@ -32,6 +35,16 @@ Go to the source code folder:
 
         $ cd wlts-qgis/wlts_qgis
 
+Install requirements pb_tool <https://pypi.org/project/pb-tool/> to deploy and publish QGIS Python plugin and pytest <https://pypi.org/project/pytest/> to run unit test with WLTS plugin.
+
+.. code-block:: shell
+
+    pip install -r requirements.txt
+
+
+Run QGIS and open the Plugin Manager and enable the WLTS-QGIS.
+
+
 Linux
 *****
 
@@ -39,7 +52,7 @@ Use ``pb_tool`` to compile and deploy the plugin in Linux OS:
 
 .. code-block:: shell
 
-    $ pb_tool deploy --plugin_path /home/{USER}/.local/share/QGIS/QGIS3/profiles/default/python/plugins
+    $ pb_tool deploy --plugin_path /home/${USER}/.local/share/QGIS/QGIS3/profiles/default/python/plugins
 
 
 Windows
@@ -62,9 +75,6 @@ On prompt use ``pb_tool`` to compile and deploy WLTS-QGIS plugin:
    > pb_tool deploy --plugin_path C:\Users\user\AppData\Roaming\QGIS\QGIS{version}\profiles\default\python\plugins
 
 
-Run QGIS and open the Plugin Manager and enable the WLTS-QGIS.
-
-
 .. note::
 
     If you want to create a new *Python Virtual Environment*, please, follow this instruction:
@@ -81,7 +91,4 @@ Run QGIS and open the Plugin Manager and enable the WLTS-QGIS.
 
         pip install --upgrade pip
 
-        pip install pyqt5-tools
-
-        pip install pb-tool
-
+        pip install -r requirements.txt
