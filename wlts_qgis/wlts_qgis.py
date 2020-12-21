@@ -210,6 +210,29 @@ class WltsQgis:
         self.dlg.export_as_json.clicked.connect(self.exportJSON)
         self.dlg.search.clicked.connect(self.getSelected)
 
+    def initHistory(self):
+        """Init and update location history"""
+        self.dlg.history_list.clear()
+        self.selected_location = None
+        try:
+            self.dlg.history_list.addItems(list(self.locations.keys()))
+        except AttributeError:
+            self.locations = {}
+        
+        self.dlg.history_list.itemActivated.connect(self.getFromHistory)
+        self.getLayers()
+        self.addCanvasControlPoint()
+
+    def getFromHistory(self, item):
+        """Select location from history storage as selected location"""
+        self.selected_location = self.locations.get(item.text(), {})
+
+    def getLayers(self):
+        """Storage the layers in QGIS project"""
+        self.layers = QgsProject.instance().layerTreeRoot().children()
+        self.layer_names = [layer.name() for layer in self.layers] # Get all layer names
+        self.layer = self.iface.activeLayer() # QVectorLayer QRasterFile
+
     def saveService(self):
         """Save the service based on name and host input"""
         name_to_save = str(self.dlg.service_name.text())
@@ -289,7 +312,6 @@ class WltsQgis:
         print("Start date: " + str(self.dlg.start_date.date().toString('yyyy-MM-dd')))
         print("End date: " + str(self.dlg.end_date.date().toString('yyyy-MM-dd')))
 
-
     def getTrajectory(self):
         """Get the trajectory from the filters that were selected"""
         self.tj = self.service.tj(latitude=self.selected_location.get('lat'), 
@@ -309,16 +331,33 @@ class WltsQgis:
         """Get the mouse possition and storage as selected location"""
         try:
             print(float(pointTool.x()), float(pointTool.y()))
+
+
+
             self.selected_location = {
                 'lat' : float(pointTool.y()),
                 'long' : float(pointTool.x())
             }
+
+            history_key = str(
+                (
+                    "({lat:,.2f},{long:,.2f})"
+                ).format(
+                    lat = self.selected_location.get('lat'),
+                    long = self.selected_location.get('long')
+                )
+            )
+
+            self.locations[history_key] = self.selected_location
+            self.dlg.history_list.clear()
+            self.dlg.history_list.addItems(list(self.locations.keys()))
+            self.dlg.history_list.itemActivated.connect(self.getFromHistory)
+
             self.getTrajectory()
             self.plot()
             
         except AttributeError:
-            pass
-        
+            pass    
 
     def addCanvasControlPoint(self):
         """Generate a canvas area to get mouse position"""
@@ -461,6 +500,7 @@ class WltsQgis:
         self.initServices()
         self.initCheckBox()
         self.initButtons()
+        self.initHistory()
         self.getDate()
         # show the dialog
         self.dlg.show()
