@@ -87,7 +87,7 @@ class Controls:
             "crs": "EPSG: 4326"
         }
 
-    def getDescription(self, name = "Null", host = "Null", coverage = "Null"):
+    def getDescription(self, name = "Null", host = "Null", collections = "Null"):
         """
         Returns a service description format string
 
@@ -99,7 +99,7 @@ class Controls:
         return (
             "Service name: " + name + "\n" +
             "Host: " + host + "\n" +
-            "Active coverage: " + coverage + "\n"
+            "Active collections: " + collections + "\n"
         )
 
 class Services:
@@ -117,9 +117,6 @@ class Services:
         getServiceNames
         loadServices
         findServiceByName
-        listProducts
-        productDescription
-        productTimeSeries
         addService
         deleteService
         editService
@@ -217,40 +214,6 @@ class Services:
             return service
         except (FileNotFoundError, FileExistsError):
             return None
-
-    def listProducts(self, service_name):
-        """
-        Return a dictionary with the list of available products
-
-        Args:
-            service_name<string>: the service registered name
-        """
-        pass
-
-    def productDescription(self, service_name, product):
-        """
-        Return a dictionary with product description
-
-        Args:
-            service_name<string>: the service registered name
-            product<string>: the product name
-        """
-        pass
-
-    def productTimeSeries(self, service_name, product, bands, lat, lon, start_date, end_date):
-        """
-        Return a dictionary with product time series data
-
-        Args:
-            service_name<string>: the service registered name
-            product<string>: the product name
-            bands<tuple>: the selected bands available on product
-            lon<float>: the point longitude
-            lat<float>: the point latitude
-            start_date<string>: start date string with 'yyyy-mm-dd' format
-            end_date<string>: end date string with 'yyyy-mm-dd' format
-        """
-        pass
 
     def addService(self, name, host):
         """
