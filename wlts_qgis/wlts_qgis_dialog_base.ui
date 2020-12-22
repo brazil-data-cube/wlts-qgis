@@ -196,7 +196,7 @@
        <x>480</x>
        <y>10</y>
        <width>251</width>
-       <height>341</height>
+       <height>291</height>
       </rect>
      </property>
      <property name="title">
@@ -208,7 +208,7 @@
         <x>10</x>
         <y>30</y>
         <width>231</width>
-        <height>301</height>
+        <height>251</height>
        </rect>
       </property>
      </widget>
@@ -373,10 +373,10 @@
     <widget class="QGroupBox" name="exporting_files">
      <property name="geometry">
       <rect>
-       <x>480</x>
-       <y>400</y>
-       <width>251</width>
-       <height>71</height>
+       <x>490</x>
+       <y>320</y>
+       <width>241</width>
+       <height>61</height>
       </rect>
      </property>
      <property name="title">
@@ -418,12 +418,25 @@
        <string>JSON</string>
       </property>
      </widget>
+    </widget>
+    <widget class="QGroupBox" name="exporting_files_2">
+     <property name="geometry">
+      <rect>
+       <x>490</x>
+       <y>400</y>
+       <width>241</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Export code as</string>
+     </property>
      <widget class="QPushButton" name="export_as_python">
       <property name="geometry">
        <rect>
-        <x>180</x>
+        <x>10</x>
         <y>30</y>
-        <width>71</width>
+        <width>81</width>
         <height>25</height>
        </rect>
       </property>
