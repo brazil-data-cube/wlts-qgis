@@ -19,6 +19,10 @@ Python QGIS Plugin for Web Land Trajectory Service
         :target: https://www.tidyverse.org/lifecycle/#experimental
         :alt: Software Life Cycle
 
+.. image:: https://readthedocs.org/projects/wlts_qgis/badge/?version=latest
+        :target: https://wlts_qgis.readthedocs.io/en/latest/?badge=latest
+        :alt: Documentation Status
+
 .. image:: https://img.shields.io/discord/689541907621085198?logo=discord&logoColor=ffffff&color=7389D8
         :target: https://discord.com/channels/689541907621085198#
         :alt: Join us at Discord
