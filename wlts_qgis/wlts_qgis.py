@@ -257,6 +257,7 @@ class WltsQgis:
         except (ValueError, AttributeError) as error:
             self.basic_controls.alert(
                 "(ValueError, AttributeError)", str(error))
+                
 
     def editService(self):
         """Edit the selected service"""
