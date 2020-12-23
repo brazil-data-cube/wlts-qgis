@@ -19,9 +19,13 @@ Python QGIS Plugin for Web Land Trajectory Service
         :target: https://www.tidyverse.org/lifecycle/#experimental
         :alt: Software Life Cycle
 
-.. image:: https://readthedocs.org/projects/wlts_qgis/badge/?version=latest
-        :target: https://wlts_qgis.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/wlts-qgis/badge/?version=latest
+        :target: https://wlts-qgis.readthedocs.io/en/latest/
         :alt: Documentation Status
+
+.. image:: https://img.shields.io/github/tag/brazil-data-cube/wlts-qgis.svg
+        :target: https://github.com/brazil-data-cube/wlts-qgis/releases
+        :alt: Release
 
 .. image:: https://img.shields.io/discord/689541907621085198?logo=discord&logoColor=ffffff&color=7389D8
         :target: https://discord.com/channels/689541907621085198#
@@ -31,25 +35,52 @@ Python QGIS Plugin for Web Land Trajectory Service
 About
 =====
 
-This is an implementation of the `Web Land Trajectory Service specification <https://github.com/brazil-data-cube/wlts-spec>`_.
+Information on land use and land cover is essential to support governments in making decisions about the impact of human activities on the environment, planning the use of natural resources, conserving biodiversity and monitoring climate change.
 
+Currently, several projects systematically provide information on the dynamics of land use and cover. Well known projects include PRODES, DETER and TerraClass. These projects are developed by INPE and they produce information on land use and coverage used by the Brazilian Government to make public policy decisions. Besides these projects there are other initiatives from universities and space agencies devoted to the creation of national and global maps.
 
-**W**\ eb **L**\ and **T**\ rajectory **S**\ ervice (WLTS)  is a service that aims to facilitate the access to these various "land use and cover" data collections through a tailored API. The result is tool that allows researchers and specialists to spend their time in the analytical process, once the API provides the integration of these datasets and brings the concept of Land Use and Cover Trajectories as a high level abstraction. The WLTS approach is to use a data model that defines a minimum set of temporal and spatial information to represent different sources and types of data. WLTS can be used in a range of application, such as in validation of land cover data sets, in the selection of trainning samples to support Machine Learning algorithms used in the generation of new classification maps.
+Although these projects follow open data policies and provide a rich collection of data, there is still a gap in tools that facilitate the integrated use of these collections. Each project adopts its own land use and land cover classification system, providing different class names and meanings for the elements of these collections. The forms of distribution of project data can be carried out in different ways, through files or web services. In addition, the data has different spatial and temporal resolutions and storage systems (raster or vector).
 
+In this context, the Web Land Trajectory Service (WLTS) is a service that aims to facilitate the access to these vaapproach consists of using a data model that defines a minimum set of temporal and spatial information to represent different sources and types of data, but with a focus on land use and land cover.
 
+WLTS can be used in a variety of applications, such as validating land cover data sets, selecting training samples to support Machine Learning algorithms used in the generation of new classification maps.
 
+WLTS is based on three operations:
+
+- list_collection: returns the list of all available collection in the service.
+- describe_collection: returns the metadata of a given collection.
+- trajectory:  returns the land use and cover trajectory from the collections given a location in space
 
 
 For more information on WLTS, see:
 
-- `wlts.py <https://github.com/brazil-data-cube/wlts.py>`_: it is a Python client library that supports the communication to a WTSS service.
+- `wlts.py <https://github.com/brazil-data-cube/wlts.py>`_: it is a Python client library that supports the communication to a WLTS service.
+
+- `rwlts <https://github.com/brazil-data-cube/rwlts>`_: it is a R client library that supports the communication to a WLTS service.
 
 - `WLTS Specification <https://github.com/brazil-data-cube/wlts-spec>`_: the WLTS specification using `OpenAPI 3.0 <https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md>`_ notation.
+
+- `WLTS <https://github.com/brazil-data-cube/wlts>`_: the WLTS service.
+
+The following image presents an overview of the plugin:
+
+.. image:: https://github.com/brazil-data-cube/wlts-qgis/raw/master/docs/img/wlts-qgis.png
+        :target: https://github.com/brazil-data-cube/wlts-qgis/tree/master/docs/img
+        :width: 70%
+        :alt: WLTS-QGIS
 
 Installation
 ============
 
 See `INSTALL.rst <./INSTALL.rst>`_.
+
+
+Documentation
+=============
+
+**Under Development**
+
+.. See https://wlts-qgis.readthedocs.io/en/latest/
 
 
 License
