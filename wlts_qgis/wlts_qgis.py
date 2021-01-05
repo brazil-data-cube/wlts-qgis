@@ -38,7 +38,7 @@ import os.path
 
 import wlts
 import csv
-import json 
+import json
 from json import loads as json_loads
 from pathlib import Path
 import pandas as pd
@@ -48,7 +48,7 @@ import numpy as np
 
 from datetime import datetime, date
 
-from .files_examples.wlts_controller import Controls, Services 
+from .files_examples.wlts_controller import Controls, Services
 
 
 class WltsQgis:
@@ -195,10 +195,10 @@ class WltsQgis:
                 self.tr(u'&WLTS'),
                 action)
             self.iface.removeToolBarIcon(action)
-    
+
     def initControls(self):
         self.basic_controls = Controls()
-        self.server_controls = Services(user = "application")
+        self.server_controls = Services(user="application")
 
     def initButtons(self):
         """Init the main buttons to manage services and the results"""
@@ -218,7 +218,7 @@ class WltsQgis:
             self.dlg.history_list.addItems(list(self.locations.keys()))
         except AttributeError:
             self.locations = {}
-        
+
         self.dlg.history_list.itemActivated.connect(self.getFromHistory)
         self.getLayers()
         self.addCanvasControlPoint()
@@ -230,8 +230,9 @@ class WltsQgis:
     def getLayers(self):
         """Storage the layers in QGIS project"""
         self.layers = QgsProject.instance().layerTreeRoot().children()
-        self.layer_names = [layer.name() for layer in self.layers] # Get all layer names
-        self.layer = self.iface.activeLayer() # QVectorLayer QRasterFile
+        self.layer_names = [layer.name()
+                            for layer in self.layers]  # Get all layer names
+        self.layer = self.iface.activeLayer()  # QVectorLayer QRasterFile
 
     def saveService(self):
         """Save the service based on name and host input"""
@@ -244,7 +245,8 @@ class WltsQgis:
             self.dlg.service_host.clear()
             self.updateServicesList()
         except (ValueError, AttributeError, ConnectionRefusedError) as error:
-            self.basic_controls.alert("(ValueError, AttributeError)", str(error))
+            self.basic_controls.alert(
+                "(ValueError, AttributeError)", str(error))
 
     def deleteService(self):
         """Delete the selected active service"""
@@ -253,13 +255,16 @@ class WltsQgis:
             self.server_controls.deleteService(host_to_delete)
             self.updateServicesList()
         except (ValueError, AttributeError) as error:
-            self.basic_controls.alert("(ValueError, AttributeError)", str(error))
+            self.basic_controls.alert(
+                "(ValueError, AttributeError)", str(error))
+                
 
     def editService(self):
         """Edit the selected service"""
         self.dlg.service_name.setText(self.dlg.service_selection.currentText())
         self.dlg.service_host.setText(
-            self.server_controls.findServiceByName(self.dlg.service_selection.currentText()).get("host")
+            self.server_controls.findServiceByName(
+                self.dlg.service_selection.currentText()).host
         )
 
     def updateServicesList(self):
@@ -269,23 +274,65 @@ class WltsQgis:
         self.basic_controls.addItemsTreeView(self.model, self.data)
         self.dlg.data.setModel(self.model)
         self.dlg.service_selection.clear()
-        self.dlg.service_selection.addItems(self.server_controls.getServiceNames())
-        self.dlg.service_selection.activated.connect(self.selectCoverage)
+        self.dlg.service_selection.addItems(
+            self.server_controls.getServiceNames())
+        self.dlg.service_selection.activated.connect(self.initCheckBox)
 
     def initServices(self):
-        """Start accessing the service"""
+        """Load the registered services based on JSON file"""
+        service_names = self.server_controls.getServiceNames()
+        if not service_names:
+            self.basic_controls.alert("502 Error", "The main services are not available!")
+        self.dlg.service_selection.addItems(service_names)
+        self.dlg.service_selection.activated.connect(self.selecte_service)
+        self.data = self.server_controls.loadServices()
+        self.model = QStandardItemModel()
+        self.basic_controls.addItemsTreeView(self.model, self.data)
+        self.dlg.data.setModel(self.model)
+        self.dlg.data.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.dlg.data.clicked.connect(self.updateDescription)
+        self.updateDescription()
+
+    def updateDescription(self):
         try:
-            self.service = wlts.WLTS('http://brazildatacube.dpi.inpe.br/dev/wlts')
-            self.dlg.service_selection.addItem("WLTS - Brazil Data Cube", self.service)
-        except AttributeError:
-            pass
+            index = self.dlg.data.selectedIndexes()[0]
+            self.metadata_selected = index.model().itemFromIndex(index)
+            self.dlg.service_metadata.setText(
+                "{service_metadata}\n\n{collection_metadata}".format(
+                    service_metadata=self.basic_controls.getDescription(
+                        name=str(self.metadata_selected.parent().text()),
+                        host=str(self.server_controls.findServiceByName(
+                            self.metadata_selected.parent().text()
+                        ).host),
+                        collections=self.metadata_selected.text()
+                    ),
+                    collection_metadata=self.basic_controls.getCollectionDescription(
+                        self.server_controls,
+                        str(self.metadata_selected.parent().text()),
+                        self.metadata_selected.text()
+                    )
+                )
+            )
+        except:
+            self.dlg.service_metadata.setText(
+                "Select a collection!"
+            )
+
+    def selecte_service(self):
+        self.server_controls.listCollections(
+            str(self.dlg.service_selection.currentText())
+        )
+        
+        self.dlg.service_selection.activated.connect(self.initCheckBox)
 
     def initCheckBox(self):
         """Start the checkbox with the collections that are active in the service"""
         self.widget = QWidget()
         self.vbox = QVBoxLayout()
 
-        collections = self.service.collections
+        collections = self.server_controls.listCollections(
+            str(self.dlg.service_selection.currentText())
+        )
         self.checks = {}
 
         for collection in collections:
@@ -305,46 +352,44 @@ class WltsQgis:
             if self.checks.get(key).isChecked():
                 self.selected_collections.append(key)
 
-        self.start_date=str(self.dlg.start_date.date().toString('yyyy-MM-dd'))
-        self.end_date=str(self.dlg.end_date.date().toString('yyyy-MM-dd'))
+        self.start_date = str(
+            self.dlg.start_date.date().toString('yyyy-MM-dd'))
+        self.end_date = str(self.dlg.end_date.date().toString('yyyy-MM-dd'))
 
-        print(self.selected_collections)
-        print("Start date: " + str(self.dlg.start_date.date().toString('yyyy-MM-dd')))
-        print("End date: " + str(self.dlg.end_date.date().toString('yyyy-MM-dd')))
 
     def getTrajectory(self):
         """Get the trajectory from the filters that were selected"""
-        self.tj = self.service.tj(latitude=self.selected_location.get('lat'), 
-            longitude=self.selected_location.get('long'), 
-            collections=",".join(self.selected_collections),
-            start_date=self.start_date, 
-            end_date=self.end_date)
-
-        print(self.tj)
+        service_host = self.server_controls.findServiceByName(self.dlg.service_selection.currentText()).host
+        if self.server_controls.testServiceConnection(service_host):
+            client_wlts = wlts.WLTS(service_host)
+            self.tj = client_wlts.tj(latitude=self.selected_location.get('lat'),
+                                    longitude=self.selected_location.get('long'),
+                                    collections=",".join(
+                                        self.selected_collections),
+                                    start_date=self.start_date,
+                                    end_date=self.end_date)
+        
+    
 
     def getDate(self):
         """Get the start and end dates of the trajectory"""
-        self.dlg.start_date.setDate(QDate(1999,1,1))
-        self.dlg.end_date.setDate(QDate(2020,1,1))
+        self.dlg.start_date.setDate(QDate(1999, 1, 1))
+        self.dlg.end_date.setDate(QDate(2020, 1, 1))
 
     def displayPoint(self, pointTool):
         """Get the mouse possition and storage as selected location"""
         try:
-            print(float(pointTool.x()), float(pointTool.y()))
-
-
-
             self.selected_location = {
-                'lat' : float(pointTool.y()),
-                'long' : float(pointTool.x())
+                'lat': float(pointTool.y()),
+                'long': float(pointTool.x())
             }
 
             history_key = str(
                 (
                     "({lat:,.2f},{long:,.2f})"
                 ).format(
-                    lat = self.selected_location.get('lat'),
-                    long = self.selected_location.get('long')
+                    lat=self.selected_location.get('lat'),
+                    long=self.selected_location.get('long')
                 )
             )
 
@@ -355,9 +400,9 @@ class WltsQgis:
 
             self.getTrajectory()
             self.plot()
-            
+
         except AttributeError:
-            pass    
+            pass
 
     def addCanvasControlPoint(self):
         """Generate a canvas area to get mouse position"""
@@ -377,12 +422,12 @@ class WltsQgis:
                 ),
                 filter='*.py'
             )
-            
+
             attributes = {
                 'service_host': self.service._url,
                 'latitude': self.selected_location['lat'],
-                'longitude' : self.selected_location['long'],
-                'collections' : ",".join(self.selected_collections)
+                'longitude': self.selected_location['long'],
+                'collections': ",".join(self.selected_collections)
             }
             self.generateCode(name[0], attributes)
         except AttributeError:
@@ -405,9 +450,9 @@ class WltsQgis:
         """
         template = (
             Path(os.path.abspath(os.path.dirname(__file__)))
-                /'files_examples'
-                /'trajectory_export_template.py'
-                )
+            / 'files_examples'
+            / 'trajectory_export_template.py'
+        )
         return open(template, 'r').read()
 
     def exportCSV(self):
@@ -424,7 +469,7 @@ class WltsQgis:
             trajectory = self.tj
             self.generateCSV(name[0], trajectory)
         except AttributeError as error:
-            print('Error')
+            self.basic_controls.alert("Error", "error")
 
     def generateCSV(self, file_name, trajectory):
         """Creates the .csv file"""
@@ -432,7 +477,8 @@ class WltsQgis:
             df = trajectory.df()
             dict = {}
 
-            latlng = [self.selected_location.get('lat'), self.selected_location.get('long')]
+            latlng = [self.selected_location.get(
+                'lat'), self.selected_location.get('long')]
 
             for key in list(df.keys()):
                 line = []
@@ -451,7 +497,7 @@ class WltsQgis:
 
             output = pd.DataFrame.from_dict(dict)
 
-            output.to_csv(file_name, sep=';', index = False, header=True)
+            output.to_csv(file_name, sep=';', index=False, header=True)
         except FileNotFoundError:
             pass
 
@@ -470,7 +516,7 @@ class WltsQgis:
             with open(name[0], 'w') as outfile:
                 json.dump(trajectory, outfile)
         except AttributeError as error:
-            print('Error')
+            self.basic_controls.alert("Error", "error")
 
     def plot(self):
         """Creates a table with the trajectory"""
@@ -479,29 +525,31 @@ class WltsQgis:
             plt.cla()
             plt.close()
 
-            fig = plt.figure(figsize=(8,5))
+            fig = plt.figure(figsize=(8, 5))
 
-            df_trajectory =  self.tj.df()
+            df_trajectory = self.tj.df()
             ax2 = fig.add_subplot()
-            font_size=18
-            bbox=[0, 0, 1, 1]
+            font_size = 18
+            bbox = [0, 0, 1, 1]
             ax2.axis('off')
-            mpl_table = ax2.table(cellText = df_trajectory.values, rowLabels = df_trajectory.index, bbox=bbox, colLabels=df_trajectory.columns)
+            mpl_table = ax2.table(cellText=df_trajectory.values,
+                                  rowLabels=df_trajectory.index, bbox=bbox, colLabels=df_trajectory.columns)
             mpl_table.auto_set_font_size(True)
             mpl_table.set_fontsize(font_size)
             plt.show()
         except:
-            print("Sem informações.")
-        
+            self.basic_controls.alert("Error", "Sem informações")
+
     def run(self):
         """Run method that performs all the real work"""
         self.dlg = WltsQgisDialog()
+        self.initControls()
         self.addCanvasControlPoint()
         self.initServices()
         self.initCheckBox()
         self.initButtons()
         self.initHistory()
-        self.getDate()
+        self.getDate()   
         # show the dialog
         self.dlg.show()
         # Run the dialog event loop
@@ -511,9 +559,3 @@ class WltsQgis:
             # Do something useful here - delete the line containing pass and
             # substitute with your code.
             pass
-
-
-
-
-
-
