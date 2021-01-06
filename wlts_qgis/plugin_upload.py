@@ -4,9 +4,8 @@
         Authors: A. Pasotti, V. Picavet
         git sha              : $TemplateVCSFormat
 """
-
-import sys
 import getpass
+import sys
 import xmlrpc.client
 from optparse import OptionParser
 

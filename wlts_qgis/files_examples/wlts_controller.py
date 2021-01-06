@@ -8,9 +8,9 @@ from pyproj import Proj, transform
 from PyQt5.QtCore import QDate
 from PyQt5.QtGui import QStandardItem
 from PyQt5.QtWidgets import QMessageBox
+from wlts import WLTS
 
 from .config import BASE_DIR
-from wlts import WLTS
 
 
 class Controls:

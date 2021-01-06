@@ -22,32 +22,26 @@
  ***************************************************************************/
 """
 
-from qgis.core import QgsProject
-from qgis.gui import QgsMapToolEmitPoint
-
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-
-# Initialize Qt resources from file resources.py
-from .resources import *
-# Import the code for the dialog
-from .wlts_qgis_dialog import WltsQgisDialog
-import os.path
-
-import wlts
 import csv
 import json
+import os.path
+from datetime import date, datetime
 from json import loads as json_loads
 from pathlib import Path
-import pandas as pd
 
 import matplotlib.pyplot as plt
 import numpy as np
-
-from datetime import datetime, date
+import pandas as pd
+import wlts
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from qgis.core import QgsProject
+from qgis.gui import QgsMapToolEmitPoint
 
 from .files_examples.wlts_controller import Controls, Services
+from .resources import *
+from .wlts_qgis_dialog import WltsQgisDialog
 
 
 class WltsQgis:
