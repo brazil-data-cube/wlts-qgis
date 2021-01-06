@@ -8,9 +8,9 @@ from pyproj import Proj, transform
 from PyQt5.QtCore import QDate
 from PyQt5.QtGui import QStandardItem
 from PyQt5.QtWidgets import QMessageBox
+from wlts import WLTS
 
 from .config import BASE_DIR
-from wlts import WLTS
 
 
 class Controls:
@@ -88,7 +88,7 @@ class Controls:
             "crs": "EPSG: 4326"
         }
 
-    def getDescription(self, name = "Null", host = "Null", collections = "Null"):
+    def getDescription(self, name="Null", host="Null", collections="Null"):
         """
         Returns a service description format string
 
@@ -98,12 +98,12 @@ class Controls:
             collection<string> optional: activate collection
         """
         return (
-            "Service name: " + name + "\n" +
-            "Host: " + host + "\n" +
-            "Active collections: " + collections + "\n"
+                "Service name: " + name + "\n" +
+                "Host: " + host + "\n" +
+                "Active collections: " + collections + "\n"
         )
-    
-    def getCollectionDescription(self, server_controls = None, service = "", collection = ""):
+
+    def getCollectionDescription(self, server_controls=None, service="", collection=""):
         """
         Get description from WLTS Server and format for show
 
@@ -112,28 +112,30 @@ class Controls:
             service<string>: the service name save on server controls
             collection<string>: the collection name selected
         """
-        description = server_controls.description(service, collection)
-        return "{classification_system}\n{collection_type}\n{description}\n{period}\n{resolution}\n{spatial}".format(
-            classication_system = "Classification system name: {classification_system}".format(
-                classification_system = description.get("classification_system").get("classification_system_name")),
-            collection_type = "Collection type: {collection_type}".format(
-                collection_type = description.get("classification_system").get("collection_type")
-            ),
-            description=str(description.get("classification_system").get("description")),
-            period= "*Period*\n\nstart date: {start}\nend date: {end}".format(
-                start = description.get("classification_system").get("period").get("start_date"),
-                end = description.get("classification_system").get("period").get("end_date")),
-            resolution = "Resolution\n\nUnit: {unit}\nValue: {value}".format(
-                unit = description.get("classification_system").get("resolution_unit").get("unit"),
-                value = description.get("classification_system").get("resolution_unit").get("value")
-            ),
-            spatial= "*Dimensions*\n\nXmin: {xmin:,.2f}\nXmax: {xmax:,.2f}\nYmin: {ymin:,.2f}\nYmax: {ymax:,.2f}".format(
-                xmin=description.get("classification_system").get("spatial_extent").get("xmin"),
-                xmax=description.get("classification_system").get("spatial_extent").get("xmax"),
-                ymin=description.get("classification_system").get("spatial_extent").get("ymin"),
-                ymax=description.get("classification_system").get("spatial_extent").get("ymax")
-            )
-        )
+        metadata = server_controls.description(service, collection)
+
+        classification_system = f'Classification System: ' \
+                                f'{metadata["classification_system"]["classification_system_name"]}'
+
+        collection_type = f'Collection type: {metadata["collection_type"]}'
+
+        description = f'Description: {metadata["description"]}'
+
+        period = f'Period:\n\tstart date: {metadata["period"]["start_date"]}\n' \
+                 f'\tend_date: {metadata["period"]["end_date"]}'
+
+        resolution = f'Resolution:\n\tUnit: {metadata["resolution_unit"]["unit"]}\n' \
+                     f'\tValue: {metadata["resolution_unit"]["value"]}'
+
+        spatial_extent = f'Spatial Extent\n\nmin_x: {metadata["spatial_extent"]["xmin"]:,.2f}\nmax_x: {metadata["spatial_extent"]["xmax"]:,.2f}' \
+                         f'\nymin: {metadata["spatial_extent"]["ymin"]:,.2f}\nymax: {metadata["spatial_extent"]["ymax"]:,.2f}'
+
+        collection_description = f'{classification_system}\n{collection_type}\n{description}\n{period}' \
+                                 f'\n{resolution}\n{spatial_extent}'
+
+        return collection_description
+
+
 class Service:
     """
     Service class to map json dumps
@@ -143,12 +145,14 @@ class Service:
         self.name = name
         self.host = host
 
+
 class ServiceList:
     """
     Service list class to store like json file
     """
     def __init__(self, services):
         self.services = services
+
 
 class Services:
     """
@@ -182,9 +186,9 @@ class Services:
         Return the location of JSON with registered services
         """
         return (
-            Path(BASE_DIR)
+                Path(BASE_DIR)
                 / 'json-schemas'
-                    / ('services_storage_user_' + self.user + '.json')
+                / ('services_storage_user_' + self.user + '.json')
         )
 
     def testServiceConnection(self, host):
@@ -205,11 +209,11 @@ class Services:
         """
         Restart the list of services with default sevices available
         """
-        self.addService("Brazil Data Cube", "http://brazildatacube.dpi.inpe.br/wlts")
+        self.addService("Brazil Data Cube", "http://brazildatacube.dpi.inpe.br/dev/wlts")
         if not self.getServiceNames():
             to_save = json_loads(json.dumps(ServiceList([]).__dict__))
             with open(str(self.getPath()), 'w') as outfile:
-                    json.dump(to_save, outfile)
+                json.dump(to_save, outfile)
 
     def description(self, service_name, collection_name):
         host = self.findServiceByName(service_name).host
@@ -226,9 +230,9 @@ class Services:
         with self.getPath().open() as f:
             return json.loads(
                 f.read(),
-                object_hook = lambda d: SimpleNamespace(**d)
+                object_hook=lambda d: SimpleNamespace(**d)
             )
-        
+
     def getServiceNames(self):
         """
         Returns a list of registered service names
@@ -260,7 +264,6 @@ class Services:
             return [('Services', servers)]
         except (FileNotFoundError, FileExistsError):
             return [('Services', servers)]
-        
 
     def findServiceByName(self, service_name):
         """
