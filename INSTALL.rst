@@ -35,7 +35,8 @@ Go to the source code folder:
 
         $ cd wlts-qgis/wlts_qgis
 
-Install requirements pb_tool <https://pypi.org/project/pb-tool/> to deploy and publish QGIS Python plugin and pytest <https://pypi.org/project/pytest/> to run unit test with WLTS plugin.
+Install requirements `pb_tool <https://pypi.org/project/pb-tool/>`_ to deploy and publish QGIS Python plugin and `pytest <https://pypi.org/project/pytest/>`_ to run unit test with WLTS plugin.
+
 
 .. code-block:: shell
 
