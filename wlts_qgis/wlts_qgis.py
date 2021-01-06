@@ -257,7 +257,7 @@ class WltsQgis:
         except (ValueError, AttributeError) as error:
             self.basic_controls.alert(
                 "(ValueError, AttributeError)", str(error))
-                
+
 
     def editService(self):
         """Edit the selected service"""
@@ -322,7 +322,7 @@ class WltsQgis:
         self.server_controls.listCollections(
             str(self.dlg.service_selection.currentText())
         )
-        
+
         self.dlg.service_selection.activated.connect(self.initCheckBox)
 
     def initCheckBox(self):
@@ -368,8 +368,8 @@ class WltsQgis:
                                         self.selected_collections),
                                     start_date=self.start_date,
                                     end_date=self.end_date)
-        
-    
+
+
 
     def getDate(self):
         """Get the start and end dates of the trajectory"""
@@ -549,7 +549,7 @@ class WltsQgis:
         self.initCheckBox()
         self.initButtons()
         self.initHistory()
-        self.getDate()   
+        self.getDate()
         # show the dialog
         self.dlg.show()
         # Run the dialog event loop

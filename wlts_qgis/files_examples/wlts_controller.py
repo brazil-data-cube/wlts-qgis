@@ -102,7 +102,7 @@ class Controls:
             "Host: " + host + "\n" +
             "Active collections: " + collections + "\n"
         )
-    
+
     def getCollectionDescription(self, server_controls = None, service = "", collection = ""):
         """
         Get description from WLTS Server and format for show
@@ -205,9 +205,10 @@ class Services:
         """
         Restart the list of services with default sevices available
         """
-        self.addService("Brazil Data Cube", "http://brazildatacube.dpi.inpe.br/wlts")
+        self.addService("Brazil Data Cube", "http://brazildatacube.dpi.inpe.br/dev/wlts")
         if not self.getServiceNames():
             to_save = json_loads(json.dumps(ServiceList([]).__dict__))
+            print(to_save)
             with open(str(self.getPath()), 'w') as outfile:
                     json.dump(to_save, outfile)
 
@@ -228,7 +229,7 @@ class Services:
                 f.read(),
                 object_hook = lambda d: SimpleNamespace(**d)
             )
-        
+
     def getServiceNames(self):
         """
         Returns a list of registered service names
@@ -260,7 +261,7 @@ class Services:
             return [('Services', servers)]
         except (FileNotFoundError, FileExistsError):
             return [('Services', servers)]
-        
+
 
     def findServiceByName(self, service_name):
         """
