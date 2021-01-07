@@ -7,8 +7,9 @@
 #
 
 """Configuration file for the QGIS Plugin for Web Land Trajectory Service."""
-from wlts_qgis.files_examples import __version__
 import sphinx_rtd_theme
+
+from wlts_qgis.files_examples import __version__
 
 # -- Project information -----------------------------------------------------
 

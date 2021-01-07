@@ -22,33 +22,26 @@
  ***************************************************************************/
 """
 
-from qgis.core import QgsProject
-from qgis.gui import QgsMapToolEmitPoint
-
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-
-
-# Initialize Qt resources from file resources.py
-from .resources import *
-# Import the code for the dialog
-from .wlts_qgis_dialog import WltsQgisDialog
-import os.path
-
-import wlts
 import csv
 import json
+import os.path
+from datetime import date, datetime
 from json import loads as json_loads
 from pathlib import Path
-import pandas as pd
 
 import matplotlib.pyplot as plt
 import numpy as np
-
-from datetime import datetime, date
+import pandas as pd
+import wlts
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from qgis.core import QgsProject
+from qgis.gui import QgsMapToolEmitPoint
 
 from .files_examples.wlts_controller import Controls, Services
+from .resources import *
+from .wlts_qgis_dialog import WltsQgisDialog
 
 
 class WltsQgis:
@@ -258,7 +251,6 @@ class WltsQgis:
             self.basic_controls.alert(
                 "(ValueError, AttributeError)", str(error))
 
-
     def editService(self):
         """Edit the selected service"""
         self.dlg.service_name.setText(self.dlg.service_selection.currentText())
@@ -284,7 +276,7 @@ class WltsQgis:
         if not service_names:
             self.basic_controls.alert("502 Error", "The main services are not available!")
         self.dlg.service_selection.addItems(service_names)
-        self.dlg.service_selection.activated.connect(self.selecte_service)
+        self.dlg.service_selection.activated.connect(self.selected_service)
         self.data = self.server_controls.loadServices()
         self.model = QStandardItemModel()
         self.basic_controls.addItemsTreeView(self.model, self.data)
@@ -297,6 +289,7 @@ class WltsQgis:
         try:
             index = self.dlg.data.selectedIndexes()[0]
             self.metadata_selected = index.model().itemFromIndex(index)
+
             self.dlg.service_metadata.setText(
                 "{service_metadata}\n\n{collection_metadata}".format(
                     service_metadata=self.basic_controls.getDescription(
@@ -318,7 +311,7 @@ class WltsQgis:
                 "Select a collection!"
             )
 
-    def selecte_service(self):
+    def selected_service(self):
         self.server_controls.listCollections(
             str(self.dlg.service_selection.currentText())
         )
@@ -355,7 +348,6 @@ class WltsQgis:
         self.start_date = str(
             self.dlg.start_date.date().toString('yyyy-MM-dd'))
         self.end_date = str(self.dlg.end_date.date().toString('yyyy-MM-dd'))
-
 
     def getTrajectory(self):
         """Get the trajectory from the filters that were selected"""
@@ -449,9 +441,9 @@ class WltsQgis:
         Returns a default python code with blank WLTS parameters
         """
         template = (
-            Path(os.path.abspath(os.path.dirname(__file__)))
-            / 'files_examples'
-            / 'trajectory_export_template.py'
+                Path(os.path.abspath(os.path.dirname(__file__)))
+                / 'files_examples'
+                / 'trajectory_export_template.py'
         )
         return open(template, 'r').read()
 

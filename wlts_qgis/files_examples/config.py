@@ -13,7 +13,4 @@
 
 import os
 
-
-# Class to configure global variables used in source code
-
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
