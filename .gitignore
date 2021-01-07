@@ -131,4 +131,4 @@ dmypy.json
 # PyCharm
 .idea/
 
-*resources.py
+resources.py

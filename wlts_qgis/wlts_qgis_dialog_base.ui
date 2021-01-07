@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>745</width>
-    <height>545</height>
+    <width>741</width>
+    <height>539</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
     <enum>QTabWidget::Rounded</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="services_tab">
     <attribute name="title">
@@ -80,19 +80,6 @@
        </property>
       </widget>
      </widget>
-     <widget class="QPushButton" name="save_service">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>430</y>
-        <width>123</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Add</string>
-      </property>
-     </widget>
      <widget class="QGroupBox" name="host">
       <property name="geometry">
        <rect>
@@ -116,6 +103,19 @@
        </property>
       </widget>
      </widget>
+     <widget class="QPushButton" name="save_service">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>430</y>
+        <width>141</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QGroupBox" name="metadata">
      <property name="geometry">
@@ -129,7 +129,7 @@
      <property name="title">
       <string>SERVICES METADATA</string>
      </property>
-     <widget class="QLabel" name="service_metadata">
+     <widget class="QScrollArea" name="metadata_scroll">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -138,12 +138,19 @@
         <height>351</height>
        </rect>
       </property>
-      <property name="text">
-       <string/>
+      <property name="widgetResizable">
+       <bool>false</bool>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
+      <widget class="QWidget" name="metadata_content">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>289</width>
+         <height>149</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QGroupBox" name="active_service_options">
@@ -161,9 +168,9 @@
      <widget class="QPushButton" name="edit_service">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>10</x>
         <y>30</y>
-        <width>131</width>
+        <width>141</width>
         <height>25</height>
        </rect>
       </property>
@@ -176,7 +183,7 @@
        <rect>
         <x>170</x>
         <y>30</y>
-        <width>121</width>
+        <width>131</width>
         <height>25</height>
        </rect>
       </property>
@@ -196,7 +203,7 @@
        <x>480</x>
        <y>10</y>
        <width>251</width>
-       <height>291</height>
+       <height>311</height>
       </rect>
      </property>
      <property name="title">
@@ -208,7 +215,7 @@
         <x>10</x>
         <y>30</y>
         <width>231</width>
-        <height>251</height>
+        <height>271</height>
        </rect>
       </property>
      </widget>
@@ -217,9 +224,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>100</y>
+       <y>90</y>
        <width>451</width>
-       <height>361</height>
+       <height>381</height>
       </rect>
      </property>
      <property name="title">
@@ -231,7 +238,7 @@
         <x>10</x>
         <y>30</y>
         <width>431</width>
-        <height>171</height>
+        <height>231</height>
        </rect>
       </property>
       <property name="title">
@@ -243,7 +250,7 @@
          <x>0</x>
          <y>0</y>
          <width>431</width>
-         <height>171</height>
+         <height>231</height>
         </rect>
        </property>
        <property name="widgetResizable">
@@ -255,7 +262,7 @@
           <x>0</x>
           <y>0</y>
           <width>429</width>
-          <height>169</height>
+          <height>229</height>
          </rect>
         </property>
        </widget>
@@ -265,8 +272,8 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>210</y>
-        <width>431</width>
+        <y>270</y>
+        <width>211</width>
         <height>51</height>
        </rect>
       </property>
@@ -278,7 +285,7 @@
         <rect>
          <x>0</x>
          <y>20</y>
-         <width>431</width>
+         <width>211</width>
          <height>31</height>
         </rect>
        </property>
@@ -300,9 +307,9 @@
      <widget class="QGroupBox" name="end_date_group">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>240</x>
         <y>270</y>
-        <width>431</width>
+        <width>201</width>
         <height>51</height>
        </rect>
       </property>
@@ -314,7 +321,7 @@
         <rect>
          <x>0</x>
          <y>20</y>
-         <width>431</width>
+         <width>201</width>
          <height>31</height>
         </rect>
        </property>
@@ -353,7 +360,7 @@
        <x>10</x>
        <y>10</y>
        <width>451</width>
-       <height>91</height>
+       <height>71</height>
       </rect>
      </property>
      <property name="title">
@@ -363,7 +370,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>40</y>
+        <y>30</y>
         <width>431</width>
         <height>31</height>
        </rect>
@@ -373,33 +380,15 @@
     <widget class="QGroupBox" name="exporting_files">
      <property name="geometry">
       <rect>
-       <x>490</x>
-       <y>320</y>
-       <width>241</width>
+       <x>480</x>
+       <y>330</y>
+       <width>251</width>
        <height>61</height>
       </rect>
      </property>
      <property name="title">
       <string>Export data as</string>
      </property>
-     <widget class="QPushButton" name="export_as_csv">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>30</y>
-        <width>71</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>9</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>CSV</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="export_as_json">
       <property name="geometry">
        <rect>
@@ -418,13 +407,31 @@
        <string>JSON</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="export_as_csv">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>30</y>
+        <width>81</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>CSV</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QGroupBox" name="exporting_files_2">
      <property name="geometry">
       <rect>
-       <x>490</x>
+       <x>480</x>
        <y>400</y>
-       <width>241</width>
+       <width>251</width>
        <height>61</height>
       </rect>
      </property>
@@ -450,9 +457,9 @@
   <widget class="QDialogButtonBox" name="button_box">
    <property name="geometry">
     <rect>
-     <x>400</x>
+     <x>0</x>
      <y>510</y>
-     <width>341</width>
+     <width>741</width>
      <height>32</height>
     </rect>
    </property>
