@@ -15,13 +15,21 @@ Python QGIS Plugin for Web Land Trajectory Service
         :target: https://github.com//brazil-data-cube/wlts-qgis/blob/master/LICENSE
         :alt: Software License
 
-.. image:: https://img.shields.io/badge/lifecycle-experimental-orange.svg
-        :target: https://www.tidyverse.org/lifecycle/#experimental
-        :alt: Software Life Cycle
+.. .. image:: https://travis-ci.org/brazil-data-cube/wlts-qgis.svg?branch=master
+        :target: https://travis-ci.org/brazil-data-cube/wlts-qgis
+        :alt: Build Status
+
+.. .. image:: https://coveralls.io/repos/github/brazil-data-cube/wlts-qgis/badge.svg?branch=master
+        :target: https://coveralls.io/github/brazil-data-cube/wlts-qgis?branch=master
+        :alt: Code Coverage Test
 
 .. image:: https://readthedocs.org/projects/wlts-qgis/badge/?version=latest
         :target: https://wlts-qgis.readthedocs.io/en/latest/
         :alt: Documentation Status
+
+.. image:: https://img.shields.io/badge/lifecycle-experimental-orange.svg
+        :target: https://www.tidyverse.org/lifecycle/#experimental
+        :alt: Software Life Cycle
 
 .. image:: https://img.shields.io/github/tag/brazil-data-cube/wlts-qgis.svg
         :target: https://github.com/brazil-data-cube/wlts-qgis/releases
