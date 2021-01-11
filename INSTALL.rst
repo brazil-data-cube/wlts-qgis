@@ -33,17 +33,14 @@ Go to the source code folder:
 
 .. code-block:: shell
 
-        $ cd wlts-qgis/wlts_qgis
+        $ cd wlts-qgis
 
 Install requirements `pb_tool <https://pypi.org/project/pb-tool/>`_ to deploy and publish QGIS Python plugin and `pytest <https://pypi.org/project/pytest/>`_ to run unit test with WLTS plugin.
 
 
 .. code-block:: shell
 
-    pip install -r requirements.txt
-
-
-Run QGIS and open the Plugin Manager and enable the WLTS-QGIS.
+    pip install -e .[all]
 
 
 Linux
@@ -53,6 +50,7 @@ Use ``pb_tool`` to compile and deploy the plugin in Linux OS:
 
 .. code-block:: shell
 
+    $ cd wlts_qgis
     $ pb_tool deploy --plugin_path /home/${USER}/.local/share/QGIS/QGIS3/profiles/default/python/plugins
 
 
@@ -69,12 +67,17 @@ To deploy the plugin in Windows OS add Python and QGIS Python Scripts to the **P
 
 Now you can work from the command line.
 
-On prompt use ``pb_tool`` to compile and deploy WLTS-QGIS plugin:
+On prompt use ``pb_tool`` to compile and deploy WLTS-QGIS plugin in ``wlts-qgis`` directory:
 
 .. code-block:: text
 
    > pb_tool deploy --plugin_path C:\Users\user\AppData\Roaming\QGIS\QGIS{version}\profiles\default\python\plugins
 
+
+Enable WLTS-QGIS Plugin
++++++++++++++++++++++++
+
+Run QGIS and open the Plugin Manager and enable the WLTS-QGIS.
 
 .. note::
 
@@ -92,4 +95,4 @@ On prompt use ``pb_tool`` to compile and deploy WLTS-QGIS plugin:
 
         pip install --upgrade pip
 
-        pip install -r requirements.txt
+        pip install -e .[all]
