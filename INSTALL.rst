@@ -40,7 +40,7 @@ Install requirements `pb_tool <https://pypi.org/project/pb-tool/>`_ to deploy an
 
 .. code-block:: shell
 
-    pip install -e . [all]
+    pip install -e .[all]
 
 
 Linux
@@ -95,4 +95,4 @@ Run QGIS and open the Plugin Manager and enable the WLTS-QGIS.
 
         pip install --upgrade pip
 
-        pip install -e . [all]
+        pip install -e .[all]
