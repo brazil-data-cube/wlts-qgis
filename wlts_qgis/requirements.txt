@@ -4,6 +4,7 @@ numpy
 matplotlib
 pytest==6.0.1
 sphinx_rtd_theme
+Sphinx>=2.2
+sphinx-copybutton
 pandas>=1.1
 git+https://github.com/brazil-data-cube/wlts.py@v0.4.0-0
-

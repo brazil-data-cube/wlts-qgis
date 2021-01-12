@@ -44,8 +44,8 @@ class SafeTranslationsTest(unittest.TestCase):
         translator.load(file_path)
         QCoreApplication.installTranslator(translator)
 
-        expected_message = 'Goeie more'
-        real_message = QCoreApplication.translate("@default", 'Good morning')
+        expected_message = 'Good Morning'
+        real_message = QCoreApplication.translate("@default", 'Good Morning')
         self.assertEqual(real_message, expected_message)
 
 

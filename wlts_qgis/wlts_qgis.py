@@ -289,8 +289,9 @@ class WltsQgis:
         try:
             index = self.dlg.data.selectedIndexes()[0]
             self.metadata_selected = index.model().itemFromIndex(index)
-
-            self.dlg.service_metadata.setText(
+            widget = QWidget()
+            vbox = QVBoxLayout()
+            label = QLabel(
                 "{service_metadata}\n\n{collection_metadata}".format(
                     service_metadata=self.basic_controls.getDescription(
                         name=str(self.metadata_selected.parent().text()),
@@ -306,10 +307,22 @@ class WltsQgis:
                     )
                 )
             )
+            label.setWordWrap(True)
+            label.heightForWidth(180)
+            vbox.addWidget(label)
+            widget.setLayout(vbox)
+            self.dlg.metadata_scroll.setWidgetResizable(True)
+            self.dlg.metadata_scroll.setWidget(widget)
         except:
-            self.dlg.service_metadata.setText(
-                "Select a collection!"
-            )
+            widget = QWidget()
+            vbox = QVBoxLayout()
+            label = QLabel("Select a collection!")
+            label.setWordWrap(True)
+            label.heightForWidth(180)
+            vbox.addWidget(label)
+            widget.setLayout(vbox)
+            self.dlg.metadata_scroll.setWidgetResizable(True)
+            self.dlg.metadata_scroll.setWidget(widget)
 
     def selected_service(self):
         self.server_controls.listCollections(
@@ -355,11 +368,13 @@ class WltsQgis:
         if self.server_controls.testServiceConnection(service_host):
             client_wlts = wlts.WLTS(service_host)
             self.tj = client_wlts.tj(latitude=self.selected_location.get('lat'),
-                                     longitude=self.selected_location.get('long'),
-                                     collections=",".join(
-                                         self.selected_collections),
-                                     start_date=self.start_date,
-                                     end_date=self.end_date)
+                                    longitude=self.selected_location.get('long'),
+                                    collections=",".join(
+                                        self.selected_collections),
+                                    start_date=self.start_date,
+                                    end_date=self.end_date)
+
+
 
     def getDate(self):
         """Get the start and end dates of the trajectory"""
