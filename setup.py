@@ -45,7 +45,6 @@ setup_requires = [
 install_requires = [
     'wlts @ git+https://github.com/brazil-data-cube/wlts.py@v0.4.0-0',
     'pyproj>=2.5.0',
-    'pyqt5-tools>=5.15',
     'pb-tool>=3.0.0',
     'numpy>=1.19',
     'matplotlib>=3.3.3',
