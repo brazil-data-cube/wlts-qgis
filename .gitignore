@@ -131,4 +131,11 @@ dmypy.json
 # PyCharm
 .idea/
 
+# ignore the help build dir
+wlts_qgis/help/build
+wlts_qgis/help/_build
+wlts_qgis_plugin.egg-info/
+help/_build
+
 resources.py
+wlts_qgis/help/_build
