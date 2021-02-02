@@ -54,12 +54,12 @@ install_requires = [
 packages = find_packages()
 
 g = {}
-with open(os.path.join('wlts_qgis/files_examples', 'version.py'), 'rt') as fp:
+with open(os.path.join('wlts_plugin', 'version.py'), 'rt') as fp:
     exec(fp.read(), g)
     version = g['__version__']
 
 setup(
-    name='wlts_qgis',
+    name='wlts_plugin',
     version=version,
     description=__doc__,
     long_description=readme + '\n\n' + history,

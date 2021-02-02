@@ -9,7 +9,7 @@
 version: 2
 
 sphinx:
-    configuration: wlts_qgis/help/conf.py
+    configuration: wlts_plugin/help/conf.py
 
 formats: []
 

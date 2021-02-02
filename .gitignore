@@ -132,10 +132,10 @@ dmypy.json
 .idea/
 
 # ignore the help build dir
-wlts_qgis/help/build
-wlts_qgis/help/_build
-wlts_qgis_plugin.egg-info/
+wlts_plugin/help/build
+wlts_plugin/help/_build
+wlts_plugin_plugin.egg-info/
 help/_build
 
 resources.py
-wlts_qgis/help/_build
+wlts_plugin/help/_build

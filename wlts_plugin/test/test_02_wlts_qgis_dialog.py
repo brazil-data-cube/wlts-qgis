@@ -15,7 +15,7 @@ __copyright__ = 'Copyright 2020, INPE'
 import unittest
 
 from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox
-from wlts_qgis.wlts_qgis_dialog import WltsQgisDialog
+from wlts_plugin.wlts_qgis_dialog import WltsQgisDialog
 
 from .utilities import get_qgis_app
 
