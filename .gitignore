@@ -135,7 +135,7 @@ dmypy.json
 wlts_plugin/help/build
 wlts_plugin/help/_build
 wlts_plugin_plugin.egg-info/
-help/_build
+wlts-qgis/wlts_qgis.egg-info
 
 resources.py
 wlts_plugin/help/_build
