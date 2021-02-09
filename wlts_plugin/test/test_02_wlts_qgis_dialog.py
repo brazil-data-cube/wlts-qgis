@@ -15,7 +15,7 @@ __copyright__ = 'Copyright 2020, INPE'
 import unittest
 
 from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox
-from wlts_qgis.wlts_qgis_dialog import WltsQgisDialog
+from wlts_plugin.wlts_qgis_dialog import WltsQgisDialog
 
 from .utilities import get_qgis_app
 
@@ -32,20 +32,6 @@ class WltsQgisDialogTest(unittest.TestCase):
     def tearDown(self):
         """Runs after each test."""
         self.dialog = None
-
-    def test_dialog_ok(self):
-        """Test we can click OK."""
-        button = self.dialog.button_box.button(QDialogButtonBox.Ok)
-        button.click()
-        result = self.dialog.result()
-        self.assertEqual(result, QDialog.Accepted)
-
-    def test_dialog_cancel(self):
-        """Test we can click cancel."""
-        button = self.dialog.button_box.button(QDialogButtonBox.Cancel)
-        button.click()
-        result = self.dialog.result()
-        self.assertEqual(result, QDialog.Rejected)
 
 if __name__ == "__main__":
     suite = unittest.makeSuite(WltsQgisDialogTest)

@@ -50,7 +50,7 @@ Use ``pb_tool`` to compile and deploy the plugin in Linux OS:
 
 .. code-block:: shell
 
-    $ cd wlts_qgis
+    $ cd wlts_plugin
     $ pb_tool deploy --plugin_path /home/${USER}/.local/share/QGIS/QGIS3/profiles/default/python/plugins
 
 
