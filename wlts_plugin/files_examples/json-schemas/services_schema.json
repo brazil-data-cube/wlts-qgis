@@ -39,7 +39,7 @@
                     "title": "Service host",
                     "default": "",
                     "examples": [
-                        "http://brazildatacube.dpi.inpe.br/"
+                        "https://brazildatacube.dpi.inpe.br/"
                     ],
                     "pattern": "^(.*)$"
                 }
