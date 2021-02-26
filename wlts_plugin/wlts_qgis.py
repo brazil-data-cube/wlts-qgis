@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-/***************************************************************************
+/***************************************************************************.
+
  WltsQgis
                                  A QGIS plugin
  Web Land Trajectory Service
@@ -48,7 +49,7 @@ class WltsQgis:
     """QGIS Plugin Implementation."""
 
     def __init__(self, iface):
-        """Constructor.
+        """Construct.
 
         :param iface: An interface instance that will be passed to this class
             which provides the hook by which you can manipulate the QGIS
@@ -143,7 +144,6 @@ class WltsQgis:
             added to self.actions list.
         :rtype: QAction
         """
-
         icon = QIcon(icon_path)
         action = QAction(icon, text, parent)
         action.triggered.connect(callback)
@@ -170,7 +170,6 @@ class WltsQgis:
 
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
-
         icon_path = ':/plugins/wlts_plugin/icon.png'
         self.add_action(
             icon_path,
@@ -182,7 +181,7 @@ class WltsQgis:
         self.first_start = True
 
     def unload(self):
-        """Removes the plugin menu item and icon from QGIS GUI."""
+        """Remove the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
             self.iface.removePluginWebMenu(
                 self.tr(u'&WLTS'),
@@ -190,11 +189,12 @@ class WltsQgis:
             self.iface.removeToolBarIcon(action)
 
     def initControls(self):
+        """Init the basic controls to get."""
         self.basic_controls = Controls()
         self.server_controls = Services(user="application")
 
     def initButtons(self):
-        """Init the main buttons to manage services and the results"""
+        """Init the main buttons to manage services and the results."""
         self.dlg.save_service.clicked.connect(self.saveService)
         self.dlg.delete_service.clicked.connect(self.deleteService)
         self.dlg.edit_service.clicked.connect(self.editService)
@@ -204,7 +204,7 @@ class WltsQgis:
         self.dlg.search.clicked.connect(self.getSelected)
 
     def initHistory(self):
-        """Init and update location history"""
+        """Init and update location history."""
         self.dlg.history_list.clear()
         self.selected_location = None
         try:
@@ -217,18 +217,18 @@ class WltsQgis:
         self.addCanvasControlPoint()
 
     def getFromHistory(self, item):
-        """Select location from history storage as selected location"""
+        """Select location from history storage as selected location."""
         self.selected_location = self.locations.get(item.text(), {})
 
     def getLayers(self):
-        """Storage the layers in QGIS project"""
+        """Storage the layers in QGIS project."""
         self.layers = QgsProject.instance().layerTreeRoot().children()
         self.layer_names = [layer.name()
                             for layer in self.layers]  # Get all layer names
         self.layer = self.iface.activeLayer()  # QVectorLayer QRasterFile
 
     def saveService(self):
-        """Save the service based on name and host input"""
+        """Save the service based on name and host input."""
         name_to_save = str(self.dlg.service_name.text())
         host_to_save = str(self.dlg.service_host.text())
         try:
@@ -242,7 +242,7 @@ class WltsQgis:
                 "(ValueError, AttributeError)", str(error))
 
     def deleteService(self):
-        """Delete the selected active service"""
+        """Delete the selected active service."""
         host_to_delete = self.dlg.service_selection.currentText()
         try:
             self.server_controls.deleteService(host_to_delete)
@@ -252,7 +252,7 @@ class WltsQgis:
                 "(ValueError, AttributeError)", str(error))
 
     def editService(self):
-        """Edit the selected service"""
+        """Edit the selected service."""
         self.dlg.service_name.setText(self.dlg.service_selection.currentText())
         self.dlg.service_host.setText(
             self.server_controls.findServiceByName(
@@ -260,7 +260,7 @@ class WltsQgis:
         )
 
     def updateServicesList(self):
-        """Update the service list when occurs some change in JSON file"""
+        """Update the service list when occurs some change in JSON file."""
         self.data = self.server_controls.loadServices()
         self.model = QStandardItemModel()
         self.basic_controls.addItemsTreeView(self.model, self.data)
@@ -271,7 +271,7 @@ class WltsQgis:
         self.dlg.service_selection.activated.connect(self.initCheckBox)
 
     def initServices(self):
-        """Load the registered services based on JSON file"""
+        """Load the registered services based on JSON file."""
         service_names = self.server_controls.getServiceNames()
         if not service_names:
             self.basic_controls.alert("502 Error", "The main services are not available!")
@@ -286,6 +286,7 @@ class WltsQgis:
         self.updateDescription()
 
     def updateDescription(self):
+        """Update description."""
         try:
             index = self.dlg.data.selectedIndexes()[0]
             self.metadata_selected = index.model().itemFromIndex(index)
@@ -325,6 +326,7 @@ class WltsQgis:
             self.dlg.metadata_scroll.setWidget(widget)
 
     def selected_service(self):
+        """Select an service."""
         self.server_controls.listCollections(
             str(self.dlg.service_selection.currentText())
         )
@@ -332,7 +334,7 @@ class WltsQgis:
         self.dlg.service_selection.activated.connect(self.initCheckBox)
 
     def initCheckBox(self):
-        """Start the checkbox with the collections that are active in the service"""
+        """Start the checkbox with the collections that are active in the service."""
         self.widget = QWidget()
         self.vbox = QVBoxLayout()
 
@@ -350,7 +352,7 @@ class WltsQgis:
         self.dlg.bands_scroll.setWidget(self.widget)
 
     def getSelected(self):
-        """Get the collections that have been selected"""
+        """Get the collections that have been selected."""
         self.selected_collections = []
 
         for key in list(self.checks.keys()):
@@ -363,7 +365,7 @@ class WltsQgis:
         self.end_date = str(self.dlg.end_date.date().toString('yyyy-MM-dd'))
 
     def getTrajectory(self):
-        """Get the trajectory from the filters that were selected"""
+        """Get the trajectory from the filters that were selected."""
         service_host = self.server_controls.findServiceByName(self.dlg.service_selection.currentText()).host
         if self.server_controls.testServiceConnection(service_host):
             client_wlts = wlts.WLTS(service_host)
@@ -377,12 +379,12 @@ class WltsQgis:
 
 
     def getDate(self):
-        """Get the start and end dates of the trajectory"""
+        """Get the start and end dates of the trajectory."""
         self.dlg.start_date.setDate(QDate(1999, 1, 1))
         self.dlg.end_date.setDate(QDate(2020, 1, 1))
 
     def displayPoint(self, pointTool):
-        """Get the mouse possition and storage as selected location"""
+        """Get the mouse possition and storage as selected location."""
         try:
             self.selected_location = {
                 'lat': float(pointTool.y()),
@@ -410,7 +412,7 @@ class WltsQgis:
             pass
 
     def addCanvasControlPoint(self):
-        """Generate a canvas area to get mouse position"""
+        """Generate a canvas area to get mouse position."""
         self.canvas = self.iface.mapCanvas()
         self.point_tool = QgsMapToolEmitPoint(self.canvas)
         self.point_tool.canvasClicked.connect(self.displayPoint)
@@ -418,6 +420,7 @@ class WltsQgis:
         self.displayPoint(self.point_tool)
 
     def exportPython(self):
+        """Export as python code."""
         try:
             name = QFileDialog.getSaveFileName(
                 parent=self.dlg,
@@ -439,6 +442,7 @@ class WltsQgis:
             pass
 
     def generateCode(self, file_name, attributes):
+        """Generate python code to export."""
         try:
             file = self.defaultCode()
 
@@ -450,9 +454,7 @@ class WltsQgis:
             pass
 
     def defaultCode(self):
-        """
-        Returns a default python code with blank WLTS parameters
-        """
+        """Return a default python code with blank WLTS parameters."""
         template = (
                 Path(os.path.abspath(os.path.dirname(__file__)))
                 / 'files_examples'
@@ -461,7 +463,7 @@ class WltsQgis:
         return open(template, 'r').read()
 
     def exportCSV(self):
-        """Export to file system trajectory data in CSV"""
+        """Export to file system trajectory data in CSV."""
         try:
             name = QFileDialog.getSaveFileName(
                 parent=self.dlg,
@@ -477,7 +479,7 @@ class WltsQgis:
             self.basic_controls.alert("Error", "error")
 
     def generateCSV(self, file_name, trajectory):
-        """Creates the .csv file"""
+        """Create the .csv file."""
         try:
             df = trajectory.df()
             dict = {}
@@ -507,7 +509,7 @@ class WltsQgis:
             pass
 
     def exportJSON(self):
-        """Export to file system trajectory data in JSON"""
+        """Export to file system trajectory data in JSON."""
         try:
             name = QFileDialog.getSaveFileName(
                 parent=self.dlg,
@@ -524,7 +526,7 @@ class WltsQgis:
             self.basic_controls.alert("Error", "error")
 
     def plot(self):
-        """Creates a table with the trajectory"""
+        """Create a table with the trajectory."""
         try:
             plt.clf()
             plt.cla()
@@ -546,7 +548,7 @@ class WltsQgis:
             self.basic_controls.alert("Error", "Sem informações")
 
     def run(self):
-        """Run method that performs all the real work"""
+        """Run method that performs all the real work."""
         self.dlg = WltsQgisDialog()
         self.initControls()
         self.addCanvasControlPoint()
