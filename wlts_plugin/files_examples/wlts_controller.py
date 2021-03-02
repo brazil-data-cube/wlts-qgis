@@ -209,7 +209,7 @@ class Services:
         """
         Restart the list of services with default sevices available
         """
-        self.addService("Brazil Data Cube", "http://brazildatacube.dpi.inpe.br/dev/wlts")
+        self.addService("Brazil Data Cube", "https://brazildatacube.dpi.inpe.br/wlts")
         if not self.getServiceNames():
             to_save = json_loads(json.dumps(ServiceList([]).__dict__))
             with open(str(self.getPath()), 'w') as outfile:

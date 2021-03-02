@@ -15,11 +15,8 @@ __copyright__ = 'Copyright 2020, INPE'
 import unittest
 
 from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox
+
 from wlts_plugin.wlts_qgis_dialog import WltsQgisDialog
-
-from .utilities import get_qgis_app
-
-QGIS_APP = get_qgis_app()
 
 
 class WltsQgisDialogTest(unittest.TestCase):

@@ -128,12 +128,46 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# PyCharm
-.idea/
+# QGIS Compile
+.vscode/
+Backups/
+blob_storage/
+Cache/
+CachedData/
+CachedExtensions/
+Code Cache/
+GPUCache/
+logs/
+User/
+Cookies/
+Cookies-journal/
+languagepacks.json
+machineid
+Network Persistent State
+rapid_render.json
+storage.json
+*.zip
+
+# ignore swap files
+*swp
+plugin_template/*swp
+
+# ignore compiled python files
+*pyc
+plugin_template/*pyc
+.idea
+.coverage
+.noseids
+nohup.out
+wlts_plugin/resources.py
 
 # ignore the help build dir
 wlts_plugin/help/build
 wlts_plugin/help/_build
 wlts_plugin_plugin.egg-info/
 wlts_qgis.egg-info/
-resources.py
+help/_build
+
+# Drone integration
+core
+drone
