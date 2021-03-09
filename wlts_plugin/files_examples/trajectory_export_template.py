@@ -1,8 +1,8 @@
+"""WLTS Python Client Examples."""
+
+
 import matplotlib.pyplot as plt
 import numpy as np
-
-#
-"""WLTS Python Client Examples."""
 
 from wlts import WLTS
 
