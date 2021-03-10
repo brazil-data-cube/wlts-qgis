@@ -11,7 +11,7 @@ email                : brazildatacube@dpi.inpe.br
 
 This program is free software.
 
-Python for the Land Cover Classification System Database Model.
+Python QGIS Plugin for Web Land Trajectory Service.
 You can redistribute it and/or modify it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 Copyright (C) 2019-2021 INPE.
@@ -185,7 +185,7 @@ class Services:
     """
 
     def __init__(self, user):
-        """Build controls for WTSS Servers.
+        """Build controls for WLTS Servers.
 
         :param user<string>: users control to storage services in a JSON file
         """
