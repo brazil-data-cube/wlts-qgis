@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>WLTS</string>
+   <string>WLTS - Web Land Trajectory Service</string>
   </property>
   <widget class="QTabWidget" name="main_tabs">
    <property name="geometry">
@@ -29,7 +29,7 @@
     <enum>QTabWidget::Rounded</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="services_tab">
     <attribute name="title">
@@ -53,7 +53,7 @@
         <x>10</x>
         <y>30</y>
         <width>381</width>
-        <height>271</height>
+        <height>331</height>
        </rect>
       </property>
      </widget>
@@ -62,7 +62,7 @@
        <rect>
         <x>10</x>
         <y>370</y>
-        <width>381</width>
+        <width>151</width>
         <height>51</height>
        </rect>
       </property>
@@ -74,7 +74,7 @@
         <rect>
          <x>0</x>
          <y>20</y>
-         <width>381</width>
+         <width>151</width>
          <height>31</height>
         </rect>
        </property>
@@ -83,9 +83,9 @@
      <widget class="QGroupBox" name="host">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>310</y>
-        <width>381</width>
+        <x>180</x>
+        <y>370</y>
+        <width>211</width>
         <height>51</height>
        </rect>
       </property>
@@ -97,7 +97,7 @@
         <rect>
          <x>0</x>
          <y>20</y>
-         <width>381</width>
+         <width>211</width>
          <height>31</height>
         </rect>
        </property>
@@ -106,9 +106,9 @@
      <widget class="QPushButton" name="save_service">
       <property name="geometry">
        <rect>
-        <x>250</x>
+        <x>270</x>
         <y>430</y>
-        <width>141</width>
+        <width>121</width>
         <height>25</height>
        </rect>
       </property>
@@ -168,9 +168,9 @@
      <widget class="QPushButton" name="edit_service">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>20</x>
         <y>30</y>
-        <width>141</width>
+        <width>131</width>
         <height>25</height>
        </rect>
       </property>
@@ -193,9 +193,9 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QWidget" name="time_series_tab">
+   <widget class="QWidget" name="trajectory_tab">
     <attribute name="title">
-     <string>WLTS</string>
+     <string>Get Trajectory</string>
     </attribute>
     <widget class="QGroupBox" name="history">
      <property name="geometry">

@@ -1,9 +1,8 @@
-import matplotlib.pyplot as plt
-import numpy as np
-
-#
 """WLTS Python Client Examples."""
 
+
+import matplotlib.pyplot as plt
+import numpy as np
 from wlts import WLTS
 
 # Change to the WLTS URL you want to use.
