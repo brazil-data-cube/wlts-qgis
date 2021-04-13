@@ -10,11 +10,23 @@
 Changes
 =======
 
+Version 0.6.0 (2021-04-13)
+--------------------------
+
+- Support for the `WLTS specification version 0.6.0 <https://github.com/brazil-data-cube/wlts-spec>`_.
+
+- Adding unit tests to plugin source code.
+
+- Adding drone integration.
+
+- Improve documentation for installation and usage.
+
+
 Version 0.4.0-0 (2021-01-13)
 ----------------------------
 
 
-- Support for the `WLTS specification version 0.4.0-0 <https://github.com/brazil-data-cube/wlts-spec>`_.
+- Support for the `WLTS specification version 0.4.0-0 <https://github.com/brazil-data-cube/wlts-spec/tree/b-0.4>`_.
 
 - Documentation system based on Sphinx.
 
