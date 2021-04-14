@@ -53,7 +53,7 @@ setup_requires = [
 ]
 
 install_requires = [
-    'wlts @ git+https://github.com/brazil-data-cube/wlts.py@v0.4.0-0',
+    'wlts @ git+https://github.com/brazil-data-cube/wlts.py@v0.6.0-0',
     'pb-tool>=3.0.0',
     'numpy>=1.19',
     'matplotlib>=3.3.3',
