@@ -32,7 +32,7 @@ import wlts
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from qgis.core import QgsProject
+from qgis.core import QgsProject, QgsVectorLayer
 from qgis.gui import QgsMapToolEmitPoint
 
 from .files_examples.wlts_controller import Controls, Services
@@ -197,6 +197,7 @@ class WltsQgis:
         self.dlg.export_as_csv.clicked.connect(self.exportCSV)
         self.dlg.export_as_json.clicked.connect(self.exportJSON)
         self.dlg.search.clicked.connect(self.getSelected)
+        self.dlg.date_control_slider.setVisible(False)
 
     def initHistory(self):
         """Init and update location history."""
@@ -218,8 +219,7 @@ class WltsQgis:
     def getLayers(self):
         """Storage the layers in QGIS project."""
         self.layers = QgsProject.instance().layerTreeRoot().children()
-        self.layer_names = [layer.name()
-                            for layer in self.layers]  # Get all layer names
+        self.layer_names = [layer.name() for layer in self.layers]  # Get all layer names
         self.layer = self.iface.activeLayer()  # QVectorLayer QRasterFile
 
     def saveService(self):
@@ -251,7 +251,8 @@ class WltsQgis:
         self.dlg.service_name.setText(self.dlg.service_selection.currentText())
         self.dlg.service_host.setText(
             self.server_controls.findServiceByName(
-                self.dlg.service_selection.currentText()).host
+                self.dlg.service_selection.currentText()
+            ).host
         )
 
     def updateServicesList(self):
@@ -262,7 +263,8 @@ class WltsQgis:
         self.dlg.data.setModel(self.model)
         self.dlg.service_selection.clear()
         self.dlg.service_selection.addItems(
-            self.server_controls.getServiceNames())
+            self.server_controls.getServiceNames()
+        )
         self.dlg.service_selection.activated.connect(self.initCheckBox)
 
     def initServices(self):
@@ -349,14 +351,10 @@ class WltsQgis:
     def getSelected(self):
         """Get the collections that have been selected."""
         self.selected_collections = []
-
         for key in list(self.checks.keys()):
-
             if self.checks.get(key).isChecked():
                 self.selected_collections.append(key)
-
-        self.start_date = str(
-            self.dlg.start_date.date().toString('yyyy-MM-dd'))
+        self.start_date = str(self.dlg.start_date.date().toString('yyyy-MM-dd'))
         self.end_date = str(self.dlg.end_date.date().toString('yyyy-MM-dd'))
 
     def getTrajectory(self):
@@ -364,14 +362,60 @@ class WltsQgis:
         service_host = self.server_controls.findServiceByName(self.dlg.service_selection.currentText()).host
         if self.server_controls.testServiceConnection(service_host):
             client_wlts = wlts.WLTS(service_host)
-            self.tj = client_wlts.tj(latitude=self.selected_location.get('lat'),
-                                    longitude=self.selected_location.get('long'),
-                                    collections=",".join(
-                                        self.selected_collections),
-                                    start_date=self.start_date,
-                                    end_date=self.end_date)
+            self.tj = client_wlts.tj(
+                latitude=self.selected_location.get('lat'),
+                longitude=self.selected_location.get('long'),
+                geometry=self.dlg.geometries.isChecked(),
+                collections=",".join(
+                    self.selected_collections
+                ),
+                start_date=self.start_date,
+                end_date=self.end_date
+            )
 
+    def changeDateValue(self, value):
+        vector = self.geojson.get("features", [])[value]
+        date = vector.get("properties").get("date")
+        vlayer = QgsVectorLayer(
+            json.dumps(vector),
+            (f"Geojson_WLTS_response_{date}"),
+            "ogr"
+        )
+        self.dlg.date_control_slider.setTitle(
+            vector.get("properties").get("date") + ", " +
+            vector.get("properties").get("collection") + ", " +
+            vector.get("properties").get("class")
+        )
+        self.layers = QgsProject.instance().layerTreeRoot().children()
+        for layer in self.layers:
+            if "Geojson_WLTS_response_" in layer.name():
+                QgsProject.instance().removeMapLayer(layer.layerId())
+        QgsProject.instance().addMapLayer(vlayer)
 
+    def getGeometries(self):
+        """Get geometries from WLTS to add map layer on QGIS"""
+        if self.dlg.geometries.isChecked():
+            result = self.tj.get('result', []).get('trajectory', [])
+            self.geojson = {
+                "type": "FeatureCollection",
+                "features": []
+            }
+            dates = []
+            for trajectory in result:
+                dates.append(trajectory.get('date', "no-data"))
+                self.geojson["features"].append({
+                    "type": "Feature",
+                    "geometry": trajectory.get('geom', {}),
+                    "properties": {
+                        "class": trajectory.get('class', "no-data"),
+                        "collection": trajectory.get('collection', "no-data"),
+                        "date": trajectory.get('date', "no-data")
+                    }
+                })
+            self.changeDateValue(0)
+            self.dlg.date_control_slider.setVisible(True)
+            self.dlg.date_slider.setMaximum(len(dates) - 1)
+            self.dlg.date_slider.valueChanged[int].connect(self.changeDateValue)
 
     def getDate(self):
         """Get the start and end dates of the trajectory."""
@@ -385,7 +429,6 @@ class WltsQgis:
                 'lat': float(pointTool.y()),
                 'long': float(pointTool.x())
             }
-
             history_key = str(
                 (
                     "({lat:,.2f},{long:,.2f})"
@@ -394,15 +437,13 @@ class WltsQgis:
                     long=self.selected_location.get('long')
                 )
             )
-
             self.locations[history_key] = self.selected_location
             self.dlg.history_list.clear()
             self.dlg.history_list.addItems(list(self.locations.keys()))
             self.dlg.history_list.itemActivated.connect(self.getFromHistory)
-
             self.getTrajectory()
+            self.getGeometries()
             self.plot()
-
         except AttributeError:
             pass
 
@@ -425,7 +466,6 @@ class WltsQgis:
                 ),
                 filter='*.py'
             )
-
             attributes = {
                 'service_host': self.service._url,
                 'latitude': self.selected_location['lat'],
@@ -440,7 +480,6 @@ class WltsQgis:
         """Generate python code to export."""
         try:
             file = self.defaultCode()
-
             code_to_save = file.format(**attributes)
             file_to_save = open(file_name, "w")
             file_to_save.write(code_to_save)
@@ -452,8 +491,8 @@ class WltsQgis:
         """Return a default python code with blank WLTS parameters."""
         template = (
                 Path(os.path.abspath(os.path.dirname(__file__)))
-                / 'files_examples'
-                / 'trajectory_export_template.py'
+                    / 'files_examples'
+                        / 'trajectory_export_template.py'
         )
         return open(template, 'r').read()
 
@@ -526,16 +565,18 @@ class WltsQgis:
             plt.clf()
             plt.cla()
             plt.close()
-
             fig = plt.figure(figsize=(8, 5))
-
-            df_trajectory = self.tj.df()
+            df_trajectory = self.tj.df().drop(columns="geom")
             ax2 = fig.add_subplot()
             font_size = 18
             bbox = [0, 0, 1, 1]
             ax2.axis('off')
-            mpl_table = ax2.table(cellText=df_trajectory.values,
-                                  rowLabels=df_trajectory.index, bbox=bbox, colLabels=df_trajectory.columns)
+            mpl_table = ax2.table(
+                cellText=df_trajectory.values,
+                rowLabels=df_trajectory.index,
+                bbox=bbox,
+                colLabels=df_trajectory.columns
+            )
             mpl_table.auto_set_font_size(True)
             mpl_table.set_fontsize(font_size)
             plt.show()

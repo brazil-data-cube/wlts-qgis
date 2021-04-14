@@ -6,20 +6,23 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>741</width>
-    <height>539</height>
+    <width>740</width>
+    <height>639</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>WLTS - Web Land Trajectory Service</string>
   </property>
   <widget class="QTabWidget" name="main_tabs">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>741</width>
-     <height>511</height>
+     <height>501</height>
     </rect>
    </property>
    <property name="tabPosition">
@@ -57,7 +60,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QGroupBox" name="groupBox">
+     <widget class="QGroupBox" name="service_group">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -226,7 +229,7 @@
        <x>10</x>
        <y>90</y>
        <width>451</width>
-       <height>381</height>
+       <height>371</height>
       </rect>
      </property>
      <property name="title">
@@ -353,6 +356,19 @@
        <string>SEARCH</string>
       </property>
      </widget>
+     <widget class="QCheckBox" name="geometries">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>330</y>
+        <width>331</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Get geometries</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QGroupBox" name="services_group">
      <property name="geometry">
@@ -457,9 +473,9 @@
   <widget class="QDialogButtonBox" name="button_box">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>510</y>
-     <width>741</width>
+     <x>10</x>
+     <y>600</y>
+     <width>721</width>
      <height>32</height>
     </rect>
    </property>
@@ -469,6 +485,54 @@
    <property name="standardButtons">
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
+  </widget>
+  <widget class="QGroupBox" name="date_slider_group">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>510</y>
+     <width>711</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Date Slider</string>
+   </property>
+   <widget class="QGroupBox" name="date_control_slider">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>691</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>0</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <widget class="QSlider" name="date_slider">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>20</y>
+       <width>691</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>
