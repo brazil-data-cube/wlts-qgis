@@ -72,15 +72,15 @@ For more information on WLTS, see:
 
 The following image presents an overview of the plugin:
 
-.. image:: https://github.com/brazil-data-cube/wlts-qgis/raw/master/docs/img/wlts-qgis.png
-        :target: https://github.com/brazil-data-cube/wlts-qgis/tree/master/docs/img
+.. image:: https://github.com/brazil-data-cube/wlts-qgis/raw/master/help/source/img/wlts-qgis.png
+        :target: https://github.com/brazil-data-cube/wlts-qgis/tree/master/wlts_plugin/help/source/img/
         :width: 70%
         :alt: WLTS-QGIS
 
 Installation
 ============
 
-See `INSTALL.rst <https://github.com/brazil-data-cube/wlts-qgis/tree/master/docs/INSTALL.rst>`_.
+See `INSTALL.rst <https://github.com/brazil-data-cube/wlts-qgis/tree/master/help/source/install.rst>`_.
 
 
 Documentation

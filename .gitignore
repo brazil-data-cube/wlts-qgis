@@ -162,12 +162,14 @@ nohup.out
 wlts_plugin/resources.py
 
 # ignore the help build dir
-wlts_plugin/help/build
-wlts_plugin/help/_build
-wlts_plugin_plugin.egg-info/
-wlts_qgis.egg-info/
+help/build
 help/_build
+help/_build
+wlts_plugin_plugin.egg-info/
 
 # Drone integration
 core
 drone
+
+# ignore services storage
+services_storage_user_application.json

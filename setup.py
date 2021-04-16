@@ -24,7 +24,7 @@ from setuptools import find_packages, setup
 
 readme = open('README.rst').read()
 
-history = open('docs/CHANGES.rst').read()
+history = open('help/source/changes.rst').read()
 
 docs_require = [
     'Sphinx>=2.2',
@@ -53,7 +53,7 @@ setup_requires = [
 ]
 
 install_requires = [
-    'wlts @ git+https://github.com/brazil-data-cube/wlts.py@v0.6.0-0',
+    'wlts @ git+https://github.com/brazil-data-cube/wlts.py@b-0.6',
     'pb-tool>=3.0.0',
     'numpy>=1.19',
     'matplotlib>=3.3.3',
