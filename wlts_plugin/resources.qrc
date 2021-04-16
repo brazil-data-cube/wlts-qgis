@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/plugins/wlts_plugin" >
-        <file>icon.png</file>
+        <file>controller/assets/img/icon.png</file>
     </qresource>
 </RCC>

@@ -18,4 +18,4 @@ Copyright (C) 2019-2021 INPE.
 """
 
 
-__version__ = '0.4.0-0'
+__version__ = '0.6.0'
