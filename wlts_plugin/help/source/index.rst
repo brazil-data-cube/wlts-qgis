@@ -6,7 +6,7 @@
     under the terms of the MIT License; see LICENSE file for more details.
 
 
-.. include:: ../../../README.rst
+.. include:: ../../README.rst
    :end-before: About
 
 
@@ -20,9 +20,9 @@
     :maxdepth: 2
     :caption: Documentation:
 
-    installation
+    install
     usage
-    history
+    changes
 
 
 
