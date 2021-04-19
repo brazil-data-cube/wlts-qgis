@@ -213,7 +213,7 @@ class WltsQgis:
         self.dlg.export_as_python.clicked.connect(self.exportPython)
         self.dlg.export_as_csv.clicked.connect(self.exportCSV)
         self.dlg.export_as_json.clicked.connect(self.exportJSON)
-        self.dlg.search.clicked.connect(self.getSelected)
+        self.dlg.search.clicked.connect(self.enableGetLatLng)
         self.dlg.date_control_slider.setVisible(False)
 
     def initHistory(self):
@@ -342,12 +342,12 @@ class WltsQgis:
 
     def getTrajectory(self):
         """Get the trajectory from the filters that were selected."""
-        service_host = self.server_controls.findServiceByName(self.dlg.service_selection.currentText()).host
-        if self.server_controls.testServiceConnection(service_host):
-            client_wlts = wlts.WLTS(service_host)
+        self.selected_service = self.server_controls.findServiceByName(self.dlg.service_selection.currentText()).host
+        if self.server_controls.testServiceConnection(self.selected_service):
+            client_wlts = wlts.WLTS(self.selected_service)
             self.tj = client_wlts.tj(
-                latitude=self.selected_location.get('lat'),
-                longitude=self.selected_location.get('long'),
+                latitude=self.transformSelectedLocation().get('lat', 0),
+                longitude=self.transformSelectedLocation().get('long', 0),
                 geometry=self.dlg.geometries.isChecked(),
                 collections=",".join(
                     self.selected_collections
@@ -378,6 +378,7 @@ class WltsQgis:
 
     def getGeometries(self):
         """Get geometries from WLTS to add map layer on QGIS."""
+        self.dlg.date_control_slider.setVisible(False)
         if self.dlg.geometries.isChecked():
             result = self.tj.get('result', []).get('trajectory', [])
             self.geojson = {
@@ -407,18 +408,20 @@ class WltsQgis:
             name = QFileDialog.getSaveFileName(
                 parent=self.dlg,
                 caption='Save as python code',
-                directory=('{collection}.py').format(
-                    collection=str(self.selected_collections),
+                directory=('wlts.{collection}.py').format(
+                    collection=str(".".join(self.selected_collections))
                 ),
                 filter='*.py'
             )
             attributes = {
-                'service_host': self.service._url,
-                'latitude': self.selected_location['lat'],
-                'longitude': self.selected_location['long'],
-                'collections': ",".join(self.selected_collections)
+                'host': self.selected_service,
+                'lat': self.selected_location['lat'],
+                'long': self.selected_location['long'],
+                'collections': ",".join(self.selected_collections),
+                'start': self.start_date,
+                'end': self.end_date
             }
-            self.files_export.generateCode(name[0], attributes)
+            self.files_controls.generateCode(name[0], attributes)
         except AttributeError as error:
             self.basic_controls.alert("warning", "AttributeError", str(error))
 
@@ -428,13 +431,13 @@ class WltsQgis:
             name = QFileDialog.getSaveFileName(
                 parent=self.dlg,
                 caption='Save as CSV',
-                directory=('{collections}.csv').format(
-                    collections=str(self.selected_collections),
+                directory=('wlts.{collection}.csv').format(
+                    collection=str(".".join(self.selected_collections))
                 ),
                 filter='*.csv'
             )
             trajectory = self.tj
-            self.files_export.generateCSV(name[0], trajectory)
+            self.files_controls.generateCSV(name[0], trajectory)
         except AttributeError as error:
             self.basic_controls.alert("warning", "AttributeError", str(error))
 
@@ -444,14 +447,18 @@ class WltsQgis:
             name = QFileDialog.getSaveFileName(
                 parent=self.dlg,
                 caption='Save as JSON',
-                directory=('{collection}.json').format(
-                    collection=str(self.selected_collections),
+                directory=('wlts.{collection}.json').format(
+                    collection=str(".".join(self.selected_collections))
                 ),
                 filter='*.json'
             )
-            self.files_export.generateJSON(name[0], self.tj)
+            self.files_controls.generateJSON(name[0], self.tj)
         except AttributeError as error:
             self.basic_controls.alert("warning", "AttributeError", str(error))
+
+    def plotTrajectory(self):
+        """Plot trajectory with files controls."""
+        self.files_controls.generatePlotFig(self.tj)
 
     def displayPoint(self, pointTool):
         """Get the mouse possition and storage as selected location."""
@@ -472,19 +479,40 @@ class WltsQgis:
             self.dlg.history_list.clear()
             self.dlg.history_list.addItems(list(self.locations.keys()))
             self.dlg.history_list.itemActivated.connect(self.getFromHistory)
+            self.getSelected()
             self.getTrajectory()
             self.getGeometries()
-            self.files_export.generatePlotFig(self.tj)
+            self.plotTrajectory()
         except AttributeError:
             pass
 
-    def addCanvasControlPoint(self):
+    def addCanvasControlPoint(self, enable):
         """Generate a canvas area to get mouse position."""
-        self.canvas = self.iface.mapCanvas()
-        self.point_tool = QgsMapToolEmitPoint(self.canvas)
-        self.point_tool.canvasClicked.connect(self.displayPoint)
-        self.canvas.setMapTool(self.point_tool)
+        self.enabled_click = False
+        self.point_tool = None
         self.displayPoint(self.point_tool)
+        if enable:
+            self.canvas = self.iface.mapCanvas()
+            self.point_tool = QgsMapToolEmitPoint(self.canvas)
+            self.point_tool.canvasClicked.connect(self.displayPoint)
+            self.canvas.setMapTool(self.point_tool)
+            self.displayPoint(self.point_tool)
+            self.enabled_click = True
+
+    def transformSelectedLocation(self):
+        """Use basic controls to transform any selected projection to EPSG:4326."""
+        transformed = self.selected_location
+        if self.selected_location.get("crs"):
+            transformed = self.basic_controls.transformProjection(
+                self.selected_location.get("crs"),
+                self.selected_location.get("lat"),
+                self.selected_location.get("long")
+            )
+        return transformed
+
+    def enableGetLatLng(self):
+        """Enable get lat lng to search trajectory data."""
+        self.addCanvasControlPoint(True)
 
     def updateDescription(self):
         """Update description."""
@@ -530,9 +558,8 @@ class WltsQgis:
         """Run method that performs all the real work."""
         self.dlg = WltsQgisDialog()
         self.initControls()
-        self.addCanvasControlPoint()
+        self.addCanvasControlPoint(True)
         self.initServices()
-        self.initCheckBox()
         self.initButtons()
         self.initHistory()
         self.getDate()
