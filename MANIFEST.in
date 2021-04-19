@@ -12,7 +12,13 @@ recursive-include wlts_plugin *.dbf
 recursive-include wlts_plugin *.prj
 recursive-include wlts_plugin *.shp
 recursive-include wlts_plugin *.shx
-recursive-include docs *.png
+recursive-include help *.bat
+recursive-include help *.css
+recursive-include help *.ico
+recursive-include help *.png
+recursive-include help *.py
+recursive-include help *.rst
+recursive-include help Makefile
 recursive-include wlts_plugin *.bat
 recursive-include wlts_plugin *.cfg
 recursive-include wlts_plugin *.css
