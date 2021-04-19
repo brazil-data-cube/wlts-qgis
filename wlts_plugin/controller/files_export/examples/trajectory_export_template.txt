@@ -9,6 +9,6 @@ from wlts import WLTS
 service = WLTS('{service_host}')
 
 # Example of trajectory operation
-tj = service.tj(latitude={latitude}, longitude={longitude}, collections='{collections}')
+tj = service.tj(latitude={latitude}, longitude={longitude}, collections='{collections}', start_date='{start_date}', end_date='{end_date}')
 
 print(tj.trajectory)

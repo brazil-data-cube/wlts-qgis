@@ -24,6 +24,7 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 
 class FilesExport:
@@ -65,19 +66,16 @@ class FilesExport:
         }
         """
         try:
-            collections_string = "("
-            for band in attributes.get("collections"):
-                collections_string = collections_string + "'" + str(band) + "', "
-            collections_string = collections_string[:len(collections_string)-2] + ")"
-            lat = "{:,.2f}".format(attributes.get("coordinates").get("lat"))
-            lon = "{:,.2f}".format(attributes.get("coordinates").get("long"))
+            collections_string = attributes.get("collections")
+            lat = "{:,.2f}".format(attributes.get("lat"))
+            lon = "{:,.2f}".format(attributes.get("long"))
             mapping = {
                 "service_host": attributes.get("host"),
                 "collections": collections_string,
                 "latitude": lat,
                 "longitude": lon,
-                "start_date": attributes.get("time_interval").get("start"),
-                "end_date": attributes.get("time_interval").get("end")
+                "start_date": attributes.get("start"),
+                "end_date": attributes.get("end")
             }
             code_to_save = self.defaultCode().format(**mapping)
             file = open(file_name, "w")
@@ -95,8 +93,10 @@ class FilesExport:
         try:
             df = trajectory.df()
             dict = {}
-            latlng = [self.selected_location.get(
-                'lat'), self.selected_location.get('long')]
+            latlng = [
+                trajectory.get('query').get('latitude'),
+                trajectory.get('query').get('longitude')
+            ]
             for key in list(df.keys()):
                 line = []
                 for i in range(len(df[key])):
