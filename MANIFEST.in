@@ -12,6 +12,7 @@ recursive-include wlts_plugin *.dbf
 recursive-include wlts_plugin *.prj
 recursive-include wlts_plugin *.shp
 recursive-include wlts_plugin *.shx
+recursive-include wlts_plugin *.csv
 recursive-include help *.bat
 recursive-include help *.css
 recursive-include help *.ico

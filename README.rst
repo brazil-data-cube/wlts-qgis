@@ -80,7 +80,7 @@ The following image presents an overview of the plugin:
 Installation
 ============
 
-See `INSTALL.rst <https://github.com/brazil-data-cube/wlts-qgis/tree/master/help/source/install.rst>`_.
+See `INSTALL.rst <https://github.com/brazil-data-cube/wlts-qgis/tree/master/wlts_plugin/help/source/install.rst>`_.
 
 
 Documentation

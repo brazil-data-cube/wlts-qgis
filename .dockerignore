@@ -18,6 +18,7 @@ lib/
 lib64/
 parts/
 sdist/
+help/
 var/
 wheels/
 pip-wheel-metadata/
@@ -164,7 +165,7 @@ wlts_plugin/resources.py
 # ignore the help build dir
 help/build
 help/_build
-wlts_plugin/help/_build
+help/_build
 wlts_plugin_plugin.egg-info/
 
 # Drone integration

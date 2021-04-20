@@ -16,9 +16,15 @@ Version 0.6.0 (2021-04-13)
 
 - Adding unit tests to plugin source code.
 
-- Add Drone integration (#31 <https://github.com/brazil-data-cube/wlts/issues/31>_)
+- Adding Drone integration (`#49 <https://github.com/brazil-data-cube/wlts-qgis/issues/49>`_).
 
-- Improve documentation for installation and usage.
+- Adding support for layer projections (`#62 <https://github.com/brazil-data-cube/wlts-qgis/issues/62>`_).
+
+- Adding support for get geometries from WLTS (`#56 <https://github.com/brazil-data-cube/wlts-qgis/issues/56>`_).
+
+- Improve the handling of http errors (`#55 <https://github.com/brazil-data-cube/wlts-qgis/issues/55>`_).
+
+- Improve documentation for installation and usage (`#51 <https://github.com/brazil-data-cube/wlts-qgis/issues/51>`_).
 
 
 Version 0.4.0-0 (2021-01-13)
