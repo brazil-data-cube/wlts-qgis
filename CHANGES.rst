@@ -1,12 +1,11 @@
 ..
     This file is part of Python QGIS Plugin for Web Land Trajectory Service.
-    Copyright (C) 2019-2020 INPE.
+    Copyright (C) 2019-2021 INPE.
 
     Python QGIS Plugin for Web Land Trajectory Service. is free software; you can redistribute it and/or modify it
     under the terms of the MIT License; see LICENSE file for more details.
 
 
-=======
 Changes
 =======
 
@@ -17,7 +16,7 @@ Version 0.6.0 (2021-04-13)
 
 - Adding unit tests to plugin source code.
 
-- Adding drone integration.
+- Add Drone integration (#31 <https://github.com/brazil-data-cube/wlts/issues/31>_)
 
 - Improve documentation for installation and usage.
 
