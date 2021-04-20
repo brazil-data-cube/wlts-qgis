@@ -163,9 +163,9 @@ nohup.out
 wlts_plugin/resources.py
 
 # ignore the help build dir
-help/build
-help/_build
-help/_build
+wlts_plugin/help/build
+wlts_plugin/help/_build
+wlts_plugin/help/_build
 wlts_plugin_plugin.egg-info/
 
 # Drone integration
