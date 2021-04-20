@@ -1,0 +1,177 @@
+{
+    "query": {
+        "collections": [
+            "terraclass_amazonia",
+            "deter_amazonia_legal"
+        ],
+        "end_date": "2021-01-01",
+        "geometry": "False",
+        "latitude": -6.374958098337555,
+        "longitude": -57.1298117201916,
+        "start_date": "1999-01-01"
+    },
+    "result": {
+        "trajectory": [
+            {
+                "class": "Floresta",
+                "collection": "terraclass_amazonia",
+                "date": "2004",
+                "geom": {
+                    "coordinates": [
+                        [
+                            [
+                                -57.25,
+                                -6.4403
+                            ],
+                            [
+                                -57.25,
+                                -6.25
+                            ],
+                            [
+                                -57.0,
+                                -6.25
+                            ],
+                            [
+                                -57.0,
+                                -6.4769
+                            ],
+                            [
+                                -57.25,
+                                -6.4403
+                            ]
+                        ]
+                    ],
+                    "type": "Polygon"
+                }
+            },
+            {
+                "class": "Floresta",
+                "collection": "terraclass_amazonia",
+                "date": "2008",
+                "geom": {
+                    "coordinates": [
+                        [
+                            [
+                                -57.25,
+                                -6.4403
+                            ],
+                            [
+                                -57.25,
+                                -6.25
+                            ],
+                            [
+                                -57.0,
+                                -6.25
+                            ],
+                            [
+                                -57.0,
+                                -6.4769
+                            ],
+                            [
+                                -57.25,
+                                -6.4403
+                            ]
+                        ]
+                    ],
+                    "type": "Polygon"
+                }
+            },
+            {
+                "class": "Floresta",
+                "collection": "terraclass_amazonia",
+                "date": "2010",
+                "geom": {
+                    "coordinates": [
+                        [
+                            [
+                                -57.25,
+                                -6.4403
+                            ],
+                            [
+                                -57.25,
+                                -6.25
+                            ],
+                            [
+                                -57.0,
+                                -6.25
+                            ],
+                            [
+                                -57.0,
+                                -6.4769
+                            ],
+                            [
+                                -57.25,
+                                -6.4403
+                            ]
+                        ]
+                    ],
+                    "type": "Polygon"
+                }
+            },
+            {
+                "class": "Floresta",
+                "collection": "terraclass_amazonia",
+                "date": "2012",
+                "geom": {
+                    "coordinates": [
+                        [
+                            [
+                                -57.25,
+                                -6.4403
+                            ],
+                            [
+                                -57.25,
+                                -6.25
+                            ],
+                            [
+                                -57.0,
+                                -6.25
+                            ],
+                            [
+                                -57.0,
+                                -6.4769
+                            ],
+                            [
+                                -57.25,
+                                -6.4403
+                            ]
+                        ]
+                    ],
+                    "type": "Polygon"
+                }
+            },
+            {
+                "class": "Floresta",
+                "collection": "terraclass_amazonia",
+                "date": "2014",
+                "geom": {
+                    "coordinates": [
+                        [
+                            [
+                                -57.25,
+                                -6.4403
+                            ],
+                            [
+                                -57.25,
+                                -6.25
+                            ],
+                            [
+                                -57.0,
+                                -6.25
+                            ],
+                            [
+                                -57.0,
+                                -6.4769
+                            ],
+                            [
+                                -57.25,
+                                -6.4403
+                            ]
+                        ]
+                    ],
+                    "type": "Polygon"
+                }
+            }
+        ]
+    }
+}

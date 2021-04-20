@@ -1,11 +1,11 @@
 ..
     This file is part of Python QGIS Plugin for Web Land Trajectory Service.
-    Copyright (C) 2020 INPE.
+    Copyright (C) 2021 INPE.
 
     Python QGIS Plugin for Web Land Trajectory Service. is free software; you can redistribute it and/or modify it
     under the terms of the MIT License; see LICENSE file for more details.
 
-
+=====
 Usage
 =====
 
@@ -14,13 +14,13 @@ Enable WLTS-QGIS Plugin
 
 Open QGIS Desktop and add a vector layer as the figure below:
 
-.. image:: ./img/step-one.png
+.. image:: ./assets/screenshots/step-one.png
     :width: 100%
     :alt: QGIS Desktop
 
 Go to ``Plugins`` tab in ``Management Plugins`` option to verify if WLTS-QGIS is enable. You will find the follow information such a figure below:
 
-.. image:: ./img/step-two.png
+.. image:: ./assets/screenshots/step-two.png
     :width: 100%
     :alt: Enable WLTS-PLUGIN
 
@@ -29,7 +29,7 @@ Run WLTS-QGIS Plugin
 
 You can open the WLTS-QGIS Plugin in ``Web`` tab. The following screen will appear:
 
-.. image:: ./img/step-three.png
+.. image:: ./assets/screenshots/step-three.png
     :width: 100%
     :alt: WLTS-PLUGIN
 
@@ -37,6 +37,6 @@ You must select a ``WLTS service`` that you want to use. And choose the ``collec
 
 After that, a ``land use and cover trajectory`` will be displayed in new screen, such a figure:
 
-.. image:: ./img/step-four.png
+.. image:: ./assets/screenshots/step-four.png
     :width: 100%
     :alt: WLTS-PLUGIN

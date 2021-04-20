@@ -1,6 +1,6 @@
 #
 # This file is part of Python QGIS Plugin for Web Land Trajectory Service.
-# Copyright (C) 2019-2020 INPE.
+# Copyright (C) 2019-2021 INPE.
 #
 # Python QGIS Plugin for Web Land Trajectory Service is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -14,7 +14,7 @@ from wlts_plugin.version import __version__
 # -- Project information -----------------------------------------------------
 
 project = 'WLTS-QGIS'
-copyright = '2020, INPE.'
+copyright = '2021, INPE.'
 author = 'Brazil Data Cube Team'
 
 # The full version, including alpha/beta/rc tags.
@@ -79,9 +79,9 @@ html_context = {
 
 html_show_sourcelink = False
 
-html_logo = './img/logo-bdc.png'
+html_logo = './assets/img/logo-bdc.png'
 
-html_favicon = './img/favicon.ico'
+html_favicon = './assets/img/favicon.ico'
 
 html_static_path = [
     '_static',
