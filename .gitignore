@@ -165,7 +165,6 @@ wlts_plugin/resources.py
 # ignore the help build dir
 wlts_plugin/help/build
 wlts_plugin/help/_build
-wlts_plugin/help/_build
 wlts_plugin_plugin.egg-info/
 
 # Drone integration
