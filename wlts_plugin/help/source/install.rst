@@ -108,12 +108,17 @@ Docker Environment Installation
 
 If is the case of some conflicts or problems on installation with any dependency for plugin, we suggest the docker installation using `Dockerfile`.
 
-Clone the repo with `Dockerfile` and build the docker image with the following command:
+Clone the repository with `Dockerfile` and build the docker image with the following command:
 
 .. code-block:: text
 
     docker build -t wlts_qgis:latest .
 
+Create a directory on your user home.
+
+.. code-block:: text
+
+    mkdir /home/${USER}/geodata/
 
 Enable the host to display connection:
 
@@ -128,9 +133,10 @@ Run a container with the built image.
     docker run --rm -it \
         --name wlts_qgis \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v /home/${USER}/geodata/:/geodata \
         -e DISPLAY=unix$DISPLAY wlts_qgis:latest qgis
 
-This command will start the QGIS software.
+This command will start the QGIS software and you can add or create your QGIS projects using the volume directory `/home/${USER}/geodata/`.
 
 Enable WLTS-QGIS Plugin
 -----------------------

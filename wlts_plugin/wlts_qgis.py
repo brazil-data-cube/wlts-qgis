@@ -196,6 +196,12 @@ class WltsQgis:
         if os.path.exists(helpfile):
             url = "file://" + str(helpfile)
             self.iface.openURL(url, False)
+        else:
+            self.basic_controls.alert(
+                "error",
+                "FileNotFoundError",
+                "No help folder found!"
+            )
         qgis.utils.showPluginHelp(packageName="wlts_plugin", filename="index", section="about")
 
     def initIcons(self):
@@ -462,16 +468,23 @@ class WltsQgis:
     def displayPoint(self, pointTool):
         """Get the mouse possition and storage as selected location."""
         try:
+            try:
+                crs = str(self.layer.crs().authid())
+            except RuntimeError:
+                crs = "Unknown"
             self.selected_location = {
-                'lat': float(pointTool.y()),
-                'long': float(pointTool.x())
+                'layer_name' : str(self.layer.name()),
+                'lat' : float(pointTool.y()),
+                'long' : float(pointTool.x()),
+                'crs' : crs
             }
             history_key = str(
                 (
-                    "({lat:,.2f},{long:,.2f})"
+                    "({lat:,.4f},{long:,.4f}) {crs}"
                 ).format(
-                    lat=self.selected_location.get('lat'),
-                    long=self.selected_location.get('long')
+                    crs = crs,
+                    lat = self.selected_location.get('lat'),
+                    long = self.selected_location.get('long')
                 )
             )
             self.locations[history_key] = self.selected_location
