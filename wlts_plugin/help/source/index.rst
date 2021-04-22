@@ -17,7 +17,7 @@
 
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
     :caption: Documentation:
 
     about
@@ -28,7 +28,7 @@
 
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
     :caption: Additional Notes
 
     license
