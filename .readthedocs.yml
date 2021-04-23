@@ -9,7 +9,7 @@
 version: 2
 
 sphinx:
-    configuration: wlts_plugin/help/conf.py
+    configuration: help/source/conf.py
 
 formats: []
 

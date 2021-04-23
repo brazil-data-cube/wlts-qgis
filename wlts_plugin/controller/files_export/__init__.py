@@ -17,5 +17,4 @@ the Free Software Foundation; either version 2 of the License, or (at your optio
 Copyright (C) 2019-2021 INPE.
 """
 
-
-__version__ = '0.6.0'
+from .files_export import FilesExport

@@ -27,7 +27,7 @@ tags=python
 
 homepage=http://brazildatacube.org/pt/pagina-inicial-2/
 category=Web
-icon=icon.png
+icon=controller/assets/icon.png
 # experimental flag
 experimental=True
 

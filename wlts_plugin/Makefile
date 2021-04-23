@@ -3,9 +3,9 @@
 #
 # Web Land Trajectory Service
 #							 -------------------
-#		begin				: 2020-08-31
+#		begin				: 2021-08-31
 #		git sha				: $Format:%H$
-#		copyright			: (C) 2020 by INPE
+#		copyright			: (C) 2021 by INPE
 #		email				: brazildatacube@inpe.br
 # ***************************************************************************/
 #
@@ -47,7 +47,7 @@ PY_FILES = \
 
 UI_FILES = wlts_qgis_dialog_base.ui
 
-EXTRAS = metadata.txt icon.png
+EXTRAS = metadata.txt controller/assets/icon.png
 
 COMPILED_RESOURCE_FILES = resources.py
 
@@ -192,13 +192,6 @@ clean:
 	@echo "Removing uic and rcc generated files"
 	@echo "------------------------------------"
 	rm $(COMPILED_UI_FILES) $(COMPILED_RESOURCE_FILES)
-
-doc:
-	@echo
-	@echo "------------------------------------"
-	@echo "Building documentation using sphinx."
-	@echo "------------------------------------"
-	cd help; make html
 
 pylint:
 	@echo

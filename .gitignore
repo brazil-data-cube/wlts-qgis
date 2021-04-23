@@ -18,6 +18,7 @@ lib/
 lib64/
 parts/
 sdist/
+help/
 var/
 wheels/
 pip-wheel-metadata/
@@ -165,9 +166,10 @@ wlts_plugin/resources.py
 wlts_plugin/help/build
 wlts_plugin/help/_build
 wlts_plugin_plugin.egg-info/
-wlts_qgis.egg-info/
-help/_build
 
 # Drone integration
 core
 drone
+
+# ignore services storage
+services_storage_user_application.json

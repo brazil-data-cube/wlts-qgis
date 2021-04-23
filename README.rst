@@ -1,11 +1,10 @@
 ..
     This file is part of Python QGIS Plugin for Web Land Trajectory Service.
-    Copyright (C) 2020 INPE.
+    Copyright (C) 2021 INPE.
 
     Python QGIS Plugin for Web Land Trajectory Service is free software;
     You can redistribute it and/or modify it under the terms of the MIT License;
     See LICENSE file for more details.
-
 
 ==================================================
 Python QGIS Plugin for Web Land Trajectory Service
@@ -15,12 +14,12 @@ Python QGIS Plugin for Web Land Trajectory Service
         :target: https://github.com//brazil-data-cube/wlts-qgis/blob/master/LICENSE
         :alt: Software License
 
-.. .. image:: https://travis-ci.org/brazil-data-cube/wlts-qgis.svg?branch=master
-        :target: https://travis-ci.org/brazil-data-cube/wlts-qgis
+.. image:: https://drone.dpi.inpe.br/api/badges/brazil-data-cube/wlts-qgis/status.svg
+        :target: https://drone.dpi.inpe.br/brazil-data-cube/wlts-qgis
         :alt: Build Status
 
-.. .. image:: https://coveralls.io/repos/github/brazil-data-cube/wlts-qgis/badge.svg?branch=master
-        :target: https://coveralls.io/github/brazil-data-cube/wlts-qgis?branch=master
+.. image:: https://codecov.io/gh/brazil-data-cube/wlts-qgis/branch/master/graph/badge.svg?token=0EICGCGNXC
+        :target: https://codecov.io/gh/brazil-data-cube/wlts-qgis
         :alt: Code Coverage Test
 
 .. image:: https://readthedocs.org/projects/wlts-qgis/badge/?version=latest
@@ -72,15 +71,16 @@ For more information on WLTS, see:
 
 The following image presents an overview of the plugin:
 
-.. image:: https://github.com/brazil-data-cube/wlts-qgis/raw/master/docs/img/wlts-qgis.png
-        :target: https://github.com/brazil-data-cube/wlts-qgis/tree/master/docs/img
+.. image:: https://github.com/brazil-data-cube/wlts-qgis/wlts_plugin/help/source/assets/img/wlts-qgis.png
+        :target: https://github.com/brazil-data-cube/wlts-qgis/wlts_plugin/help/source/assets/img/
         :width: 70%
         :alt: WLTS-QGIS
+
 
 Installation
 ============
 
-See `INSTALL.rst <https://github.com/brazil-data-cube/wlts-qgis/tree/master/docs/INSTALL.rst>`_.
+See `INSTALL.rst <https://github.com/brazil-data-cube/wlts-qgis/tree/master/wlts_plugin/help/source/install.rst>`_.
 
 
 Documentation
@@ -95,7 +95,7 @@ License
 =======
 
 .. admonition::
-    Copyright (C) 2020 INPE.
+    Copyright (C) 2021 INPE.
 
     Python QGIS Plugin for Web Land Trajectory Service is free software; you can redistribute it and/or modify it
     under the terms of the MIT License; see LICENSE file for more details.

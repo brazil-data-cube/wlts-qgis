@@ -1,6 +1,6 @@
 ..
     This file is part of Python QGIS Plugin for Web Land Trajectory Service.
-    Copyright (C) 2020 INPE.
+    Copyright (C) 2021 INPE.
 
     Python QGIS Plugin for Web Land Trajectory Service. is free software; you can redistribute it and/or modify it
     under the terms of the MIT License; see LICENSE file for more details.
@@ -20,14 +20,15 @@
     :maxdepth: 2
     :caption: Documentation:
 
-    installation
+    about
+    install
     usage
     history
 
 
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
     :caption: Additional Notes
 
     license

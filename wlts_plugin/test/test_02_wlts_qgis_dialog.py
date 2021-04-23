@@ -9,8 +9,8 @@
 """
 
 __author__ = 'brazildatacube@inpe.br'
-__date__ = '2020-08-31'
-__copyright__ = 'Copyright 2020, INPE'
+__date__ = '2021-08-31'
+__copyright__ = 'Copyright 2021, INPE'
 
 import unittest
 

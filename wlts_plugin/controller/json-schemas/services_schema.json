@@ -18,11 +18,22 @@
                 "type": "object",
                 "title": "The Items Schema",
                 "required": [
+                    "id",
                     "name",
                     "host"
                 ]
             },
             "properties": {
+                "id": {
+                    "$id": "#/properties/services/items/index",
+                    "type": "number",
+                    "title": "Service ID",
+                    "default": "",
+                    "examples": [
+                        0,1,2
+                    ],
+                    "pattern": "^(.*)$"
+                },
                 "name": {
                     "$id": "#/properties/services/items/name",
                     "type": "string",
@@ -39,7 +50,7 @@
                     "title": "Service host",
                     "default": "",
                     "examples": [
-                        "https://brazildatacube.dpi.inpe.br/"
+                        "http://brazildatacube.dpi.inpe.br/"
                     ],
                     "pattern": "^(.*)$"
                 }
