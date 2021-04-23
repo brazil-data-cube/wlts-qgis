@@ -9,7 +9,7 @@
 Changes
 =======
 
-Version 0.6.0 (2021-04-13)
+Version 0.6.0 (2021-04-23)
 --------------------------
 
 - Support for the `WLTS specification version 0.6.0 <https://github.com/brazil-data-cube/wlts-spec>`_.
