@@ -4,6 +4,7 @@ include *.sh
 include *.yml
 include LICENSE
 include pylintrc
+include pytest.ini
 include Dockerfile
 include .dockerignore
 recursive-include docs *.rst
