@@ -58,6 +58,7 @@ install_requires = [
     'numpy>=1.19',
     'matplotlib>=3.3.3',
     'pandas>=1.1',
+    'pyqt5ac>=1.2',
 ]
 
 packages = find_packages()

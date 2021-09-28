@@ -59,6 +59,12 @@ To deploy the plugin in Windows OS add Python and QGIS Python Scripts to the **P
 
 .. code-block:: text
 
+    C:\Program Files\Python39\Scripts
+
+    C:\OSGeo4W\apps\Python39
+
+    C:\OSGeo4W\apps\Python39\Scripts
+
     C:\Users\user\AppData\Local\Programs\Python\Python{version}\Scripts
 
     C:\Program Files\QGIS {version}\apps\Python37\Scripts
