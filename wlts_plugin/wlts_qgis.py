@@ -216,7 +216,7 @@ class WltsQgis:
         self.files_controls = FilesExport()
         self.token_controls = Tokens()
         try:
-            self.token = self.token_controls.getTokenByUser(str(getpass.getuser())).token
+            self.token = str(self.token_controls.getTokenByUser(str(getpass.getuser())).token)
         except:
             self.token = ""
 
