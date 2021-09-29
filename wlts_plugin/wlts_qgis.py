@@ -18,12 +18,12 @@ Copyright (C) 2019-2021 INPE.
 """
 
 
+import getpass
 import json
 import os.path
 from pathlib import Path
 
 import qgis.utils
-import requests
 import wlts
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -37,7 +37,7 @@ from .controller.config import Config
 # Import files exporting controls
 from .controller.files_export import FilesExport
 # Import the controls for the plugin
-from .controller.wlts_qgis_controller import Controls, Services
+from .controller.wlts_qgis_controller import Controls, Services, Tokens
 # Initialize Qt resources from file resources.py
 from .resources import *
 # Import the code for the dialog
@@ -214,6 +214,11 @@ class WltsQgis:
         self.basic_controls = Controls()
         self.server_controls = Services(user="application")
         self.files_controls = FilesExport()
+        self.token_controls = Tokens()
+        try:
+            self.token = self.token_controls.getTokenByUser(str(getpass.getuser())).token
+        except:
+            self.token = ""
 
     def initButtons(self):
         """Init the main buttons to manage services and the results."""
