@@ -444,14 +444,14 @@ class Services:
         except (FileNotFoundError, FileExistsError):
             return None
 
-    def listCollections(self, service_name):
+    def listCollections(self, service_name, token):
         """Return a dictionary with the list of available products.
 
         :param service_name<string>: the service registered name
         """
         host = self.findServiceByName(service_name).host
         if self.testServiceConnection(host):
-            client_wlts = WLTS(host)
+            client_wlts = WLTS(url=host, access_token=token)
             return client_wlts.collections
         else:
             return []

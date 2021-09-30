@@ -24,7 +24,7 @@ import os.path
 from pathlib import Path
 
 import qgis.utils
-import wlts
+from wlts import WLTS
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from qgis.core import QgsProject, QgsVectorLayer
@@ -329,8 +329,13 @@ class WltsQgis:
         """Start the checkbox with the collections that are active in the service."""
         self.widget = QWidget()
         self.vbox = QVBoxLayout()
+        print(self.token == "")
+        if self.token == "":
+            self.token = str(self.basic_controls.dialogBox(self.dlg, "Init session", "Insert a valid token:"))
+            self.token_controls.addToken(str(getpass.getuser()), self.token)
         collections = self.server_controls.listCollections(
-            str(self.dlg.service_selection.currentText())
+            str(self.dlg.service_selection.currentText()),
+            self.token
         )
         self.checks = {}
         for collection in collections:
@@ -352,8 +357,11 @@ class WltsQgis:
     def getTrajectory(self):
         """Get the trajectory from the filters that were selected."""
         self.selected_service = self.server_controls.findServiceByName(self.dlg.service_selection.currentText()).host
+        if self.token == "":
+            self.token = str(self.basic_controls.dialogBox(self.dlg, "Init session", "Insert a valid token:"))
+            self.token_controls.addToken(str(getpass.getuser()), self.token)
         if self.server_controls.testServiceConnection(self.selected_service):
-            client_wlts = wlts.WLTS(self.selected_service)
+            client_wlts = WLTS(url=self.selected_service, access_token=self.token)
             self.tj = client_wlts.tj(
                 latitude=self.transformSelectedLocation().get('lat', 0),
                 longitude=self.transformSelectedLocation().get('long', 0),
