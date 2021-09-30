@@ -176,15 +176,17 @@ class Token:
         self.user = user
         self.token = token
 
+
 class TokenList:
     """Token list class to store like json file."""
 
     def __init__(self, tokens):
         """Build the Tokens List Object.
 
-        :param tokens<Service[]>: list of token objects.
+        :param tokens<Token[]>: list of token objects.
         """
         self.tokens = tokens
+
 
 class Tokens:
     """Class for the tokens storage rule.
