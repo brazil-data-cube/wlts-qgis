@@ -329,7 +329,6 @@ class WltsQgis:
         """Start the checkbox with the collections that are active in the service."""
         self.widget = QWidget()
         self.vbox = QVBoxLayout()
-        print(self.token == "")
         if self.token == "":
             self.token = str(self.basic_controls.dialogBox(self.dlg, "Init session", "Insert a valid token:"))
             self.token_controls.addToken(str(getpass.getuser()), self.token)
