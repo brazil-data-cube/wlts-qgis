@@ -71,9 +71,9 @@ For more information on WLTS, see:
 
 The following image presents an overview of the plugin:
 
-.. image:: https://github.com/brazil-data-cube/wlts-qgis/blob/master/wlts_plugin/help/source/assets/img/wlts-qgis.png
-        :target: https://github.com/brazil-data-cube/wlts-qgis/blob/master/wlts_plugin/help/source/assets/img/wlts-qgis.png
-        :width: 70%
+.. image:: wlts_plugin/help/source/assets/img/wlts-qgis.png
+        :target: https://github.com/brazil-data-cube/wlts-qgis
+        :width: 95%
         :alt: WLTS-QGIS
 
 
