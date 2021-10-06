@@ -329,9 +329,6 @@ class WltsQgis:
         """Start the checkbox with the collections that are active in the service."""
         self.widget = QWidget()
         self.vbox = QVBoxLayout()
-        if self.token == "":
-            self.token = str(self.basic_controls.dialogBox(self.dlg, "Init session", "Insert a valid token:"))
-            self.token_controls.addToken(str(getpass.getuser()), self.token)
         collections = self.server_controls.listCollections(
             str(self.dlg.service_selection.currentText()),
             self.token
@@ -358,19 +355,23 @@ class WltsQgis:
         self.selected_service = self.server_controls.findServiceByName(self.dlg.service_selection.currentText()).host
         if self.token == "":
             self.token = str(self.basic_controls.dialogBox(self.dlg, "Init session", "Insert a valid token:"))
-            self.token_controls.addToken(str(getpass.getuser()), self.token)
         if self.server_controls.testServiceConnection(self.selected_service):
-            client_wlts = WLTS(url=self.selected_service, access_token=self.token)
-            self.tj = client_wlts.tj(
-                latitude=self.transformSelectedLocation().get('lat', 0),
-                longitude=self.transformSelectedLocation().get('long', 0),
-                geometry=self.dlg.geometries.isChecked(),
-                collections=",".join(
-                    self.selected_collections
-                ),
-                start_date=self.start_date,
-                end_date=self.end_date
-            )
+            try:
+                client_wlts = WLTS(url=self.selected_service, access_token=self.token)
+                self.tj = client_wlts.tj(
+                    latitude=self.transformSelectedLocation().get('lat', 0),
+                    longitude=self.transformSelectedLocation().get('long', 0),
+                    geometry=self.dlg.geometries.isChecked(),
+                    collections=",".join(
+                        self.selected_collections
+                    ),
+                    start_date=self.start_date,
+                    end_date=self.end_date
+                )
+                self.token_controls.addToken(str(getpass.getuser()), self.token)
+            except:
+                self.basic_controls.alert("warning", "AttributeError", "Please insert a valid token!")
+                self.token = str(self.basic_controls.dialogBox(self.dlg, "Init session", "Insert a valid token:"))
 
     def changeDateValue(self, value):
         """Date slider control data on layers QGIS."""
@@ -543,9 +544,7 @@ class WltsQgis:
         try:
             index = self.dlg.data.selectedIndexes()[0]
             self.metadata_selected = index.model().itemFromIndex(index)
-            widget = QWidget()
-            vbox = QVBoxLayout()
-            label = QLabel(
+            description = (
                 "{service_metadata}\n\n{collection_metadata}".format(
                     service_metadata=self.basic_controls.getDescription(
                         name=str(self.metadata_selected.parent().text()),
@@ -561,22 +560,9 @@ class WltsQgis:
                     )
                 )
             )
-            label.setWordWrap(True)
-            label.heightForWidth(180)
-            vbox.addWidget(label)
-            widget.setLayout(vbox)
-            self.dlg.metadata_scroll.setWidgetResizable(True)
-            self.dlg.metadata_scroll.setWidget(widget)
+            self.basic_controls.alert("info", "Service Metadata", description)
         except:
-            widget = QWidget()
-            vbox = QVBoxLayout()
-            label = QLabel("Select a collection!")
-            label.setWordWrap(True)
-            label.heightForWidth(180)
-            vbox.addWidget(label)
-            widget.setLayout(vbox)
-            self.dlg.metadata_scroll.setWidgetResizable(True)
-            self.dlg.metadata_scroll.setWidget(widget)
+            pass
 
     def run(self):
         """Run method that performs all the real work."""
