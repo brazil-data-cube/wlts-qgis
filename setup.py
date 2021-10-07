@@ -53,11 +53,13 @@ setup_requires = [
 ]
 
 install_requires = [
-    'wlts @ git+https://github.com/brazil-data-cube/wlts.py@v0.6.0',
     'pb-tool>=3.0.0',
     'numpy>=1.19',
     'matplotlib>=3.3.3',
     'pandas>=1.1',
+    'pyqt5ac>=1.2',
+    'bdc-config @ git+https://github.com/brazil-data-cube/bdc-config@v0.1.0',
+    'wlts @ git+https://github.com/brazil-data-cube/wlts.py@v0.8.0'
 ]
 
 packages = find_packages()

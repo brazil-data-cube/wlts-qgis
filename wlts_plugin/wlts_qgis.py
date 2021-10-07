@@ -18,13 +18,13 @@ Copyright (C) 2019-2021 INPE.
 """
 
 
+import getpass
 import json
 import os.path
 from pathlib import Path
 
 import qgis.utils
-import requests
-import wlts
+from wlts import WLTS
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from qgis.core import QgsProject, QgsVectorLayer
@@ -37,7 +37,7 @@ from .controller.config import Config
 # Import files exporting controls
 from .controller.files_export import FilesExport
 # Import the controls for the plugin
-from .controller.wlts_qgis_controller import Controls, Services
+from .controller.wlts_qgis_controller import Controls, Services, Tokens
 # Initialize Qt resources from file resources.py
 from .resources import *
 # Import the code for the dialog
@@ -214,6 +214,11 @@ class WltsQgis:
         self.basic_controls = Controls()
         self.server_controls = Services(user="application")
         self.files_controls = FilesExport()
+        self.token_controls = Tokens()
+        try:
+            self.token = str(self.token_controls.getTokenByUser(str(getpass.getuser())).token)
+        except:
+            self.token = ""
 
     def initButtons(self):
         """Init the main buttons to manage services and the results."""
@@ -325,7 +330,8 @@ class WltsQgis:
         self.widget = QWidget()
         self.vbox = QVBoxLayout()
         collections = self.server_controls.listCollections(
-            str(self.dlg.service_selection.currentText())
+            str(self.dlg.service_selection.currentText()),
+            self.token
         )
         self.checks = {}
         for collection in collections:
@@ -347,18 +353,25 @@ class WltsQgis:
     def getTrajectory(self):
         """Get the trajectory from the filters that were selected."""
         self.selected_service = self.server_controls.findServiceByName(self.dlg.service_selection.currentText()).host
+        if self.token == "":
+            self.token = str(self.basic_controls.dialogBox(self.dlg, "Init session", "Insert a valid token:"))
         if self.server_controls.testServiceConnection(self.selected_service):
-            client_wlts = wlts.WLTS(self.selected_service)
-            self.tj = client_wlts.tj(
-                latitude=self.transformSelectedLocation().get('lat', 0),
-                longitude=self.transformSelectedLocation().get('long', 0),
-                geometry=self.dlg.geometries.isChecked(),
-                collections=",".join(
-                    self.selected_collections
-                ),
-                start_date=self.start_date,
-                end_date=self.end_date
-            )
+            try:
+                client_wlts = WLTS(url=self.selected_service, access_token=self.token)
+                self.tj = client_wlts.tj(
+                    latitude=self.transformSelectedLocation().get('lat', 0),
+                    longitude=self.transformSelectedLocation().get('long', 0),
+                    geometry=self.dlg.geometries.isChecked(),
+                    collections=",".join(
+                        self.selected_collections
+                    ),
+                    start_date=self.start_date,
+                    end_date=self.end_date
+                )
+                self.token_controls.addToken(str(getpass.getuser()), self.token)
+            except:
+                self.basic_controls.alert("warning", "AttributeError", "Please insert a valid token!")
+                self.token = str(self.basic_controls.dialogBox(self.dlg, "Init session", "Insert a valid token:"))
 
     def changeDateValue(self, value):
         """Date slider control data on layers QGIS."""
@@ -531,9 +544,7 @@ class WltsQgis:
         try:
             index = self.dlg.data.selectedIndexes()[0]
             self.metadata_selected = index.model().itemFromIndex(index)
-            widget = QWidget()
-            vbox = QVBoxLayout()
-            label = QLabel(
+            description = (
                 "{service_metadata}\n\n{collection_metadata}".format(
                     service_metadata=self.basic_controls.getDescription(
                         name=str(self.metadata_selected.parent().text()),
@@ -549,22 +560,9 @@ class WltsQgis:
                     )
                 )
             )
-            label.setWordWrap(True)
-            label.heightForWidth(180)
-            vbox.addWidget(label)
-            widget.setLayout(vbox)
-            self.dlg.metadata_scroll.setWidgetResizable(True)
-            self.dlg.metadata_scroll.setWidget(widget)
+            self.basic_controls.alert("info", "Service Metadata", description)
         except:
-            widget = QWidget()
-            vbox = QVBoxLayout()
-            label = QLabel("Select a collection!")
-            label.setWordWrap(True)
-            label.heightForWidth(180)
-            vbox.addWidget(label)
-            widget.setLayout(vbox)
-            self.dlg.metadata_scroll.setWidgetResizable(True)
-            self.dlg.metadata_scroll.setWidget(widget)
+            pass
 
     def run(self):
         """Run method that performs all the real work."""

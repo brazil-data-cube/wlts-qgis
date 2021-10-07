@@ -43,7 +43,7 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>401</width>
+       <width>721</width>
        <height>461</height>
       </rect>
      </property>
@@ -53,9 +53,9 @@
      <widget class="QTreeView" name="data">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>20</x>
         <y>30</y>
-        <width>381</width>
+        <width>681</width>
         <height>331</height>
        </rect>
       </property>
@@ -63,7 +63,7 @@
      <widget class="QGroupBox" name="service_group">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>20</x>
         <y>370</y>
         <width>151</width>
         <height>51</height>
@@ -86,7 +86,7 @@
      <widget class="QGroupBox" name="host">
       <property name="geometry">
        <rect>
-        <x>180</x>
+        <x>190</x>
         <y>370</y>
         <width>211</width>
         <height>51</height>
@@ -109,7 +109,7 @@
      <widget class="QPushButton" name="save_service">
       <property name="geometry">
        <rect>
-        <x>270</x>
+        <x>280</x>
         <y>430</y>
         <width>121</width>
         <height>25</height>
@@ -119,80 +119,44 @@
        <string>Add</string>
       </property>
      </widget>
-    </widget>
-    <widget class="QGroupBox" name="metadata">
-     <property name="geometry">
-      <rect>
-       <x>420</x>
-       <y>10</y>
-       <width>311</width>
-       <height>391</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>SERVICES METADATA</string>
-     </property>
-     <widget class="QScrollArea" name="metadata_scroll">
+     <widget class="QGroupBox" name="active_service_options">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>30</y>
-        <width>291</width>
-        <height>351</height>
+        <x>420</x>
+        <y>390</y>
+        <width>271</width>
+        <height>61</height>
        </rect>
       </property>
-      <property name="widgetResizable">
-       <bool>false</bool>
+      <property name="title">
+       <string>Active Service</string>
       </property>
-      <widget class="QWidget" name="metadata_content">
+      <widget class="QPushButton" name="edit_service">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>289</width>
-         <height>149</height>
+         <x>20</x>
+         <y>30</y>
+         <width>111</width>
+         <height>25</height>
         </rect>
        </property>
+       <property name="text">
+        <string>Edit</string>
+       </property>
       </widget>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="active_service_options">
-     <property name="geometry">
-      <rect>
-       <x>420</x>
-       <y>410</y>
-       <width>311</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Active Service</string>
-     </property>
-     <widget class="QPushButton" name="edit_service">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>30</y>
-        <width>131</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Edit</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="delete_service">
-      <property name="geometry">
-       <rect>
-        <x>170</x>
-        <y>30</y>
-        <width>131</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Remove</string>
-      </property>
+      <widget class="QPushButton" name="delete_service">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>30</y>
+         <width>111</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Remove</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </widget>

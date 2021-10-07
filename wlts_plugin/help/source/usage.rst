@@ -9,6 +9,8 @@
 Usage
 =====
 
+To use the WLTS extension to retrieve land use and land cover trajectories it is necessary to generate a user access token in `BDC Auth App <https://brazildatacube.dpi.inpe.br/auth-app>`_.
+
 Enable WLTS-QGIS Plugin
 +++++++++++++++++++++++
 
