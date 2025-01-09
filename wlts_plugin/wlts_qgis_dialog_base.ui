@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>740</width>
-    <height>639</height>
+    <height>531</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,132 +34,6 @@
    <property name="currentIndex">
     <number>0</number>
    </property>
-   <widget class="QWidget" name="services_tab">
-    <attribute name="title">
-     <string>Services</string>
-    </attribute>
-    <widget class="QGroupBox" name="registry">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>721</width>
-       <height>461</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>REGISTERED SERVICES</string>
-     </property>
-     <widget class="QTreeView" name="data">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>30</y>
-        <width>681</width>
-        <height>331</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QGroupBox" name="service_group">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>370</y>
-        <width>151</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Service Name</string>
-      </property>
-      <widget class="QLineEdit" name="service_name">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>20</y>
-         <width>151</width>
-         <height>31</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QGroupBox" name="host">
-      <property name="geometry">
-       <rect>
-        <x>190</x>
-        <y>370</y>
-        <width>211</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Host</string>
-      </property>
-      <widget class="QLineEdit" name="service_host">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>20</y>
-         <width>211</width>
-         <height>31</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QPushButton" name="save_service">
-      <property name="geometry">
-       <rect>
-        <x>280</x>
-        <y>430</y>
-        <width>121</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Add</string>
-      </property>
-     </widget>
-     <widget class="QGroupBox" name="active_service_options">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>390</y>
-        <width>271</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Active Service</string>
-      </property>
-      <widget class="QPushButton" name="edit_service">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>30</y>
-         <width>111</width>
-         <height>25</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Edit</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="delete_service">
-       <property name="geometry">
-        <rect>
-         <x>150</x>
-         <y>30</y>
-         <width>111</width>
-         <height>25</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Remove</string>
-       </property>
-      </widget>
-     </widget>
-    </widget>
-   </widget>
    <widget class="QWidget" name="trajectory_tab">
     <attribute name="title">
      <string>Get Trajectory</string>
@@ -170,7 +44,7 @@
        <x>480</x>
        <y>10</y>
        <width>251</width>
-       <height>311</height>
+       <height>381</height>
       </rect>
      </property>
      <property name="title">
@@ -182,7 +56,7 @@
         <x>10</x>
         <y>30</y>
         <width>231</width>
-        <height>271</height>
+        <height>341</height>
        </rect>
       </property>
      </widget>
@@ -191,7 +65,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>90</y>
+       <y>80</y>
        <width>451</width>
        <height>371</height>
       </rect>
@@ -240,7 +114,7 @@
        <rect>
         <x>10</x>
         <y>270</y>
-        <width>201</width>
+        <width>211</width>
         <height>51</height>
        </rect>
       </property>
@@ -252,7 +126,7 @@
         <rect>
          <x>0</x>
          <y>20</y>
-         <width>201</width>
+         <width>211</width>
          <height>31</height>
         </rect>
        </property>
@@ -274,9 +148,9 @@
      <widget class="QGroupBox" name="end_date_group">
       <property name="geometry">
        <rect>
-        <x>240</x>
+        <x>230</x>
         <y>270</y>
-        <width>201</width>
+        <width>211</width>
         <height>51</height>
        </rect>
       </property>
@@ -288,7 +162,7 @@
         <rect>
          <x>0</x>
          <y>20</y>
-         <width>201</width>
+         <width>211</width>
          <height>31</height>
         </rect>
        </property>
@@ -310,27 +184,27 @@
      <widget class="QPushButton" name="search">
       <property name="geometry">
        <rect>
-        <x>350</x>
+        <x>80</x>
         <y>330</y>
-        <width>89</width>
-        <height>25</height>
+        <width>221</width>
+        <height>27</height>
        </rect>
       </property>
       <property name="text">
-       <string>Get point</string>
+       <string>Get Trajectory</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="geometries">
+     <widget class="QPushButton" name="show_help_button">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>310</x>
         <y>330</y>
-        <width>331</width>
-        <height>23</height>
+        <width>31</width>
+        <height>27</height>
        </rect>
       </property>
       <property name="text">
-       <string>Get geometries</string>
+       <string/>
       </property>
      </widget>
     </widget>
@@ -340,82 +214,33 @@
        <x>10</x>
        <y>10</y>
        <width>451</width>
-       <height>71</height>
+       <height>61</height>
       </rect>
      </property>
      <property name="title">
       <string>Active Service</string>
      </property>
-     <widget class="QComboBox" name="service_selection">
+     <widget class="QLineEdit" name="wlts_host">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>30</y>
-        <width>391</width>
-        <height>31</height>
+        <width>351</width>
+        <height>27</height>
        </rect>
       </property>
      </widget>
-     <widget class="QPushButton" name="show_help_button">
+     <widget class="QPushButton" name="update_wlts_host">
       <property name="geometry">
        <rect>
-        <x>410</x>
+        <x>370</x>
         <y>30</y>
-        <width>31</width>
-        <height>31</height>
+        <width>71</width>
+        <height>27</height>
        </rect>
       </property>
       <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="exporting_files">
-     <property name="geometry">
-      <rect>
-       <x>480</x>
-       <y>330</y>
-       <width>251</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Export data as</string>
-     </property>
-     <widget class="QPushButton" name="export_as_json">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>30</y>
-        <width>81</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>9</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>JSON</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="export_as_csv">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>30</y>
-        <width>81</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>9</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>CSV</string>
+       <string>Update</string>
       </property>
      </widget>
     </widget>
@@ -431,17 +256,53 @@
      <property name="title">
       <string>Export code as</string>
      </property>
+     <widget class="QPushButton" name="export_as_json">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>30</y>
+        <width>71</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>JSON</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="export_as_csv">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>30</y>
+        <width>71</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>CSV</string>
+      </property>
+     </widget>
      <widget class="QPushButton" name="export_as_python">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>30</y>
-        <width>81</width>
+        <width>71</width>
         <height>25</height>
        </rect>
       </property>
       <property name="text">
-       <string>PYTHON</string>
+       <string>Python</string>
       </property>
      </widget>
     </widget>
@@ -450,8 +311,8 @@
   <widget class="QDialogButtonBox" name="button_box">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>600</y>
+     <x>20</x>
+     <y>500</y>
      <width>721</width>
      <height>32</height>
     </rect>
@@ -462,54 +323,6 @@
    <property name="standardButtons">
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
-  </widget>
-  <widget class="QGroupBox" name="date_slider_group">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>510</y>
-     <width>711</width>
-     <height>81</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Date Slider</string>
-   </property>
-   <widget class="QGroupBox" name="date_control_slider">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>691</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>0</string>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-    <property name="checkable">
-     <bool>false</bool>
-    </property>
-    <widget class="QSlider" name="date_slider">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>671</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </widget>
   </widget>
  </widget>
  <resources/>
