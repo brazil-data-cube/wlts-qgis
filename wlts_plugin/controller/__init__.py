@@ -17,4 +17,4 @@
 #
 
 from .files_export.files_export import FilesExport
-from .wlts_qgis_controller import Controls, Services
+from .wlts_qgis_controller import Controls, WLTS_Controls

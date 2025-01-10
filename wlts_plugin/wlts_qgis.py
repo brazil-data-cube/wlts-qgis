@@ -21,12 +21,17 @@ import json
 import os.path
 from pathlib import Path
 
+import time
+
 import qgis.utils
-from wlts import WLTS
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from qgis.core import QgsProject, QgsVectorLayer
-from qgis.gui import QgsMapToolEmitPoint
+from qgis.core import (QgsCoordinateReferenceSystem, QgsFeature, QgsPoint,
+                       QgsProject, QgsRasterMarkerSymbolLayer, QgsRectangle,
+                       QgsSingleSymbolRenderer, QgsSymbol, QgsVectorLayer,
+                       QgsWkbTypes)
+from qgis.gui import QgsMapToolEmitPoint, QgsMapToolPan
 from qgis.PyQt.QtCore import QCoreApplication, QSettings, QTranslator
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
@@ -35,7 +40,7 @@ from .controller.config import Config
 # Import files exporting controls
 from .controller.files_export import FilesExport
 # Import the controls for the plugin
-from .controller.wlts_qgis_controller import Controls, Services
+from .controller.wlts_qgis_controller import Controls, WLTS_Controls
 # Initialize Qt resources from file resources.py
 from .resources import *
 # Import the code for the dialog
@@ -209,21 +214,21 @@ class WltsQgis:
 
     def initControls(self):
         """Init the basic controls to get."""
+        self.dlg.setWindowFlag(Qt.WindowMaximizeButtonHint, False)
+        self.dlg.setFixedSize(self.dlg.size().width(), self.dlg.size().height())
         self.basic_controls = Controls()
-        self.server_controls = Services(user="application")
+        self.wlts_controls = WLTS_Controls()
         self.files_controls = FilesExport()
+        self.enabled_click = True
+        self.addCanvasControlPoint(self.enabled_click)
 
     def initButtons(self):
         """Init the main buttons to manage services and the results."""
         self.dlg.show_help_button.clicked.connect(self.showHelp)
-        self.dlg.save_service.clicked.connect(self.saveService)
-        self.dlg.delete_service.clicked.connect(self.deleteService)
-        self.dlg.edit_service.clicked.connect(self.editService)
         self.dlg.export_as_python.clicked.connect(self.exportPython)
         self.dlg.export_as_csv.clicked.connect(self.exportCSV)
         self.dlg.export_as_json.clicked.connect(self.exportJSON)
-        self.dlg.search.clicked.connect(self.enableGetLatLng)
-        self.dlg.date_control_slider.setVisible(False)
+        self.dlg.search_button.clicked.connect(self.plotTrajectory)
 
     def initHistory(self):
         """Init and update location history."""
@@ -251,80 +256,28 @@ class WltsQgis:
         self.dlg.start_date.setDate(self.basic_controls.formatForQDate("1999-01-01"))
         self.dlg.end_date.setDate(self.basic_controls.formatForQDate("2021-01-01"))
 
-    def initServices(self):
+    def initService(self):
         """Load the registered services based on JSON file."""
-        service_names = self.server_controls.getServiceNames()
-        if not service_names:
-            self.basic_controls.alert("error","502 Error", "The main services are not available!")
-        self.dlg.service_selection.addItems(service_names)
-        self.dlg.service_selection.activated.connect(self.initCheckBox)
-        self.data = self.server_controls.loadServices()
-        self.model = QStandardItemModel()
-        self.basic_controls.addItemsTreeView(self.model, self.data)
-        self.dlg.data.setModel(self.model)
-        self.dlg.data.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.dlg.data.clicked.connect(self.updateDescription)
-        self.updateDescription()
+        self.wlts_server_edit = True
+        self.dlg.wlts_server_label.setText(self.wlts_controls.getService())
+        self.dlg.wlts_server_label.setEnabled(self.wlts_server_edit)
+        self.dlg.wlts_server_label_update.clicked.connect(self.updateService)
+        self.initCheckBox()
 
-    def saveService(self):
-        """Save the service based on name and host input."""
-        name_to_save = str(self.dlg.service_name.text())
-        host_to_save = str(self.dlg.service_host.text())
-        try:
-            response = self.server_controls.editService(name_to_save, host_to_save)
-            if response != None:
-                self.selected_service = host_to_save
-                self.dlg.service_name.clear()
-                self.dlg.service_host.clear()
-                self.updateServicesList()
-            else:
-                self.basic_controls.alert(
-                    "error",
-                    "(ValueError, AttributeError)",
-                    "It is not a valid WLTS Server!"
-                )
-        except (ValueError, AttributeError, ConnectionRefusedError) as error:
-            self.basic_controls.alert("error", "(ValueError, AttributeError)", str(error))
-
-    def deleteService(self):
-        """Delete the selected active service."""
-        try:
-            host_to_delete = host_to_delete = self.server_controls.findServiceByName(self.metadata_selected.text())
-            if host_to_delete == None:
-                host_to_delete = self.server_controls.findServiceByName(self.metadata_selected.parent().text())
-            self.server_controls.deleteService(host_to_delete.name)
-            self.updateServicesList()
-        except (ValueError, AttributeError) as error:
-            self.basic_controls.alert("error", "(ValueError, AttributeError)", str(error))
-
-    def editService(self):
+    def updateService(self):
         """Edit the selected service."""
-        try:
-            host_to_delete = host_to_delete = self.server_controls.findServiceByName(self.metadata_selected.text())
-            if host_to_delete == None:
-                host_to_delete = self.server_controls.findServiceByName(self.metadata_selected.parent().text())
-            self.dlg.service_name.setText(host_to_delete.name)
-            self.dlg.service_host.setText(host_to_delete.host)
-        except (ValueError, AttributeError) as error:
-            self.basic_controls.alert("error", "(ValueError, AttributeError)", str(error))
-
-    def updateServicesList(self):
-        """Update the service list when occurs some change in JSON file."""
-        self.data = self.server_controls.loadServices()
-        self.model = QStandardItemModel()
-        self.basic_controls.addItemsTreeView(self.model, self.data)
-        self.dlg.data.setModel(self.model)
-        self.dlg.service_selection.clear()
-        self.dlg.service_selection.addItems(self.server_controls.getServiceNames())
-        self.dlg.service_selection.activated.connect(self.initCheckBox)
+        self.wlts_server_edit = not self.wlts_server_edit
+        self.dlg.wlts_server_label.setEnabled(self.wlts_server_edit)
+        if self.wlts_server_edit:
+            self.dlg.search_button.setEnabled(True)
+        else:
+            self.wlts_controls.setService(self.dlg.wlts_server_label.text())
 
     def initCheckBox(self):
         """Start the checkbox with the collections that are active in the service."""
         self.widget = QWidget()
         self.vbox = QVBoxLayout()
-        collections = self.server_controls.listCollections(
-            str(self.dlg.service_selection.currentText())
-        )
+        collections = self.wlts_controls.listCollections()
         self.checks = {}
         for collection in collections:
             self.checks[collection] = QCheckBox(str(collection))
@@ -332,6 +285,10 @@ class WltsQgis:
         self.widget.setLayout(self.vbox)
         self.dlg.bands_scroll.setWidgetResizable(True)
         self.dlg.bands_scroll.setWidget(self.widget)
+
+    def setCRS(self):
+        """Set the CRS in project instance."""
+        QgsProject.instance().setCrs(QgsCoordinateReferenceSystem(int("4326")))
 
     def getSelected(self):
         """Get the collections that have been selected."""
@@ -341,25 +298,6 @@ class WltsQgis:
                 self.selected_collections.append(key)
         self.start_date = str(self.dlg.start_date.date().toString('yyyy-MM-dd'))
         self.end_date = str(self.dlg.end_date.date().toString('yyyy-MM-dd'))
-
-    def getTrajectory(self):
-        """Get the trajectory from the filters that were selected."""
-        self.selected_service = self.server_controls.findServiceByName(self.dlg.service_selection.currentText()).host
-        if self.server_controls.testServiceConnection(self.selected_service):
-            try:
-                client_wlts = WLTS(url=self.selected_service)
-                self.tj = client_wlts.tj(
-                    latitude=self.transformSelectedLocation().get('lat', 0),
-                    longitude=self.transformSelectedLocation().get('long', 0),
-                    geometry=self.dlg.geometries.isChecked(),
-                    collections=",".join(
-                        self.selected_collections
-                    ),
-                    start_date=self.start_date,
-                    end_date=self.end_date
-                )
-            except:
-                self.basic_controls.alert("warning", "AttributeError", "Please insert a valid token!")
 
     def changeDateValue(self, value):
         """Date slider control data on layers QGIS."""
@@ -381,32 +319,6 @@ class WltsQgis:
                 QgsProject.instance().removeMapLayer(layer.layerId())
         QgsProject.instance().addMapLayer(vlayer)
 
-    def getGeometries(self):
-        """Get geometries from WLTS to add map layer on QGIS."""
-        self.dlg.date_control_slider.setVisible(False)
-        if self.dlg.geometries.isChecked():
-            result = self.tj.get('result', []).get('trajectory', [])
-            self.geojson = {
-                "type": "FeatureCollection",
-                "features": []
-            }
-            dates = []
-            for trajectory in result:
-                dates.append(trajectory.get('date', "no-data"))
-                self.geojson["features"].append({
-                    "type": "Feature",
-                    "geometry": trajectory.get('geom', {}),
-                    "properties": {
-                        "class": trajectory.get('class', "no-data"),
-                        "collection": trajectory.get('collection', "no-data"),
-                        "date": trajectory.get('date', "no-data")
-                    }
-                })
-            self.changeDateValue(0)
-            self.dlg.date_control_slider.setVisible(True)
-            self.dlg.date_slider.setMaximum(len(dates) - 1)
-            self.dlg.date_slider.valueChanged[int].connect(self.changeDateValue)
-
     def exportPython(self):
         """Export as python code."""
         try:
@@ -423,7 +335,6 @@ class WltsQgis:
                 'lat': self.selected_location['lat'],
                 'long': self.selected_location['long'],
                 'collections': ",".join(self.selected_collections),
-                'geometry': self.dlg.geometries.isChecked(),
                 'start': self.start_date,
                 'end': self.end_date
             }
@@ -464,64 +375,135 @@ class WltsQgis:
 
     def plotTrajectory(self):
         """Plot trajectory with files controls."""
+        self.getSelected()
+        self.tj = self.wlts_controls.getTrajectory(
+            lon=float(self.selected_location.get("long")),
+            lat=float(self.selected_location.get("lat")),
+            collections=self.selected_collections,
+            start_date=self.start_date,
+            end_date=self.end_date
+        )
         self.files_controls.generatePlotFig(self.tj)
 
-    def displayPoint(self, pointTool):
-        """Get the mouse possition and storage as selected location."""
-        try:
-            try:
-                crs = str(self.layer.crs().authid())
-            except RuntimeError:
-                crs = "Unknown"
-            self.selected_location = {
-                'layer_name' : str(self.layer.name()),
-                'lat' : float(pointTool.y()),
-                'long' : float(pointTool.x()),
-                'crs' : crs
-            }
-            history_key = str(
-                (
-                    "({lat:,.4f},{long:,.4f}) {crs}"
-                ).format(
-                    crs = crs,
-                    lat = self.selected_location.get('lat'),
-                    long = self.selected_location.get('long')
-                )
+    def remove_layer_by_name(self, layer_name):
+        """Remove a layer using name."""
+        for layer in QgsProject.instance().mapLayers().values():
+            if layer.name() == layer_name:
+                QgsProject.instance().removeMapLayer(layer.id())
+
+    def zoom_to_point(self, longitude, latitude, scale = None):
+        """Zoom in to selected location using longitude and latitude."""
+        time.sleep(0.30)
+        canvas = self.iface.mapCanvas()
+        if not scale:
+            scale = 200 * (1 / canvas.scale())
+        canvas.setExtent(
+            QgsRectangle(
+                float(longitude) - scale,
+                float(latitude) - scale,
+                float(longitude) + scale,
+                float(latitude) + scale
             )
-            self.locations[history_key] = self.selected_location
-            self.dlg.history_list.clear()
-            self.dlg.history_list.addItems(list(self.locations.keys()))
-            self.dlg.history_list.itemActivated.connect(self.getFromHistory)
-            self.getSelected()
-            self.getTrajectory()
-            self.getGeometries()
-            self.plotTrajectory()
+        )
+        canvas.refresh()
+
+    def zoom_to_selected_point(self):
+        """Zoom to selected point."""
+        self.addCanvasControlPoint(self.enabled_click)
+        if (self.dlg.input_longitude.value() != 0 and self.dlg.input_latitude.value() != 0):
+            self.dlg.zoom_selected_point.setEnabled(True)
+            self.zoom_to_point(
+                self.selected_location['long'],
+                self.selected_location['lat'],
+                scale = 0.1
+            )
+
+    def set_draw_point(self, longitude, latitude):
+        """Create featur to draw temporary point in canvas."""
+        feature = QgsFeature()
+        feature.setGeometry(QgsPoint(float(longitude), float(latitude)))
+        self.points_layer_data_provider.truncate()
+        self.points_layer_data_provider.addFeatures([feature])
+        self.points_layer_data_provider.forceReload()
+
+    def draw_point(self, longitude, latitude):
+        """Draw the selected points in canvas."""
+        self.getLayers()
+        if len(self.layers) > 0:
+            self.setCRS()
+            points_layer_name = "wtss_coordinates_history"
+            points_layer_icon_size = 10
+            try:
+                self.set_draw_point(longitude, latitude)
+            except:
+                self.remove_layer_by_name(points_layer_name)
+                self.points_layer = QgsVectorLayer(
+                    "Point?crs=epsg:4326&index=yes",
+                    points_layer_name, "memory"
+                )
+                symbol = QgsSymbol.defaultSymbol(QgsWkbTypes.PointGeometry)
+                symbol.deleteSymbolLayer(0)
+                symbol.appendSymbolLayer(QgsRasterMarkerSymbolLayer(self.points_layer_icon_path))
+                symbol.setSize(points_layer_icon_size)
+                self.points_layer.setRenderer(QgsSingleSymbolRenderer(symbol))
+                self.points_layer.triggerRepaint()
+                QgsProject.instance().addMapLayer(self.points_layer)
+                self.points_layer_data_provider = self.points_layer.dataProvider()
+                self.set_draw_point(longitude, latitude)
+
+    def save_on_history(self, x, y):
+        """Get lng/lat coordinates and save on history list."""
+        self.getLayers()
+        layer_name = '<none>'
+        if self.layer:
+            layer_name = str(self.layer.name())
+        self.selected_location = {
+            'long' : x,
+            'lat' : y,
+            'layer_name' : layer_name,
+            'crs' : 'epsg:4326'
+        }
+        history_key = str(("[{long:,.7f}, {lat:,.7f}]").format(
+            long = self.selected_location.get('long'),
+            lat = self.selected_location.get('lat')
+        ))
+        self.locations[history_key] = self.selected_location
+        locations_keys = list(self.locations.keys())
+        self.dlg.history_list.clear()
+        self.dlg.history_list.addItems(locations_keys)
+        self.dlg.history_list.setCurrentRow(len(locations_keys) - 1)
+
+    def display_point(self, pointTool):
+        """Get the mouse possition and storage as selected location."""
+        x = None
+        y = None
+        if pointTool == None:
+            x = self.dlg.input_longitude.value()
+            y = self.dlg.input_latitude.value()
+        else:
+            x = float(pointTool.x())
+            y = float(pointTool.y())
+            self.dlg.input_longitude.setValue(x)
+            self.dlg.input_latitude.setValue(y)
+        try:
+            self.save_on_history(x, y)
+            self.draw_point(x, y)
         except AttributeError:
             pass
 
     def addCanvasControlPoint(self, enable):
         """Generate a canvas area to get mouse position."""
-        self.enabled_click = False
         self.point_tool = None
-        self.displayPoint(self.point_tool)
+        self.pan_map = None
+        self.canvas = self.iface.mapCanvas()
         if enable:
-            self.canvas = self.iface.mapCanvas()
+            self.setCRS()
             self.point_tool = QgsMapToolEmitPoint(self.canvas)
-            self.point_tool.canvasClicked.connect(self.displayPoint)
+            self.point_tool.canvasClicked.connect(self.display_point)
             self.canvas.setMapTool(self.point_tool)
-            self.displayPoint(self.point_tool)
-            self.enabled_click = True
-
-    def transformSelectedLocation(self):
-        """Use basic controls to transform any selected projection to EPSG:4326."""
-        transformed = self.selected_location
-        if self.selected_location.get("crs"):
-            transformed = self.basic_controls.transformProjection(
-                self.selected_location.get("crs"),
-                self.selected_location.get("lat"),
-                self.selected_location.get("long")
-            )
-        return transformed
+        else:
+            self.pan_map = QgsMapToolPan(self.canvas)
+            self.canvas.setMapTool(self.pan_map)
 
     def enableGetLatLng(self):
         """Enable get lat lng to search trajectory data."""
@@ -557,7 +539,7 @@ class WltsQgis:
         self.dlg = WltsQgisDialog()
         self.initControls()
         self.addCanvasControlPoint(True)
-        self.initServices()
+        self.initService()
         self.initIcons()
         self.initButtons()
         self.initHistory()
