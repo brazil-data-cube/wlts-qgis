@@ -18,6 +18,7 @@
 
 import os
 
+
 class Config:
     """Base configuration for global variables.
 
@@ -28,4 +29,4 @@ class Config:
 
     WLTS_HOST = os.getenv("WLTS_HOST", "https://data.inpe.br/bdc/wlts/v1/")
 
-    PYTHONPATH_WTSS_PLUGIN = os.getenv("PYTHONPATH_WTSS_PLUGIN", None)
+    PYTHONPATH_WLTS_PLUGIN = os.getenv("PYTHONPATH_WTSS_PLUGIN", None)

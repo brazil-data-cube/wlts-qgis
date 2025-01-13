@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>741</width>
-    <height>500</height>
+    <width>742</width>
+    <height>501</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,6 +58,12 @@
         <width>231</width>
         <height>341</height>
        </rect>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::CurrentChanged</set>
+      </property>
+      <property name="showDropIndicator" stdset="0">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -161,7 +167,7 @@
      <widget class="QPushButton" name="export_as_json">
       <property name="geometry">
        <rect>
-        <x>170</x>
+        <x>10</x>
         <y>30</y>
         <width>71</width>
         <height>25</height>
@@ -197,7 +203,7 @@
      <widget class="QPushButton" name="export_as_python">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>170</x>
         <y>30</y>
         <width>71</width>
         <height>25</height>
@@ -213,7 +219,7 @@
       <rect>
        <x>10</x>
        <y>300</y>
-       <width>211</width>
+       <width>221</width>
        <height>51</height>
       </rect>
      </property>
@@ -225,7 +231,7 @@
        <rect>
         <x>0</x>
         <y>20</y>
-        <width>211</width>
+        <width>221</width>
         <height>31</height>
        </rect>
       </property>
@@ -247,9 +253,9 @@
     <widget class="QGroupBox" name="end_date_group">
      <property name="geometry">
       <rect>
-       <x>250</x>
+       <x>240</x>
        <y>300</y>
-       <width>211</width>
+       <width>221</width>
        <height>51</height>
       </rect>
      </property>
@@ -261,7 +267,7 @@
        <rect>
         <x>0</x>
         <y>20</y>
-        <width>211</width>
+        <width>221</width>
         <height>31</height>
        </rect>
       </property>
@@ -298,7 +304,7 @@
       <rect>
        <x>330</x>
        <y>430</y>
-       <width>31</width>
+       <width>27</width>
        <height>27</height>
       </rect>
      </property>
@@ -309,9 +315,9 @@
     <widget class="QGroupBox" name="longitude_latitude_group">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>360</y>
-       <width>451</width>
+       <x>14</x>
+       <y>358</y>
+       <width>441</width>
        <height>61</height>
       </rect>
      </property>
@@ -362,12 +368,12 @@
        <double>0.000000000000000</double>
       </property>
      </widget>
-     <widget class="QPushButton" name="zoom_to_point">
+     <widget class="QPushButton" name="zoom_selected_point">
       <property name="geometry">
        <rect>
         <x>410</x>
-        <y>30</y>
-        <width>31</width>
+        <y>31</y>
+        <width>25</width>
         <height>25</height>
        </rect>
       </property>

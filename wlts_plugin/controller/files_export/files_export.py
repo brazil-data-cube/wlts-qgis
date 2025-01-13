@@ -25,6 +25,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+from ..wlts_qgis_controller import Controls
+
 
 class FilesExport:
     """Exporting WLTS data in different formats.
@@ -135,11 +137,10 @@ class FilesExport:
             plt.cla()
             plt.close()
             fig = plt.figure(figsize=(12, 5))
-            df_trajectory = trajectory.df().drop(columns="geom")
+            df_trajectory = trajectory.df()
             ax2 = fig.add_subplot()
             font_size = 11
             bbox = [0, 0, 1, 1]
-            ax2.axis('off')
             mpl_table = ax2.table(
                 cellText=df_trajectory.values,
                 rowLabels=df_trajectory.index,
@@ -149,5 +150,6 @@ class FilesExport:
             mpl_table.auto_set_font_size(False)
             mpl_table.set_fontsize(font_size)
             plt.show()
-        except:
-            pass
+        except Exception as e:
+            controls = Controls()
+            controls.alert("error", "Error while generate an image!", str(e))

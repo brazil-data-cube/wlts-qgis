@@ -211,6 +211,11 @@ class WltsQgis:
         """Get icons from file system."""
         icon = QIcon(str(Path(Config.BASE_DIR) / 'assets' / 'interrogation-icon.png'))
         self.dlg.show_help_button.setIcon(icon)
+        icon = QIcon(str(Path(Config.BASE_DIR) / 'assets' / 'location-icon.png'))
+        self.dlg.search_button.setIcon(icon)
+        icon = QIcon(str(Path(Config.BASE_DIR) / 'assets' / 'zoom-icon.png'))
+        self.dlg.zoom_selected_point.setIcon(icon)
+        self.points_layer_icon_path = str(Path(Config.BASE_DIR) / 'assets' / 'marker-icon.png')
 
     def initControls(self):
         """Init the basic controls to get."""
@@ -221,6 +226,9 @@ class WltsQgis:
         self.files_controls = FilesExport()
         self.enabled_click = True
         self.addCanvasControlPoint(self.enabled_click)
+        self.dlg.input_longitude.valueChanged.connect(self.checkFilters)
+        self.dlg.input_latitude.valueChanged.connect(self.checkFilters)
+        self.getDate()
 
     def initButtons(self):
         """Init the main buttons to manage services and the results."""
@@ -229,6 +237,7 @@ class WltsQgis:
         self.dlg.export_as_csv.clicked.connect(self.exportCSV)
         self.dlg.export_as_json.clicked.connect(self.exportJSON)
         self.dlg.search_button.clicked.connect(self.plotTrajectory)
+        self.enabledSearchButtons(False)
 
     def initHistory(self):
         """Init and update location history."""
@@ -238,12 +247,18 @@ class WltsQgis:
             self.dlg.history_list.addItems(list(self.locations.keys()))
         except AttributeError:
             self.locations = {}
-        self.dlg.history_list.itemActivated.connect(self.getFromHistory)
+        self.dlg.history_list.itemClicked.connect(self.getFromHistory)
         self.getLayers()
 
     def getFromHistory(self, item):
         """Select location from history storage as selected location."""
         self.selected_location = self.locations.get(item.text(), {})
+        self.dlg.input_longitude.setValue(self.selected_location.get('long'))
+        self.dlg.input_latitude.setValue(self.selected_location.get('lat'))
+        self.draw_point(
+            self.selected_location.get('long'),
+            self.selected_location.get('lat')
+        )
 
     def getLayers(self):
         """Storage the layers in QGIS project."""
@@ -281,6 +296,7 @@ class WltsQgis:
         self.checks = {}
         for collection in collections:
             self.checks[collection] = QCheckBox(str(collection))
+            self.checks[collection].stateChanged.connect(self.checkFilters)
             self.vbox.addWidget(self.checks.get(collection))
         self.widget.setLayout(self.vbox)
         self.dlg.bands_scroll.setWidgetResizable(True)
@@ -431,7 +447,7 @@ class WltsQgis:
         self.getLayers()
         if len(self.layers) > 0:
             self.setCRS()
-            points_layer_name = "wtss_coordinates_history"
+            points_layer_name = "wlts_coordinates_history"
             points_layer_icon_size = 10
             try:
                 self.set_draw_point(longitude, latitude)
@@ -509,47 +525,63 @@ class WltsQgis:
         """Enable get lat lng to search trajectory data."""
         self.addCanvasControlPoint(True)
 
-    def updateDescription(self):
-        """Update description."""
+    def enabledSearchButtons(self, enable):
+        """Enable the buttons to load time series."""
+        self.dlg.search_button.setEnabled(enable)
+        self.dlg.export_as_python.setEnabled(enable)
+        self.dlg.export_as_csv.setEnabled(enable)
+        self.dlg.export_as_json.setEnabled(enable)
+
+    def checkFilters(self):
+        """Check if lat lng are selected."""
+        self.getSelected()
         try:
-            index = self.dlg.data.selectedIndexes()[0]
-            self.metadata_selected = index.model().itemFromIndex(index)
-            description = (
-                "{service_metadata}\n\n{collection_metadata}".format(
-                    service_metadata=self.basic_controls.getDescription(
-                        name=str(self.metadata_selected.parent().text()),
-                        host=str(self.server_controls.findServiceByName(
-                            self.metadata_selected.parent().text()
-                        ).host),
-                        collections=self.metadata_selected.text()
-                    ),
-                    collection_metadata=self.basic_controls.getCollectionDescription(
-                        self.server_controls,
-                        str(self.metadata_selected.parent().text()),
-                        self.metadata_selected.text()
-                    )
-                )
-            )
-            self.basic_controls.alert("info", "Service Metadata", description)
+            if (len(self.selected_collections) > 0 and
+                self.dlg.input_longitude.value() != 0 and
+                    self.dlg.input_latitude.value() != 0):
+                self.enabledSearchButtons(True)
+            else:
+                self.enabledSearchButtons(False)
         except:
-            pass
+            self.enabledSearchButtons(False)
+
+    def finish_session(self):
+        """Methods to finish when dialog close"""
+        #
+        # Remove mouse click
+        self.addCanvasControlPoint(False)
+        #
+        # Restore sys.path
+        if Config.PYTHONPATH_WLTS_PLUGIN:
+            try:
+                import sys
+                sys.path = os.environ['PYTHONPATH_WLTS_PLUGIN'].split(':')
+                os.environ.pop('PYTHONPATH_WLTS_PLUGIN')
+            except:
+                pass
+
+    def dialogShow(self):
+        """Rules to start dialog."""
+        wlts_qgis = qgis.utils.plugins.get("wlts_qgis", None)
+        if wlts_qgis and not wlts_qgis.dlg.isVisible():
+            self.dlg.show()
+        else:
+            wlts_qgis.dlg.activateWindow()
 
     def run(self):
         """Run method that performs all the real work."""
         self.dlg = WltsQgisDialog()
+        # Init Controls
         self.initControls()
-        self.addCanvasControlPoint(True)
+        # Services
         self.initService()
+        # Add icons to buttons
         self.initIcons()
+        # Add functions to buttons
         self.initButtons()
+        # History
         self.initHistory()
-        self.getDate()
         # show the dialog
-        self.dlg.show()
-        # Run the dialog event loop
-        result = self.dlg.exec_()
-        # See if OK was pressed
-        if result:
-            # Do something useful here - delete the line containing pass and
-            # substitute with your code.
-            pass
+        self.dialogShow()
+        # Methods to finish session
+        self.dlg.finished.connect(self.finish_session)
