@@ -59,7 +59,7 @@ install_requires = [
     'pandas>=1.1',
     'pyqt5ac>=1.2',
     'bdc-config @ git+https://github.com/brazil-data-cube/bdc-config@v0.1.0',
-    'wlts @ git+https://github.com/brazil-data-cube/wlts.py@v0.8.0'
+    'wlts @ git+https://github.com/brazil-data-cube/wlts.py@v1.1.0'
 ]
 
 packages = find_packages()
