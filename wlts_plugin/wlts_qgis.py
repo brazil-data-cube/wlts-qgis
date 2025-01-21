@@ -215,6 +215,8 @@ class WltsQgis:
         self.dlg.search_button.setIcon(icon)
         icon = QIcon(str(Path(Config.BASE_DIR) / 'assets' / 'zoom-icon.png'))
         self.dlg.zoom_selected_point.setIcon(icon)
+        icon = QIcon(str(Path(Config.BASE_DIR) / 'assets' / 'save-icon.png'))
+        self.dlg.export_result.setIcon(icon)
         self.points_layer_icon_path = str(Path(Config.BASE_DIR) / 'assets' / 'marker-icon.png')
 
     def initControls(self):
@@ -233,11 +235,15 @@ class WltsQgis:
     def initButtons(self):
         """Init the main buttons to manage services and the results."""
         self.dlg.show_help_button.clicked.connect(self.showHelp)
-        self.dlg.export_as_python.clicked.connect(self.exportPython)
-        self.dlg.export_as_csv.clicked.connect(self.exportCSV)
-        self.dlg.export_as_json.clicked.connect(self.exportJSON)
+        self.dlg.export_result.clicked.connect(self.exportAsType)
         self.dlg.search_button.clicked.connect(self.plotTrajectory)
+        self.dlg.zoom_selected_point.clicked.connect(self.zoom_to_selected_point)
+        self.initExportOptions()
         self.enabledSearchButtons(False)
+
+    def initExportOptions(self):
+        """Init the combo box select option to export"""
+        self.dlg.export_result_as_type.addItems(self.files_controls.getExportOptions())
 
     def initHistory(self):
         """Init and update location history."""
@@ -269,24 +275,7 @@ class WltsQgis:
     def getDate(self):
         """Get the start and end dates of the trajectory."""
         self.dlg.start_date.setDate(self.basic_controls.formatForQDate("1999-01-01"))
-        self.dlg.end_date.setDate(self.basic_controls.formatForQDate("2021-01-01"))
-
-    def initService(self):
-        """Load the registered services based on JSON file."""
-        self.wlts_server_edit = True
-        self.dlg.wlts_server_label.setText(self.wlts_controls.getService())
-        self.dlg.wlts_server_label.setEnabled(self.wlts_server_edit)
-        self.dlg.wlts_server_label_update.clicked.connect(self.updateService)
-        self.initCheckBox()
-
-    def updateService(self):
-        """Edit the selected service."""
-        self.wlts_server_edit = not self.wlts_server_edit
-        self.dlg.wlts_server_label.setEnabled(self.wlts_server_edit)
-        if self.wlts_server_edit:
-            self.dlg.search_button.setEnabled(True)
-        else:
-            self.wlts_controls.setService(self.dlg.wlts_server_label.text())
+        self.dlg.end_date.setDate(self.basic_controls.getNowFormatQDate())
 
     def initCheckBox(self):
         """Start the checkbox with the collections that are active in the service."""
@@ -295,7 +284,8 @@ class WltsQgis:
         collections = self.wlts_controls.listCollections()
         self.checks = {}
         for collection in collections:
-            self.checks[collection] = QCheckBox(str(collection))
+            description = self.wlts_controls.description(collection)
+            self.checks[collection] = QCheckBox(str(description["title"]))
             self.checks[collection].stateChanged.connect(self.checkFilters)
             self.vbox.addWidget(self.checks.get(collection))
         self.widget.setLayout(self.vbox)
@@ -347,7 +337,7 @@ class WltsQgis:
                 filter='*.py'
             )
             attributes = {
-                'host': self.selected_service,
+                'host': Config.WLTS_HOST,
                 'lat': self.selected_location['lat'],
                 'long': self.selected_location['long'],
                 'collections': ",".join(self.selected_collections),
@@ -400,6 +390,30 @@ class WltsQgis:
             end_date=self.end_date
         )
         self.files_controls.generatePlotFig(self.tj)
+
+    def plotlyBrowser(self):
+        """Redirects user to browser plotly."""
+        self.getSelected()
+        self.tj = self.wlts_controls.getTrajectory(
+            lon=float(self.selected_location.get("long")),
+            lat=float(self.selected_location.get("lat")),
+            collections=self.selected_collections,
+            start_date=self.start_date,
+            end_date=self.end_date
+        )
+        self.files_controls.generatePlotlyFig(self.tj)
+
+    def exportAsType(self):
+        """Export result based on combo box selection."""
+        ext = self.dlg.export_result_as_type.currentText()
+        if ext == "CSV":
+            self.exportCSV()
+        elif ext == "JSON":
+            self.exportJSON()
+        elif ext == "Python":
+            self.exportPython()
+        elif ext == "Plotly":
+            self.plotlyBrowser()
 
     def remove_layer_by_name(self, layer_name):
         """Remove a layer using name."""
@@ -528,9 +542,8 @@ class WltsQgis:
     def enabledSearchButtons(self, enable):
         """Enable the buttons to load time series."""
         self.dlg.search_button.setEnabled(enable)
-        self.dlg.export_as_python.setEnabled(enable)
-        self.dlg.export_as_csv.setEnabled(enable)
-        self.dlg.export_as_json.setEnabled(enable)
+        self.dlg.export_result_as_type.setEnabled(enable)
+        self.dlg.export_result.setEnabled(enable)
 
     def checkFilters(self):
         """Check if lat lng are selected."""
@@ -573,14 +586,14 @@ class WltsQgis:
         self.dlg = WltsQgisDialog()
         # Init Controls
         self.initControls()
-        # Services
-        self.initService()
         # Add icons to buttons
         self.initIcons()
         # Add functions to buttons
         self.initButtons()
         # History
         self.initHistory()
+        # Get collections
+        self.initCheckBox()
         # show the dialog
         self.dialogShow()
         # Methods to finish session

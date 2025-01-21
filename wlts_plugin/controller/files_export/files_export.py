@@ -16,15 +16,16 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
 
-import csv
 import json
 import os
 from pathlib import Path
 
+import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
+from wlts import WLTS
 
+from ..config import Config
 from ..wlts_qgis_controller import Controls
 
 
@@ -48,6 +49,16 @@ class FilesExport:
         )
         return open(template, 'r').read()
 
+    def defaultImage(self):
+        return f'{Config.BASE_DIR}/wlts_plotly.png'
+
+    def getExportOptions(self):
+        """Set options to export result."""
+        return [
+            "CSV", "JSON",
+            "Python", "Plotly"
+        ]
+
     def generateCode(self, file_name, attributes):
         """Generate a python code file filling WLTS blank spaces.
 
@@ -67,8 +78,8 @@ class FilesExport:
         }
         """
         try:
-            lat = "{:,.2f}".format(attributes.get("lat"))
-            lon = "{:,.2f}".format(attributes.get("long"))
+            lat = attributes.get("lat")
+            lon = attributes.get("long")
             mapping = {
                 "service_host": attributes.get("host"),
                 "collections": attributes.get("collections"),
@@ -133,23 +144,37 @@ class FilesExport:
         :param trajectory<dict>: the trajectory service reponse dictionary.
         """
         try:
-            plt.clf()
-            plt.cla()
-            plt.close()
-            fig = plt.figure(figsize=(12, 5))
-            df_trajectory = trajectory.df()
-            ax2 = fig.add_subplot()
-            font_size = 11
-            bbox = [0, 0, 1, 1]
-            mpl_table = ax2.table(
-                cellText=df_trajectory.values,
-                rowLabels=df_trajectory.index,
-                bbox=bbox,
-                colLabels=df_trajectory.columns
+            fig = WLTS.plot(
+                trajectory.df(),
+                marker_size=8,
+                font_size=12,
+                width=1050,
+                height=320
             )
-            mpl_table.auto_set_font_size(False)
-            mpl_table.set_fontsize(font_size)
+            fig.write_image(self.defaultImage())
+            img = mpimg.imread(self.defaultImage())
+            plt.figure(figsize = (12, 4))
+            plt.imshow(img)
+            plt.axis('off')
             plt.show()
+        except Exception as e:
+            controls = Controls()
+            controls.alert("error", "Error while generate an image!", str(e))
+
+    def generatePlotlyFig(self, trajectory):
+        """Generate an SVG based on Plotly with trajectory data in a table.
+
+        :param trajectory<dict>: the trajectory service reponse dictionary.
+        """
+        try:
+            fig = WLTS.plot(
+                trajectory.df(),
+                marker_size=8,
+                font_size=12,
+                width=1050,
+                height=320
+            )
+            fig.show()
         except Exception as e:
             controls = Controls()
             controls.alert("error", "Error while generate an image!", str(e))

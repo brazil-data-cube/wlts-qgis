@@ -16,6 +16,8 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
 
+from datetime import datetime
+
 from pyproj import CRS, Proj, transform
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QInputDialog, QLineEdit, QMessageBox
@@ -69,6 +71,15 @@ class Controls:
 
         :param date_string<string>: date string with 'yyyy-mm-dd' format.
         """
+        return QDate(
+            int(date_string[:4]),
+            int(date_string[5:-3]),
+            int(date_string[8:])
+        )
+
+    def getNowFormatQDate(self):
+        """Get date today to init controls."""
+        date_string = datetime.today().strftime('%Y-%m-%d')
         return QDate(
             int(date_string[:4]),
             int(date_string[5:-3]),

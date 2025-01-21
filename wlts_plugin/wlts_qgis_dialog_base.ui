@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>742</width>
-    <height>501</height>
+    <width>703</width>
+    <height>441</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,8 +21,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>741</width>
-     <height>501</height>
+     <width>701</width>
+     <height>441</height>
     </rect>
    </property>
    <property name="tabPosition">
@@ -43,8 +43,8 @@
       <rect>
        <x>480</x>
        <y>10</y>
-       <width>251</width>
-       <height>381</height>
+       <width>211</width>
+       <height>321</height>
       </rect>
      </property>
      <property name="title">
@@ -55,8 +55,8 @@
        <rect>
         <x>10</x>
         <y>30</y>
-        <width>231</width>
-        <height>341</height>
+        <width>191</width>
+        <height>281</height>
        </rect>
       </property>
       <property name="editTriggers">
@@ -71,7 +71,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>80</y>
+       <y>10</y>
        <width>451</width>
        <height>211</height>
       </rect>
@@ -116,110 +116,48 @@
       </widget>
      </widget>
     </widget>
-    <widget class="QGroupBox" name="services_group">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>451</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Active Service</string>
-     </property>
-     <widget class="QLineEdit" name="wlts_server_label">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>30</y>
-        <width>351</width>
-        <height>27</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="wlts_server_label_update">
-      <property name="geometry">
-       <rect>
-        <x>370</x>
-        <y>30</y>
-        <width>71</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Update</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QGroupBox" name="exporting_files_2">
      <property name="geometry">
       <rect>
        <x>480</x>
-       <y>400</y>
-       <width>251</width>
+       <y>340</y>
+       <width>211</width>
        <height>61</height>
       </rect>
      </property>
      <property name="title">
-      <string>Export code as</string>
+      <string>Export result as</string>
      </property>
-     <widget class="QPushButton" name="export_as_json">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>30</y>
-        <width>71</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>9</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>JSON</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="export_as_csv">
-      <property name="geometry">
-       <rect>
-        <x>90</x>
-        <y>30</y>
-        <width>71</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>9</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>CSV</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="export_as_python">
+     <widget class="QPushButton" name="export_result">
       <property name="geometry">
        <rect>
         <x>170</x>
         <y>30</y>
-        <width>71</width>
+        <width>31</width>
         <height>25</height>
        </rect>
       </property>
       <property name="text">
-       <string>Python</string>
+       <string/>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="export_result_as_type">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>151</width>
+        <height>27</height>
+       </rect>
       </property>
      </widget>
     </widget>
     <widget class="QGroupBox" name="start_date_group">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>300</y>
-       <width>221</width>
+       <x>20</x>
+       <y>230</y>
+       <width>211</width>
        <height>51</height>
       </rect>
      </property>
@@ -231,7 +169,7 @@
        <rect>
         <x>0</x>
         <y>20</y>
-        <width>221</width>
+        <width>211</width>
         <height>31</height>
        </rect>
       </property>
@@ -254,8 +192,8 @@
      <property name="geometry">
       <rect>
        <x>240</x>
-       <y>300</y>
-       <width>221</width>
+       <y>230</y>
+       <width>211</width>
        <height>51</height>
       </rect>
      </property>
@@ -267,7 +205,7 @@
        <rect>
         <x>0</x>
         <y>20</y>
-        <width>221</width>
+        <width>211</width>
         <height>31</height>
        </rect>
       </property>
@@ -290,7 +228,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>430</y>
+       <y>370</y>
        <width>221</width>
        <height>27</height>
       </rect>
@@ -303,7 +241,7 @@
      <property name="geometry">
       <rect>
        <x>330</x>
-       <y>430</y>
+       <y>370</y>
        <width>27</width>
        <height>27</height>
       </rect>
@@ -315,8 +253,8 @@
     <widget class="QGroupBox" name="longitude_latitude_group">
      <property name="geometry">
       <rect>
-       <x>14</x>
-       <y>358</y>
+       <x>10</x>
+       <y>290</y>
        <width>441</width>
        <height>61</height>
       </rect>
