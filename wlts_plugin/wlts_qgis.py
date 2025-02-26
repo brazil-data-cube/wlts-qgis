@@ -584,17 +584,21 @@ class WltsQgis:
     def run(self):
         """Run method that performs all the real work."""
         self.dlg = WltsQgisDialog()
-        # Init Controls
-        self.initControls()
-        # Add icons to buttons
-        self.initIcons()
-        # Add functions to buttons
-        self.initButtons()
-        # History
-        self.initHistory()
-        # Get collections
-        self.initCheckBox()
-        # show the dialog
-        self.dialogShow()
-        # Methods to finish session
-        self.dlg.finished.connect(self.finish_session)
+        try:
+            # Init Controls
+            self.initControls()
+            # Add icons to buttons
+            self.initIcons()
+            # Add functions to buttons
+            self.initButtons()
+            # History
+            self.initHistory()
+            # Get collections
+            self.initCheckBox()
+            # show the dialog
+            self.dialogShow()
+            # Methods to finish session
+            self.dlg.finished.connect(self.finish_session)
+        except Exception as e:
+            controls = Controls()
+            controls.alert("error", "Error while start plugin!", str(e))
