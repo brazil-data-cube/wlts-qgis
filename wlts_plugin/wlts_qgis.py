@@ -47,7 +47,7 @@ from .resources import *
 from .wlts_qgis_dialog import WltsQgisDialog
 
 
-class WltsQgis:
+class WLTSQgis:
     """QGIS Plugin Implementation."""
 
     def __init__(self, iface):
@@ -601,4 +601,4 @@ class WltsQgis:
             self.dlg.finished.connect(self.finish_session)
         except Exception as e:
             controls = Controls()
-            controls.alert("error", "Error while start plugin!", str(e))
+            controls.alert("error", "Error while starting plugin!", str(e))

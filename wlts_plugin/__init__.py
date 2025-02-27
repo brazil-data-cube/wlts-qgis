@@ -207,8 +207,8 @@ def start(iface):
     set_lib_path()
     #
     # Start plugin GUI
-    from .wlts_qgis import wlts_qgis
-    return wlts_qgis(iface)
+    from .wlts_qgis import WLTSQgis
+    return WLTSQgis(iface)
 
 def classFactory(iface):
     """Load wlts_qgis class from file wlts_qgis.
