@@ -236,7 +236,7 @@ class WLTSQgis:
         """Init the main buttons to manage services and the results."""
         self.dlg.show_help_button.clicked.connect(self.showHelp)
         self.dlg.export_result.clicked.connect(self.exportAsType)
-        self.dlg.search_button.clicked.connect(self.plotTrajectory)
+        self.dlg.search_button.clicked.connect(self.plotlyBrowser)
         self.dlg.zoom_selected_point.clicked.connect(self.zoom_to_selected_point)
         self.initExportOptions()
         self.enabledSearchButtons(False)
@@ -412,8 +412,8 @@ class WLTSQgis:
             self.exportJSON()
         elif ext == "Python":
             self.exportPython()
-        elif ext == "Plotly":
-            self.plotlyBrowser()
+        elif ext == "Matplot":
+            self.plotTrajectory()
 
     def remove_layer_by_name(self, layer_name):
         """Remove a layer using name."""

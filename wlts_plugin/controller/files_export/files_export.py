@@ -56,7 +56,7 @@ class FilesExport:
         """Set options to export result."""
         return [
             "CSV", "JSON",
-            "Python", "Plotly"
+            "Python", "Matplot"
         ]
 
     def generateCode(self, file_name, attributes):
