@@ -1,6 +1,6 @@
 @REM #
-@REM # This file is part of Python QGIS Plugin for WLTS.
-@REM # Copyright (C) 2025 INPE.
+@REM # This file is part of Python QGIS Plugin for WTSS.
+@REM # Copyright (C) 2024 INPE.
 @REM #
 @REM # This program is free software: you can redistribute it and/or modify
 @REM # it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ call %OSGEO4W_ROOT%\apps\grass\grass%GRASS_VERSION%\etc\env.bat
 path %PATH%;%OSGEO4W_ROOT%\apps\qgis\bin
 path %PATH%;%OSGEO4W_ROOT%\apps\grass\grass%GRASS_VERSION%\lib
 path %PATH%;%OSGEO4W_ROOT%\apps\Qt5\bin
-path %PATH%;%OSGEO4W_ROOT%\Python%PYTHON_VERSION%\Scripts
+path %PATH%;%OSGEO4W_ROOT%\apps\Python%PYTHON_VERSION%\Scripts
 
 set PYTHONPATH=%PYTHONPATH%;%OSGEO4W_ROOT%\apps\qgis\python
 set PYTHONHOME=%OSGEO4W_ROOT%\apps\Python%PYTHON_VERSION%
