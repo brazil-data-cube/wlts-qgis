@@ -81,7 +81,7 @@ setup(
     keywords=['Land Use Land Cover', 'GIS', 'QGIS'],
     license='MIT',
     author='Brazil Data Cube Team',
-    author_email='brazildatacube@inpe.br',
+    author_email='bdc.team@inpe.br',
     url='https://github.com/brazil-data-cube/lccs-db',
     packages=packages,
     zip_safe=False,

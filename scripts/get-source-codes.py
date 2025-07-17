@@ -46,8 +46,8 @@ lib_paths.append(pystac.__file__)
 import pystac_client
 lib_paths.append(pystac_client.__file__)
 
-import wtss
-lib_paths.append(wtss.__file__)
+import wlts
+lib_paths.append(wlts.__file__)
 
 file = open(Path('scripts') / 'lib-paths.txt', 'w')
 for path in lib_paths:

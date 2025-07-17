@@ -8,7 +8,7 @@
 
 """
 
-__author__ = 'brazildatacube@inpe.br'
+__author__ = 'bdc.team@inpe.br'
 __date__ = '2021-08-31'
 __copyright__ = 'Copyright 2021, INPE'
 
