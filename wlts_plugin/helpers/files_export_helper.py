@@ -26,7 +26,7 @@ import pandas as pd
 from wlts import WLTS
 
 from ..config import Config
-from ..wlts_qgis_controller import Controls
+from ..controller.wlts_qgis_controller import Controls
 
 
 class FilesExport:
@@ -56,7 +56,7 @@ class FilesExport:
         """Set options to export result."""
         return [
             "CSV", "JSON",
-            "Python", "Matplot"
+            "Python", "Plotly"
         ]
 
     def generateCode(self, file_name, attributes):

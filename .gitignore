@@ -178,6 +178,7 @@ plugin_template/*pyc
 .coverage
 .noseids
 nohup.out
+wlts_plugin/resources.py
 
 # ignore the help build dir
 wlts_plugin/help/build
@@ -199,6 +200,7 @@ services_storage_user_application.json
 wlts_plugin/LICENSE
 
 # Ignore libs path
+
 *lib
 
 *lib-paths.txt

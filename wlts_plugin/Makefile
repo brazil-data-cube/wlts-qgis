@@ -47,7 +47,7 @@ PY_FILES = \
 
 UI_FILES = wlts_qgis_dialog_base.ui
 
-EXTRAS = metadata.txt controller/assets/icon.png
+EXTRAS = metadata.txt assets/icon.png
 
 COMPILED_RESOURCE_FILES = resources.py
 

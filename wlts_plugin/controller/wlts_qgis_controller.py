@@ -23,7 +23,7 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QInputDialog, QLineEdit, QMessageBox
 from wlts import WLTS
 
-from .config import Config
+from ..config import Config
 
 
 class Controls:

@@ -16,5 +16,4 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
 
-from .files_export.files_export import FilesExport
 from .wlts_qgis_controller import Controls, WLTS_Controls

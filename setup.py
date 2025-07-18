@@ -59,7 +59,7 @@ install_requires = [
     'pandas>=1.1',
     'pyqt5ac>=1.2',
     'ipython>=8.31.0',
-    'kaleido>=0.2.1',
+    'kaleido<1.0.0',
     'dash>=2.18.2',
     'bdc-config @ git+https://github.com/brazil-data-cube/bdc-config@v0.1.0',
     'wlts @ git+https://github.com/brazil-data-cube/wlts.py@v1.1.0'

@@ -16,12 +16,10 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
 
-import getpass
 import json
 import os.path
-from pathlib import Path
-
 import time
+from pathlib import Path
 
 import qgis.utils
 from PyQt5.QtCore import Qt
@@ -36,9 +34,9 @@ from qgis.PyQt.QtCore import QCoreApplication, QSettings, QTranslator
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 
-from .controller.config import Config
+from .config import Config
 # Import files exporting controls
-from .controller.files_export import FilesExport
+from .helpers.files_export_helper import FilesExport
 # Import the controls for the plugin
 from .controller.wlts_qgis_controller import Controls, WLTS_Controls
 # Initialize Qt resources from file resources.py
@@ -236,7 +234,7 @@ class WLTSQgis:
         """Init the main buttons to manage services and the results."""
         self.dlg.show_help_button.clicked.connect(self.showHelp)
         self.dlg.export_result.clicked.connect(self.exportAsType)
-        self.dlg.search_button.clicked.connect(self.plotlyBrowser)
+        self.dlg.search_button.clicked.connect(self.plotTrajectory)
         self.dlg.zoom_selected_point.clicked.connect(self.zoom_to_selected_point)
         self.initExportOptions()
         self.enabledSearchButtons(False)
@@ -412,8 +410,8 @@ class WLTSQgis:
             self.exportJSON()
         elif ext == "Python":
             self.exportPython()
-        elif ext == "Matplot":
-            self.plotTrajectory()
+        elif ext == "Plotly":
+            self.plotlyBrowser()
 
     def remove_layer_by_name(self, layer_name):
         """Remove a layer using name."""
@@ -576,10 +574,10 @@ class WLTSQgis:
     def dialogShow(self):
         """Rules to start dialog."""
         wlts_qgis = qgis.utils.plugins.get("wlts_qgis", None)
-        if wlts_qgis and not wlts_qgis.dlg.isVisible():
-            self.dlg.show()
+        if wlts_qgis:
+            wlts_qgis.dlg.show()
         else:
-            wlts_qgis.dlg.activateWindow()
+            self.dlg.show()
 
     def run(self):
         """Run method that performs all the real work."""
