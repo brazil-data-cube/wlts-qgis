@@ -26,7 +26,7 @@ import pandas as pd
 from wlts import WLTS
 
 from ..config import Config
-from ..controller.wlts_qgis_controller import Controls
+from ..controller.wlts_qgis_controller import Controls, WLTS_Controls
 
 
 class FilesExport:
@@ -138,41 +138,30 @@ class FilesExport:
         except FileNotFoundError:
             pass
 
-    def generatePlotFig(self, trajectory):
+    def generatePlotFig(self, wlts_controls: WLTS_Controls):
         """Generate an image .JPEG with trajectory data in a table.
 
         :param trajectory<dict>: the trajectory service reponse dictionary.
         """
         try:
-            fig = WLTS.plot(
-                trajectory.df(),
-                marker_size=8,
-                font_size=12,
-                width=1050,
-                height=320
+            wlts_controls.plotTrajectory(
+                marker_size=8, font_size=12,
+                width=1050, height=320
             )
-            fig.write_image(self.defaultImage())
-            img = mpimg.imread(self.defaultImage())
-            plt.figure(figsize = (12, 4))
-            plt.imshow(img)
-            plt.axis('off')
-            plt.show()
         except Exception as e:
             controls = Controls()
             controls.alert("error", "Error while generate an image!", str(e))
 
-    def generatePlotlyFig(self, trajectory):
+    def generatePlotlyFig(self, wlts_controls: WLTS_Controls):
         """Generate an SVG based on Plotly with trajectory data in a table.
 
         :param trajectory<dict>: the trajectory service reponse dictionary.
         """
         try:
             fig = WLTS.plot(
-                trajectory.df(),
-                marker_size=8,
-                font_size=12,
-                width=1050,
-                height=320
+                wlts_controls.trajectory.df(),
+                marker_size=8, font_size=12,
+                width=1050, height=320
             )
             fig.show()
         except Exception as e:

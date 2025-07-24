@@ -16,6 +16,7 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
 
+from datetime import datetime
 import json
 import os.path
 import time
@@ -272,8 +273,11 @@ class WLTSQgis:
 
     def getDate(self):
         """Get the start and end dates of the trajectory."""
-        self.dlg.start_date.setDate(self.basic_controls.formatForQDate("1999-01-01"))
-        self.dlg.end_date.setDate(self.basic_controls.getNowFormatQDate())
+        years_interval = 10
+        date_string = datetime.today().strftime('%Y-%m-%d')
+        end_year = int(date_string[:4]) - years_interval
+        self.dlg.start_date.setDate(self.basic_controls.formatForQDate(f"{end_year}-01-01"))
+        self.dlg.end_date.setDate(self.basic_controls.formatForQDate(date_string))
 
     def initCheckBox(self):
         """Start the checkbox with the collections that are active in the service."""
@@ -284,6 +288,7 @@ class WLTSQgis:
         for collection in collections:
             description = self.wlts_controls.description(collection)
             self.checks[collection] = QCheckBox(str(description["title"]))
+            self.checks[collection].setChecked(True)
             self.checks[collection].stateChanged.connect(self.checkFilters)
             self.vbox.addWidget(self.checks.get(collection))
         self.widget.setLayout(self.vbox)
@@ -329,9 +334,7 @@ class WLTSQgis:
             name = QFileDialog.getSaveFileName(
                 parent=self.dlg,
                 caption='Save as python code',
-                directory=('wlts.{collection}.py').format(
-                    collection=str(".".join(self.selected_collections))
-                ),
+                directory=('wlts_trajectory_download.py'),
                 filter='*.py'
             )
             attributes = {
@@ -352,9 +355,7 @@ class WLTSQgis:
             name = QFileDialog.getSaveFileName(
                 parent=self.dlg,
                 caption='Save as CSV',
-                directory=('wlts.{collection}.csv').format(
-                    collection=str(".".join(self.selected_collections))
-                ),
+                directory=('wlts_trajectory_download.csv'),
                 filter='*.csv'
             )
             trajectory = self.tj
@@ -368,9 +369,7 @@ class WLTSQgis:
             name = QFileDialog.getSaveFileName(
                 parent=self.dlg,
                 caption='Save as JSON',
-                directory=('wlts.{collection}.json').format(
-                    collection=str(".".join(self.selected_collections))
-                ),
+                directory=('wlts_trajectory_download.json'),
                 filter='*.json'
             )
             self.files_controls.generateJSON(name[0], self.tj)
@@ -387,7 +386,7 @@ class WLTSQgis:
             start_date=self.start_date,
             end_date=self.end_date
         )
-        self.files_controls.generatePlotFig(self.tj)
+        self.files_controls.generatePlotFig(self.wlts_controls)
 
     def plotlyBrowser(self):
         """Redirects user to browser plotly."""
@@ -399,7 +398,7 @@ class WLTSQgis:
             start_date=self.start_date,
             end_date=self.end_date
         )
-        self.files_controls.generatePlotlyFig(self.tj)
+        self.files_controls.generatePlotlyFig(self.wlts_controls)
 
     def exportAsType(self):
         """Export result based on combo box selection."""

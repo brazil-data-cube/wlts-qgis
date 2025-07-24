@@ -16,6 +16,9 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
 
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 from datetime import datetime
 
 from pyproj import CRS, Proj, transform
@@ -71,15 +74,6 @@ class Controls:
 
         :param date_string<string>: date string with 'yyyy-mm-dd' format.
         """
-        return QDate(
-            int(date_string[:4]),
-            int(date_string[5:-3]),
-            int(date_string[8:])
-        )
-
-    def getNowFormatQDate(self):
-        """Get date today to init controls."""
-        date_string = datetime.today().strftime('%Y-%m-%d')
         return QDate(
             int(date_string[:4]),
             int(date_string[5:-3]),
@@ -149,6 +143,7 @@ class WLTS_Controls:
         """Build controls for WTSS Servers."""
         self.wlts_host = Config.WLTS_HOST
         self.wlts = WLTS(self.wlts_host)
+        self.trajectory = None
 
     def getService(self):
         """Get the service data finding by name."""
@@ -175,10 +170,133 @@ class WLTS_Controls:
 
     def getTrajectory(self, lon, lat, collections, start_date, end_date):
         """Plot trajectory with files controls."""
-        return self.wlts.tj(
+        self.trajectory = self.wlts.tj(
             longitude=lon,
             latitude=lat,
             collections=",".join(collections),
             start_date=start_date,
             end_date=end_date
         )
+        return self.trajectory
+
+    def plotTrajectory(self, **parameters):
+        """Plotting trajectory using seaborn."""
+
+        # Apply Seaborn grid style globally
+        sns.set_theme(style="darkgrid")
+
+        # Default parameters
+        parameters.setdefault('marker_size', 10)
+        parameters.setdefault('title', 'Land Use and Cover Trajectory')
+        parameters.setdefault('title_y', 'Number of Points')
+        parameters.setdefault('legend_title_text', 'Class')
+        parameters.setdefault('date', 'Year')
+        parameters.setdefault('value', 'Collection')
+        parameters.setdefault('width', 950)
+        parameters.setdefault('height', 320)
+        parameters.setdefault('font_size', 12)
+        parameters.setdefault('type', 'scatter')
+        parameters.setdefault('opacity', 0.8)
+        parameters.setdefault('marker_line_width', 1.5)
+        parameters.setdefault('bar_title', False)
+
+        # Copy and preprocess
+        df = self.trajectory.df().copy()
+        df['class'] = df['class'].astype('category')
+        df['date'] = df['date'].astype('category')
+        df['collection'] = df['collection'].astype('category')
+
+        def update_column_title(title_text):
+            new_title = title_text.split("=")[-1].capitalize()
+            if len(new_title.split("_")) > 1:
+                return new_title.split("_")[0] + " " + new_title.split("_")[-1].capitalize()
+            return new_title.split("_")[0]
+
+        # SCATTER PLOT: One point only
+        if parameters['type'] == 'scatter':
+            if len(df.point_id.unique()) == 1:
+                plt.figure(figsize=((parameters['width'] + 200) / 100, parameters['height'] / 100))
+                sns.scatterplot(
+                    data=df,
+                    x='date', y='collection',
+                    hue='class', style='class',
+                    s=parameters['marker_size']**2,
+                    alpha=parameters['opacity'],
+                    linewidth=parameters['marker_line_width']
+                )
+                plt.title(parameters['title'], fontsize=parameters['font_size'])
+                plt.xlabel(parameters['date'])
+                plt.ylabel(parameters['value'])
+                plt.legend(
+                    title=parameters['legend_title_text'],
+                    bbox_to_anchor=(1.01, 1),
+                    loc='upper left',
+                    borderaxespad=0
+                )
+                plt.tight_layout()
+                plt.show()
+            else:
+                raise ValueError("The scatter plot is for one point only! Please try another type: bar plot.")
+
+        # BAR PLOT: Single or multiple collections
+        elif parameters['type'] == 'bar':
+            if len(df.collection.unique()) == 1 and len(df.point_id.unique()) >= 1:
+                df_group = df.groupby(['date', 'class']).count()['point_id'].reset_index()
+                df_group.rename(columns={'point_id': 'count'}, inplace=True)
+
+                plt.figure(figsize=((parameters['width'] + 200) / 100, parameters['height'] / 100))
+                sns.barplot(
+                    data=df_group,
+                    x='date', y='count',
+                    hue='class',
+                    alpha=parameters['opacity']
+                )
+                plt.title(parameters['title'], fontsize=parameters['font_size'])
+                plt.xlabel(parameters['date'])
+                plt.ylabel(parameters['title_y'])
+                plt.legend(
+                    title=parameters['legend_title_text'],
+                    bbox_to_anchor=(1.01, 1),
+                    loc='upper left',
+                    borderaxespad=0
+                )
+                plt.tight_layout()
+                plt.show()
+
+            elif len(df.collection.unique()) >= 1 and len(df.point_id.unique()) >= 1:
+                mydf = (
+                    df.groupby(['date', 'collection', 'class'])
+                    .count()['point_id']
+                    .reset_index()
+                    .rename(columns={'point_id': 'size'})
+                )
+
+                g = sns.catplot(
+                    data=mydf,
+                    x='date', y='size',
+                    hue='class',
+                    col='collection',
+                    kind='bar',
+                    col_wrap=3,
+                    height=parameters['height'] / 100,
+                    aspect=parameters['width'] / (parameters['height'] * 3),
+                    alpha=parameters['opacity']
+                )
+                g.set_axis_labels(parameters['date'], parameters['title_y'])
+
+                g.add_legend(title=parameters['legend_title_text'])
+
+                # Move legend outside
+                g._legend.set_bbox_to_anchor((1.05, 0.5))
+                g._legend.set_loc('center left')
+
+                if parameters['bar_title']:
+                    for ax in g.axes.flatten():
+                        title = ax.get_title()
+                        ax.set_title(update_column_title(title))
+
+                plt.tight_layout()
+                plt.subplots_adjust(right=0.85)
+                plt.show()
+        else:
+            raise RuntimeError("No plot support for this trajectory!")

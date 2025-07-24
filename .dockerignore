@@ -16,6 +16,7 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
 
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -177,6 +178,7 @@ plugin_template/*pyc
 .coverage
 .noseids
 nohup.out
+wlts_plugin/resources.py
 
 # ignore the help build dir
 wlts_plugin/help/build
@@ -192,4 +194,4 @@ drone
 services_storage_user_application.json
 
 # Ignore LICENSE
-wtss_plugin/LICENSE
+wlts_plugin/LICENSE
