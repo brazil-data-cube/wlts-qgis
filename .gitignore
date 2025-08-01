@@ -208,3 +208,6 @@ wlts_plugin/LICENSE
 *requirements.csv
 
 *requirements.txt
+
+# ignore build paths for qgis docker
+*.qgis/

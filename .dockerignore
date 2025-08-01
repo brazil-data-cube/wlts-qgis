@@ -186,6 +186,9 @@ wlts_plugin/help/_build
 wlts_plugin_plugin.egg-info/
 help/_build
 
+# ignore build paths for qgis docker
+.qgis/
+
 # Drone integration
 core
 drone

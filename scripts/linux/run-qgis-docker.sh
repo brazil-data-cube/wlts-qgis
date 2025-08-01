@@ -19,21 +19,28 @@
 
 if [ "$QGIS_RELEASE" = "" ];
 then
-	echo "Using latest..."
-	QGIS_RELEASE=latest
+	echo "Using QGIS 3.32..."
+	QGIS_RELEASE=release-3_32
 fi
 
-xhost +
+if [ "$BUILD" = "" ];
+then
+	echo "Building image for WLTS-QGIS..."
+	python3 ./scripts/build_requirements.py
+	cp ./LICENSE ./wlts_plugin/LICENSE
+	ls -al
 
-docker run --rm \
-	--interactive \
-    --tty \
-	--name qgis-docker \
-	-i -t \
-	-v ${PWD}:/home/wlts_plugin \
-	-v ${PWD}/plugins:/root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/ \
+	docker rmi wlts_qgis/qgis:$QGIS_RELEASE --force
+
+	docker build -t wlts_qgis/qgis:$QGIS_RELEASE .
+fi
+
+mkdir .qgis/
+
+docker run --rm -it -u $UID \
+	-e DISPLAY=$DISPLAY \
+	-v /etc/passwd:/etc/passwd:ro \
+	-v $PWD/.qgis/:$HOME \
 	-v /tmp/.X11-unix:/tmp/.X11-unix \
-	-e DISPLAY=unix$DISPLAY \
-	qgis/qgis:$QGIS_RELEASE qgis
-
-xhost -
+	-v $HOME/.Xauthority:$HOME/.Xauthority \
+	wlts_qgis/qgis:$QGIS_RELEASE /bin/bash
