@@ -54,8 +54,9 @@ setup_requires = [
 
 install_requires = [
     'pb-tool>=3.0.0',
-    'numpy>=1.19',
-    'matplotlib>=3.3.3',
+    'numpy!=1.24.0,<2,>=1.22',
+    'matplotlib>=3.7',
+    'seaborn>=0.13.2',
     'pandas>=1.1',
     'pyqt5ac>=1.2',
     'ipython>=8.31.0',

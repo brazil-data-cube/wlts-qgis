@@ -17,7 +17,7 @@
 #
 #!/bin/bash
 
-LIB_PATH="./wtss_plugin/lib"
+LIB_PATH="./wlts_plugin/lib"
 SCRIPTS_PATH="./scripts"
 
 mkdir -p $LIB_PATH

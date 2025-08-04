@@ -140,7 +140,7 @@ class WLTS_Controls:
     """
 
     def __init__(self):
-        """Build controls for WTSS Servers."""
+        """Build controls for WLTS Servers."""
         self.wlts_host = Config.WLTS_HOST
         self.wlts = WLTS(self.wlts_host)
         self.trajectory = None
@@ -155,7 +155,7 @@ class WLTS_Controls:
         :param server_host<string>: the URL service to edit.
         """
         self.wlts_host = server_host
-        self.wtss = WLTS(self.getService())
+        self.wlts = WLTS(self.getService())
 
     def listCollections(self):
         """Return a dictionary with the list of available products."""

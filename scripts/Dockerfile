@@ -1,6 +1,6 @@
 #
 # This file is part of Python QGIS Plugin for WLTS.
-# Copyright (C) 2025 INPE.
+# Copyright (C) 2024 INPE.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,34 +15,29 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
-#!/bin/bash
+# Build image with:
+#
+# docker build -t wlts_qgis/qgis:3.42 .
+#
 
-if [ "$QGIS_RELEASE" = "" ];
-then
-	echo "Using QGIS 3.42..."
-	QGIS_RELEASE=3.42
-fi
+ARG QGIS_RELEASE=3.42
+FROM qgis/qgis:${QGIS_RELEASE}
 
-if [ "$BUILD" = "" ];
-then
-	echo "Building image for WLTS-QGIS..."
-	python3 ./scripts/build_requirements.py
-	cp ./LICENSE ./wlts_plugin/LICENSE
-	ls -al
+ADD wlts_qgis.zip .
 
-	bash ./scripts/linux/generate-zip.sh
+RUN apt-get update && \
+    apt-get install -y unzip
 
-	docker rmi wlts_qgis/qgis:$QGIS_RELEASE --force
+RUN unzip wlts_qgis.zip -d \
+    /usr/share/qgis/python/plugins/
 
-	docker build -t wlts_qgis/qgis:$QGIS_RELEASE .
-fi
+RUN python3 -m pip install --user -r \
+      /usr/share/qgis/python/plugins/wlts_qgis/requirements.txt \
+      --break-system-packages
 
-xhost +local:docker
+RUN mkdir -p ~/.local/share/QGIS/QGIS3/profiles/default/QGIS
 
-docker run -it \
-	--rm \
-	-e DISPLAY=$DISPLAY \
-	-v /tmp/.X11-unix:/tmp/.X11-unix \
-	-v $PWD:/home/wlts-qgis \
-	--device /dev/dri \
-	wlts_qgis/qgis:$QGIS_RELEASE qgis
+RUN echo -e "\n[PythonPlugins]\nwlts_qgis=true\n" \
+      >> ~/.local/share/QGIS/QGIS3/profiles/default/QGIS/QGIS3.ini
+
+CMD /bin/bash
