@@ -39,10 +39,12 @@ fi
 
 xhost +local:docker
 
-docker run -it \
-	--rm \
+docker run -it --rm \
 	-e DISPLAY=$DISPLAY \
 	-v /tmp/.X11-unix:/tmp/.X11-unix \
 	-v $PWD:/home/wlts-qgis \
 	--device /dev/dri \
+	--name wlts_qgis \
 	wlts_qgis/qgis:$QGIS_RELEASE qgis
+
+xhost -local:docker
