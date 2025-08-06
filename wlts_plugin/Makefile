@@ -39,7 +39,7 @@ SOURCES = \
 	__init__.py \
 	wlts_qgis.py wlts_qgis_dialog.py
 
-PLUGINNAME = wlts_qgis
+PLUGINNAME = wlts_plugin
 
 PY_FILES = \
 	__init__.py \

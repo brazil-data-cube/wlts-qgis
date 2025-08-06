@@ -572,7 +572,7 @@ class WLTSQgis:
 
     def dialogShow(self):
         """Rules to start dialog."""
-        wlts_qgis = qgis.utils.plugins.get("wlts_qgis", None)
+        wlts_qgis = qgis.utils.plugins.get("wlts_plugin", None)
         if wlts_qgis:
             wlts_qgis.dlg.show()
         else:

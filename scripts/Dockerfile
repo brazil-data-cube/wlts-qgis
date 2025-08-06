@@ -23,21 +23,21 @@
 ARG QGIS_RELEASE=3.42
 FROM qgis/qgis:${QGIS_RELEASE}
 
-ADD wlts_qgis.zip .
+ADD wlts_plugin.zip .
 
 RUN apt-get update && \
     apt-get install -y unzip
 
-RUN unzip wlts_qgis.zip -d \
+RUN unzip wlts_plugin.zip -d \
     /usr/share/qgis/python/plugins/
 
 RUN python3 -m pip install --user -r \
-      /usr/share/qgis/python/plugins/wlts_qgis/requirements.txt \
+      /usr/share/qgis/python/plugins/wlts_plugin/requirements.txt \
       --break-system-packages
 
 RUN mkdir -p ~/.local/share/QGIS/QGIS3/profiles/default/QGIS
 
-RUN echo -e "\n[PythonPlugins]\nwlts_qgis=true\n" \
+RUN echo -e "\n[PythonPlugins]\nwlts_plugin=true\n" \
       >> ~/.local/share/QGIS/QGIS3/profiles/default/QGIS/QGIS3.ini
 
 CMD /bin/bash

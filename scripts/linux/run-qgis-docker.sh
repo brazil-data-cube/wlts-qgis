@@ -45,6 +45,6 @@ docker run -it --rm \
 	-v $PWD:/home/wlts-qgis \
 	--device /dev/dri \
 	--name wlts_qgis \
-	wlts_qgis/qgis:$QGIS_RELEASE qgis
+	wlts_qgis/qgis:3.42 qgis
 
 xhost -local:docker
