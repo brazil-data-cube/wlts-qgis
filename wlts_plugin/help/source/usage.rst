@@ -1,44 +1,37 @@
 ..
-    This file is part of Python QGIS Plugin for Web Land Trajectory Service.
-    Copyright (C) 2021 INPE.
+    This file is part of Python QGIS Plugin for WLTS.
+    Copyright (C) 2025 INPE.
 
-    Python QGIS Plugin for Web Land Trajectory Service. is free software; you can redistribute it and/or modify it
-    under the terms of the MIT License; see LICENSE file for more details.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-=====
-Usage
-=====
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
 
-To use the WLTS extension to retrieve land use and land cover trajectories it is necessary to generate a user access token in `BDC Auth App <https://brazildatacube.dpi.inpe.br/auth-app>`_.
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 
-Enable WLTS-QGIS Plugin
-+++++++++++++++++++++++
 
-Open QGIS Desktop and add a vector layer as the figure below:
+====================
+WLTS Plugin Overview
+====================
 
-.. image:: ./assets/screenshots/step-one.png
-    :width: 100%
-    :alt: QGIS Desktop
+TODO...
 
-Go to ``Plugins`` tab in ``Management Plugins`` option to verify if WLTS-QGIS is enable. You will find the follow information such a figure below:
-
-.. image:: ./assets/screenshots/step-two.png
-    :width: 100%
-    :alt: Enable WLTS-PLUGIN
-
-Run WLTS-QGIS Plugin
-++++++++++++++++++++
-
-You can open the WLTS-QGIS Plugin in ``Web`` tab. The following screen will appear:
-
-.. image:: ./assets/screenshots/step-three.png
+.. image:: ./assets/img/wlts_plugin_overview.png
     :width: 100%
     :alt: WLTS-PLUGIN
 
-You must select a ``WLTS service`` that you want to use. And choose the ``collections`` to retrieve the trajectory information. You can also edit a ``start`` and ``end date``. Finally click on ``SEARCH`` button to enable the mouse event to get a ``latitude`` and ``longitude`` in vector layer with mouse.
+================================
+Retrieve and Export Trajectories
+================================
 
-After that, a ``land use and cover trajectory`` will be displayed in new screen, such a figure:
+TODO...
 
-.. image:: ./assets/screenshots/step-four.png
+.. image:: ./assets/screenshots/get_time_series.png
     :width: 100%
     :alt: WLTS-PLUGIN
