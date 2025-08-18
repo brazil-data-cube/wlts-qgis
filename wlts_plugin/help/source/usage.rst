@@ -20,18 +20,24 @@
 WLTS Plugin Overview
 ====================
 
-TODO...
+The figure below shows the WLTS Plugin interface. This interface contains a list of available data collections for selection, where some are preselected by default, two fields for entering the start and end dates of the trajectory period, and fields for entering the geographic coordinates (longitude and latitude) that represent the selected point. On the left, there is a list with the history of selected coordinates, allowing the user to compare different locations.
+
+Just below, options are available to save the results in different file formats: CSV, JSON, and Python script. The option to save as a Python script provides the user with the code to reproduce the request and obtain the same chart with the selected attributes in another tool with a Python interpreter, such as Jupyter Lab.
+
+To display the trajectory chart, it is necessary to select the coordinate and click the “Get Trajectory” button. A window will then open with the retrieved data.
 
 .. image:: ./assets/img/wlts_plugin_overview.png
-    :width: 100%
+    :width: 60%
+    :align: center
     :alt: WLTS-PLUGIN
+
 
 ================================
 Retrieve and Export Trajectories
 ================================
 
-TODO...
+In the example below, a query is performed from a selected coordinate ``-65.3908, -5.6703``, located in a region of the Brazilian Amazon biome. The datasets from IBGE, DETER Amazônia, and MapBiomas were selected for the years 2015 to 2025. The figure shows the resulting chart of the retrieved trajectory.
 
-.. image:: ./assets/screenshots/get_time_series.png
+.. image:: ./assets/screenshots/get_trajectory.png
     :width: 100%
     :alt: WLTS-PLUGIN
