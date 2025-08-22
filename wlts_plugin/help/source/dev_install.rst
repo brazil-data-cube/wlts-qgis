@@ -30,17 +30,17 @@ For **development environment**, you will need to set your python QGIS environme
 
 This **development environment** consist in a environment with all dependencies required to **compile** and **build** the plugin installer for WLTS QGIS Plugin.
 
-Linux
------
-
-The scripts to help to configure the environment variables are located in `Linux bash scripts <../wlts-qgis/scripts/linux>`_.
-
 The fisrt step is to clone the software repository for `wlts_plugin`:
 
 .. code-block:: text
 
     $ git clone https://github.com/brazil-data-cube/wlts-qgis
 
+
+Linux
+-----
+
+The scripts to help to configure the environment variables are located in `Linux bash scripts <../wlts-qgis/scripts/linux>`_.
 
 If you clone the repository from git you needd to go to the source code folder:
 
@@ -116,6 +116,7 @@ This command will compress the files configured in `pb_tool.cfg <../wlts_plugin/
     To upload the `zip` in `QGIS Plugins Repository <https://plugins.qgis.org/>`_, you need to clean the source code deleting the `__pycache__/` files.
     Thers is an example to do this step in `generate-zip.sh <./scripts/linux/generate-zip.sh>`_.
 
+
 Docker
 ------
 
@@ -150,14 +151,22 @@ To build the plugin image you need to create a new folder in a different path of
     CMD /bin/bash
 
 
-Move the `wlts_plugin.zip` to this folder with `Dockerfile` and run:
+Move the ``wlts_plugin.zip`` to this folder with `Dockerfile` and run:
 
 .. code-block:: text
 
-    $ docker build -t wlts_qgis/qgis:3.42 .
+    $ docker build --build-arg FILE="<zip_file_name>" -t wlts_qgis/qgis:3.42 .
 
 
-To get the `wlts_plugin.zip` you can run the `pb_tool zip` command described previously, or download the latest version in `https://github.com/brazil-data-cube/wlts-qgis/releases <https://github.com/brazil-data-cube/wlts-qgis/releases>`_.
+Remember to change the ``<zip_file_name>`` to the real name of zip file.
+
+.. note::
+
+    When downloading the zip file, this file may have this pattern in the name ``wlts-qgis-plugin-v<version>.zip``.
+    You will need to extract the ``wlts_plugin.zip``.
+
+
+To get this zip file you can run the `pb_tool zip` command described previously, or download the latest version in `https://github.com/brazil-data-cube/wlts-qgis/releases <https://github.com/brazil-data-cube/wlts-qgis/releases>`_.
 
 You can run this image in a container using this command:
 

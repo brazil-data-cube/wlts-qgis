@@ -23,6 +23,12 @@ then
 	QGIS_RELEASE=3.42
 fi
 
+if [ "$ZIPFILE" = "" ];
+then
+	echo "Using zip file wlts_plugin.zip..."
+	ZIPFILE="./wlts_plugin/zip_build/wlts_plugin.zip"
+fi
+
 if [ "$BUILD" = "" ];
 then
 	echo "Building image for WLTS-QGIS..."
@@ -34,7 +40,7 @@ then
 
 	docker rmi wlts_qgis/qgis:$QGIS_RELEASE --force
 
-	docker build -t wlts_qgis/qgis:$QGIS_RELEASE .
+	docker build --build-arg FILE=$ZIPFILE -t wlts_qgis/qgis:$QGIS_RELEASE .
 fi
 
 xhost +local:docker
