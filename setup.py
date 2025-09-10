@@ -63,7 +63,7 @@ install_requires = [
     'kaleido<1.0.0',
     'dash>=2.18.2',
     'bdc-config @ git+https://github.com/brazil-data-cube/bdc-config@v0.1.0',
-    'wlts @ git+https://github.com/brazil-data-cube/wlts.py@v1.1.0'
+    'wlts.py>=1.1.0'
 ]
 
 packages = find_packages()
