@@ -17,7 +17,7 @@
 #
 # Build image with:
 #
-# docker build -t wlts_qgis/qgis:3.42 .
+# docker build --build-arg FILE="wlts_plugin.zip" -t wlts_qgis/qgis:3.42 .
 #
 
 ARG QGIS_RELEASE=3.42
