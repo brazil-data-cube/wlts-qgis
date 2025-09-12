@@ -19,7 +19,7 @@
 Changes
 =======
 
-Version 0.8.0 (2025-09-11)
+Version 0.8.0 (2025-09-12)
 --------------------------
 
 - Update documentation (#81);
