@@ -83,7 +83,7 @@ setup(
     license='GPLv3',
     author='Brazil Data Cube Team',
     author_email='bdc.team@inpe.br',
-    url='https://github.com/brazil-data-cube/lccs-db',
+    url='https://github.com/brazil-data-cube/wlts-qgis',
     packages=packages,
     zip_safe=False,
     include_package_data=True,
