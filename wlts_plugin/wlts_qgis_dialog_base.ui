@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>740</width>
-    <height>639</height>
+    <width>703</width>
+    <height>441</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,8 +21,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>741</width>
-     <height>501</height>
+     <width>701</width>
+     <height>441</height>
     </rect>
    </property>
    <property name="tabPosition">
@@ -34,132 +34,6 @@
    <property name="currentIndex">
     <number>0</number>
    </property>
-   <widget class="QWidget" name="services_tab">
-    <attribute name="title">
-     <string>Services</string>
-    </attribute>
-    <widget class="QGroupBox" name="registry">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>721</width>
-       <height>461</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>REGISTERED SERVICES</string>
-     </property>
-     <widget class="QTreeView" name="data">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>30</y>
-        <width>681</width>
-        <height>331</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QGroupBox" name="service_group">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>370</y>
-        <width>151</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Service Name</string>
-      </property>
-      <widget class="QLineEdit" name="service_name">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>20</y>
-         <width>151</width>
-         <height>31</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QGroupBox" name="host">
-      <property name="geometry">
-       <rect>
-        <x>190</x>
-        <y>370</y>
-        <width>211</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Host</string>
-      </property>
-      <widget class="QLineEdit" name="service_host">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>20</y>
-         <width>211</width>
-         <height>31</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QPushButton" name="save_service">
-      <property name="geometry">
-       <rect>
-        <x>280</x>
-        <y>430</y>
-        <width>121</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Add</string>
-      </property>
-     </widget>
-     <widget class="QGroupBox" name="active_service_options">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>390</y>
-        <width>271</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Active Service</string>
-      </property>
-      <widget class="QPushButton" name="edit_service">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>30</y>
-         <width>111</width>
-         <height>25</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Edit</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="delete_service">
-       <property name="geometry">
-        <rect>
-         <x>150</x>
-         <y>30</y>
-         <width>111</width>
-         <height>25</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Remove</string>
-       </property>
-      </widget>
-     </widget>
-    </widget>
-   </widget>
    <widget class="QWidget" name="trajectory_tab">
     <attribute name="title">
      <string>Get Trajectory</string>
@@ -169,8 +43,8 @@
       <rect>
        <x>480</x>
        <y>10</y>
-       <width>251</width>
-       <height>311</height>
+       <width>211</width>
+       <height>321</height>
       </rect>
      </property>
      <property name="title">
@@ -181,9 +55,15 @@
        <rect>
         <x>10</x>
         <y>30</y>
-        <width>231</width>
-        <height>271</height>
+        <width>191</width>
+        <height>281</height>
        </rect>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::CurrentChanged</set>
+      </property>
+      <property name="showDropIndicator" stdset="0">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -191,9 +71,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>90</y>
+       <y>10</y>
        <width>451</width>
-       <height>371</height>
+       <height>211</height>
       </rect>
      </property>
      <property name="title">
@@ -205,7 +85,7 @@
         <x>10</x>
         <y>30</y>
         <width>431</width>
-        <height>231</height>
+        <height>171</height>
        </rect>
       </property>
       <property name="title">
@@ -217,7 +97,7 @@
          <x>0</x>
          <y>0</y>
          <width>431</width>
-         <height>231</height>
+         <height>171</height>
         </rect>
        </property>
        <property name="widgetResizable">
@@ -229,140 +109,210 @@
           <x>0</x>
           <y>0</y>
           <width>429</width>
-          <height>229</height>
+          <height>169</height>
          </rect>
         </property>
        </widget>
       </widget>
      </widget>
-     <widget class="QGroupBox" name="start_date_group">
+    </widget>
+    <widget class="QGroupBox" name="exporting_files_2">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>340</y>
+       <width>211</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Export result as</string>
+     </property>
+     <widget class="QPushButton" name="export_result">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>270</y>
-        <width>201</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Start Date:</string>
-      </property>
-      <widget class="QDateEdit" name="start_date">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>20</y>
-         <width>201</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="dateTime">
-        <datetime>
-         <hour>0</hour>
-         <minute>0</minute>
-         <second>0</second>
-         <year>1999</year>
-         <month>1</month>
-         <day>1</day>
-        </datetime>
-       </property>
-       <property name="displayFormat">
-        <string>dd/MM/yyyy</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QGroupBox" name="end_date_group">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>270</y>
-        <width>201</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>End Date:</string>
-      </property>
-      <widget class="QDateEdit" name="end_date">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>20</y>
-         <width>201</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="dateTime">
-        <datetime>
-         <hour>0</hour>
-         <minute>0</minute>
-         <second>0</second>
-         <year>2020</year>
-         <month>1</month>
-         <day>1</day>
-        </datetime>
-       </property>
-       <property name="displayFormat">
-        <string>dd/MM/yyyy</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QPushButton" name="search">
-      <property name="geometry">
-       <rect>
-        <x>350</x>
-        <y>330</y>
-        <width>89</width>
+        <x>170</x>
+        <y>30</y>
+        <width>31</width>
         <height>25</height>
        </rect>
       </property>
       <property name="text">
-       <string>Get point</string>
+       <string/>
       </property>
      </widget>
-     <widget class="QCheckBox" name="geometries">
+     <widget class="QComboBox" name="export_result_as_type">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>330</y>
-        <width>331</width>
-        <height>23</height>
+        <y>30</y>
+        <width>151</width>
+        <height>27</height>
        </rect>
-      </property>
-      <property name="text">
-       <string>Get geometries</string>
       </property>
      </widget>
     </widget>
-    <widget class="QGroupBox" name="services_group">
+    <widget class="QGroupBox" name="start_date_group">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>451</width>
-       <height>71</height>
+       <x>20</x>
+       <y>230</y>
+       <width>211</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="title">
-      <string>Active Service</string>
+      <string>Start Date:</string>
      </property>
-     <widget class="QComboBox" name="service_selection">
+     <widget class="QDateEdit" name="start_date">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="dateTime">
+       <datetime>
+        <hour>0</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>1999</year>
+        <month>1</month>
+        <day>1</day>
+       </datetime>
+      </property>
+      <property name="displayFormat">
+       <string>dd/MM/yyyy</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="end_date_group">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>230</y>
+       <width>211</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>End Date:</string>
+     </property>
+     <widget class="QDateEdit" name="end_date">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="dateTime">
+       <datetime>
+        <hour>0</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>2020</year>
+        <month>1</month>
+        <day>1</day>
+       </datetime>
+      </property>
+      <property name="displayFormat">
+       <string>dd/MM/yyyy</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QPushButton" name="search_button">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>370</y>
+       <width>221</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Get Trajectory</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="show_help_button">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>370</y>
+       <width>31</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="longitude_latitude_group">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>290</y>
+       <width>441</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Longitude / Latitude</string>
+     </property>
+     <widget class="QDoubleSpinBox" name="input_longitude">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>30</y>
-        <width>391</width>
-        <height>31</height>
+        <width>191</width>
+        <height>28</height>
        </rect>
       </property>
+      <property name="decimals">
+       <number>10</number>
+      </property>
+      <property name="minimum">
+       <double>-180.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>180.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.000001000000000</double>
+      </property>
      </widget>
-     <widget class="QPushButton" name="show_help_button">
+     <widget class="QDoubleSpinBox" name="input_latitude">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>30</y>
+        <width>191</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="decimals">
+       <number>10</number>
+      </property>
+      <property name="minimum">
+       <double>-90.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>90.000000000000000</double>
+      </property>
+      <property name="value">
+       <double>0.000000000000000</double>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="zoom_selected_point">
       <property name="geometry">
        <rect>
         <x>410</x>
-        <y>30</y>
-        <width>31</width>
-        <height>31</height>
+        <y>31</y>
+        <width>25</width>
+        <height>25</height>
        </rect>
       </property>
       <property name="text">
@@ -370,181 +320,9 @@
       </property>
      </widget>
     </widget>
-    <widget class="QGroupBox" name="exporting_files">
-     <property name="geometry">
-      <rect>
-       <x>480</x>
-       <y>330</y>
-       <width>251</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Export data as</string>
-     </property>
-     <widget class="QPushButton" name="export_as_json">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>30</y>
-        <width>81</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>9</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>JSON</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="export_as_csv">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>30</y>
-        <width>81</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>9</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>CSV</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="exporting_files_2">
-     <property name="geometry">
-      <rect>
-       <x>480</x>
-       <y>400</y>
-       <width>251</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Export code as</string>
-     </property>
-     <widget class="QPushButton" name="export_as_python">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>30</y>
-        <width>81</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>PYTHON</string>
-      </property>
-     </widget>
-    </widget>
-   </widget>
-  </widget>
-  <widget class="QDialogButtonBox" name="button_box">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>600</y>
-     <width>721</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
-  </widget>
-  <widget class="QGroupBox" name="date_slider_group">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>510</y>
-     <width>711</width>
-     <height>81</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Date Slider</string>
-   </property>
-   <widget class="QGroupBox" name="date_control_slider">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>691</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>0</string>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-    <property name="checkable">
-     <bool>false</bool>
-    </property>
-    <widget class="QSlider" name="date_slider">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>671</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
    </widget>
   </widget>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>button_box</sender>
-   <signal>accepted()</signal>
-   <receiver>WltsQgisDialogBase</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>button_box</sender>
-   <signal>rejected()</signal>
-   <receiver>WltsQgisDialogBase</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

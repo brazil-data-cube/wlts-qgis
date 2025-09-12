@@ -54,12 +54,16 @@ setup_requires = [
 
 install_requires = [
     'pb-tool>=3.0.0',
-    'numpy>=1.19',
-    'matplotlib>=3.3.3',
+    'numpy!=1.24.0,<2,>=1.22',
+    'matplotlib>=3.7',
+    'seaborn>=0.13.2',
     'pandas>=1.1',
     'pyqt5ac>=1.2',
+    'ipython>=8.31.0',
+    'kaleido<1.0.0',
+    'dash>=2.18.2',
     'bdc-config @ git+https://github.com/brazil-data-cube/bdc-config@v0.1.0',
-    'wlts @ git+https://github.com/brazil-data-cube/wlts.py@v0.8.0'
+    'wlts.py==1.3.1'
 ]
 
 packages = find_packages()
@@ -78,7 +82,7 @@ setup(
     keywords=['Land Use Land Cover', 'GIS', 'QGIS'],
     license='MIT',
     author='Brazil Data Cube Team',
-    author_email='brazildatacube@inpe.br',
+    author_email='bdc.team@inpe.br',
     url='https://github.com/brazil-data-cube/lccs-db',
     packages=packages,
     zip_safe=False,

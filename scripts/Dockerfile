@@ -15,24 +15,32 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
+# Build image with:
+#
+# docker build --build-arg FILE="wlts_plugin.zip" -t wlts_qgis/qgis:3.42 .
+#
 
-from json import loads as json_loads
-from pathlib import Path
+ARG QGIS_RELEASE=3.42
+FROM qgis/qgis:${QGIS_RELEASE}
 
-from ..config import Config
+ARG FILE
+ENV ZIP_FILE=${FILE}
 
-schemas_folder = Path(Config.BASE_DIR) / 'controller' / 'json-schemas'
+ADD ${ZIP_FILE} .
 
-def load_schema(file_name):
-    """Open file and parses as JSON file.
+RUN apt-get update && \
+    apt-get install -y unzip
 
-    :param file_name<str>: File name of JSON Schema.
-    :returns: JSON schema parsed as Python object (dict).
-    :raises: json.JSONDecodeError When file is not valid JSON object.
-    """
-    schema_file = schemas_folder / file_name
+RUN unzip ${ZIP_FILE} -d \
+    /usr/share/qgis/python/plugins/
 
-    with schema_file.open() as f:
-        return json_loads(f.read())
+RUN python3 -m pip install --user -r \
+      /usr/share/qgis/python/plugins/wlts_plugin/requirements.txt \
+      --break-system-packages
 
-services_storage_schema = load_schema('services_schema.json')
+RUN mkdir -p ~/.local/share/QGIS/QGIS3/profiles/default/QGIS
+
+RUN echo -e "\n[PythonPlugins]\nwlts_plugin=true\n" \
+      >> ~/.local/share/QGIS/QGIS3/profiles/default/QGIS/QGIS3.ini
+
+CMD /bin/bash

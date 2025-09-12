@@ -16,23 +16,40 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
 
-from json import loads as json_loads
+"""Python Script to list Path libraries."""
+
 from pathlib import Path
 
-from ..config import Config
+lib_paths = []
 
-schemas_folder = Path(Config.BASE_DIR) / 'controller' / 'json-schemas'
+import json
+lib_paths.append(json.__file__)
 
-def load_schema(file_name):
-    """Open file and parses as JSON file.
+import numpy
+lib_paths.append(numpy.__file__)
 
-    :param file_name<str>: File name of JSON Schema.
-    :returns: JSON schema parsed as Python object (dict).
-    :raises: json.JSONDecodeError When file is not valid JSON object.
-    """
-    schema_file = schemas_folder / file_name
+import seaborn
+lib_paths.append(seaborn.__file__)
 
-    with schema_file.open() as f:
-        return json_loads(f.read())
+import matplotlib
+lib_paths.append(matplotlib.__file__)
 
-services_storage_schema = load_schema('services_schema.json')
+import pandas
+lib_paths.append(pandas.__file__)
+
+import jsonschema
+lib_paths.append(jsonschema.__file__)
+
+import pystac
+lib_paths.append(pystac.__file__)
+
+import pystac_client
+lib_paths.append(pystac_client.__file__)
+
+import wlts
+lib_paths.append(wlts.__file__)
+
+file = open(Path('scripts') / 'lib-paths.txt', 'w')
+for path in lib_paths:
+	file.write(str(path).replace('__init__.py', '') + "\n")
+file.close()

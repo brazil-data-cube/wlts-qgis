@@ -6,7 +6,7 @@
 #		begin				: 2021-08-31
 #		git sha				: $Format:%H$
 #		copyright			: (C) 2021 by INPE
-#		email				: brazildatacube@inpe.br
+#		email				: bdc.team@inpe.br
 # ***************************************************************************/
 #
 #/***************************************************************************
@@ -39,7 +39,7 @@ SOURCES = \
 	__init__.py \
 	wlts_qgis.py wlts_qgis_dialog.py
 
-PLUGINNAME = wlts_qgis
+PLUGINNAME = wlts_plugin
 
 PY_FILES = \
 	__init__.py \
@@ -47,7 +47,7 @@ PY_FILES = \
 
 UI_FILES = wlts_qgis_dialog_base.ui
 
-EXTRAS = metadata.txt controller/assets/icon.png
+EXTRAS = metadata.txt assets/icon.png
 
 COMPILED_RESOURCE_FILES = resources.py
 

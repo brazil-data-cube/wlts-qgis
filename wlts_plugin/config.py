@@ -16,23 +16,17 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
 
-from json import loads as json_loads
-from pathlib import Path
+import os
 
-from ..config import Config
 
-schemas_folder = Path(Config.BASE_DIR) / 'controller' / 'json-schemas'
+class Config:
+    """Base configuration for global variables.
 
-def load_schema(file_name):
-    """Open file and parses as JSON file.
-
-    :param file_name<str>: File name of JSON Schema.
-    :returns: JSON schema parsed as Python object (dict).
-    :raises: json.JSONDecodeError When file is not valid JSON object.
+    :attribute BASE_DIR(str): Returns app root path.
     """
-    schema_file = schemas_folder / file_name
 
-    with schema_file.open() as f:
-        return json_loads(f.read())
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-services_storage_schema = load_schema('services_schema.json')
+    WLTS_HOST = os.getenv("WLTS_HOST", "https://data.inpe.br/bdc/wlts/v1/")
+
+    PYTHONPATH_WLTS_PLUGIN = os.getenv("PYTHONPATH_WLTS_PLUGIN", None)

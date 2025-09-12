@@ -11,28 +11,16 @@ Python QGIS Plugin for Web Land Trajectory Service
 ==================================================
 
 .. image:: https://img.shields.io/badge/license-MIT-green
-        :target: https://github.com//brazil-data-cube/wlts-qgis/blob/master/LICENSE
+        :target: https://github.com/brazil-data-cube/wlts-qgis/blob/master/LICENSE
         :alt: Software License
-
-.. image:: https://drone.dpi.inpe.br/api/badges/brazil-data-cube/wlts-qgis/status.svg
-        :target: https://drone.dpi.inpe.br/brazil-data-cube/wlts-qgis
-        :alt: Build Status
-
-.. image:: https://codecov.io/gh/brazil-data-cube/wlts-qgis/branch/master/graph/badge.svg?token=0EICGCGNXC
-        :target: https://codecov.io/gh/brazil-data-cube/wlts-qgis
-        :alt: Code Coverage Test
-
-.. image:: https://readthedocs.org/projects/wlts-qgis/badge/?version=latest
-        :target: https://wlts-qgis.readthedocs.io/en/latest/
-        :alt: Documentation Status
 
 .. image:: https://img.shields.io/badge/lifecycle-experimental-orange.svg
         :target: https://www.tidyverse.org/lifecycle/#experimental
         :alt: Software Life Cycle
 
-.. image:: https://img.shields.io/github/tag/brazil-data-cube/wlts-qgis.svg
-        :target: https://github.com/brazil-data-cube/wlts-qgis/releases
-        :alt: Release
+.. image:: https://badges.gitter.im/brazil-data-cube/community.png
+        :target: https://gitter.im/brazil-data-cube/community#
+        :alt: Join the chat
 
 .. image:: https://img.shields.io/discord/689541907621085198?logo=discord&logoColor=ffffff&color=7389D8
         :target: https://discord.com/channels/689541907621085198#
@@ -71,7 +59,7 @@ For more information on WLTS, see:
 
 The following image presents an overview of the plugin:
 
-.. image:: wlts_plugin/help/source/assets/img/wlts-qgis.png
+.. image: wlts_plugin/help/source/assets/img/wlts_plugin.png
         :target: https://github.com/brazil-data-cube/wlts-qgis
         :width: 95%
         :alt: WLTS-QGIS

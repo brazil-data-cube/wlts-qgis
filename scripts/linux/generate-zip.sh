@@ -15,24 +15,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
+#!/bin/bash
 
-from json import loads as json_loads
-from pathlib import Path
+PLUGIN_PATH=./wlts_plugin
 
-from ..config import Config
+# Remove the python cache files
+find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | sudo xargs rm -rf
 
-schemas_folder = Path(Config.BASE_DIR) / 'controller' / 'json-schemas'
+# Get LICENSE from root
+cp LICENSE ${PLUGIN_PATH}
 
-def load_schema(file_name):
-    """Open file and parses as JSON file.
+# Go to plugin path to zip files
+cd ${PLUGIN_PATH}
 
-    :param file_name<str>: File name of JSON Schema.
-    :returns: JSON schema parsed as Python object (dict).
-    :raises: json.JSONDecodeError When file is not valid JSON object.
-    """
-    schema_file = schemas_folder / file_name
-
-    with schema_file.open() as f:
-        return json_loads(f.read())
-
-services_storage_schema = load_schema('services_schema.json')
+pb_tool zip

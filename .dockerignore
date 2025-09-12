@@ -1,3 +1,22 @@
+#
+# This file is part of Python QGIS Plugin for WLTS.
+# Copyright (C) 2025 INPE.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
+#
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -18,7 +37,6 @@ lib/
 lib64/
 parts/
 sdist/
-help/
 var/
 wheels/
 pip-wheel-metadata/
@@ -166,6 +184,10 @@ wlts_plugin/resources.py
 wlts_plugin/help/build
 wlts_plugin/help/_build
 wlts_plugin_plugin.egg-info/
+help/_build
+
+# ignore build paths for qgis docker
+.qgis/
 
 # Drone integration
 core
@@ -173,3 +195,6 @@ drone
 
 # ignore services storage
 services_storage_user_application.json
+
+# Ignore LICENSE
+wlts_plugin/LICENSE

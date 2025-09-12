@@ -43,4 +43,4 @@ Version 0.4.0-0 (2021-01-13)
 
 - Source code versioning based on `Semantic Versioning 2.0.0 <https://semver.org/>`_.
 
-- License: `MIT <https://github.com/gqueiroz/wtss.py/blob/master/LICENSE>`_.
+- License: `MIT <https://github.com/gqueiroz/wlts.py/blob/master/LICENSE>`_.

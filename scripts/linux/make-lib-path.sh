@@ -15,24 +15,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
+#!/bin/bash
 
-from json import loads as json_loads
-from pathlib import Path
+LIB_PATH="./wlts_plugin/lib"
+SCRIPTS_PATH="./scripts"
 
-from ..config import Config
+mkdir -p $LIB_PATH
 
-schemas_folder = Path(Config.BASE_DIR) / 'controller' / 'json-schemas'
+cat $SCRIPTS_PATH/lib-paths.txt | while read path || [[ -n $path ]];
+do
+    echo "Copying all dependencies for "$path" to "$LIB_PATH
+    cp -R $path $LIB_PATH
+done
 
-def load_schema(file_name):
-    """Open file and parses as JSON file.
+echo "Removing backends for matplotlib..."
+rm -R  $LIB_PATH/matplotlib/backends/web_backend/jquery
 
-    :param file_name<str>: File name of JSON Schema.
-    :returns: JSON schema parsed as Python object (dict).
-    :raises: json.JSONDecodeError When file is not valid JSON object.
-    """
-    schema_file = schemas_folder / file_name
-
-    with schema_file.open() as f:
-        return json_loads(f.read())
-
-services_storage_schema = load_schema('services_schema.json')
+echo "Removing _pycache__..."
+find $LIB_PATH -type f -name "__pycache__" -exec rm -r {} \;
