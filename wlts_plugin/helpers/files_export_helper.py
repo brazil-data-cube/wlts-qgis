@@ -158,8 +158,9 @@ class FilesExport:
         :param trajectory<dict>: the trajectory service reponse dictionary.
         """
         try:
-            fig = WLTS.plot(
-                wlts_controls.trajectory.df(),
+            dataframe_copy = wlts_controls.trajectory.df().copy()
+            fig = wlts_controls.wlts.plot(
+                dataframe_copy,
                 marker_size=8, font_size=12,
                 width=1050, height=320
             )
