@@ -16,11 +16,11 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
 
-import seaborn as sns
-import matplotlib.pyplot as plt
-
 from datetime import datetime
 
+import lccs
+import matplotlib.pyplot as plt
+import seaborn as sns
 from pyproj import CRS, Proj, transform
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QInputDialog, QLineEdit, QMessageBox
@@ -141,21 +141,16 @@ class WLTS_Controls:
 
     def __init__(self):
         """Build controls for WLTS Servers."""
-        self.wlts_host = Config.WLTS_HOST
-        self.wlts = WLTS(self.wlts_host)
+        self.wlts = WLTS(
+            url = Config.WLTS_HOST,
+            lccs_url = Config.LCCS_HOST
+        )
+        self.lccs_service = lccs.LCCS(Config.LCCS_HOST)
         self.trajectory = None
 
     def getService(self):
         """Get the service data finding by name."""
         return self.wlts_host
-
-    def setService(self, server_host):
-        """Edit the service data finding by name.
-
-        :param server_host<string>: the URL service to edit.
-        """
-        self.wlts_host = server_host
-        self.wlts = WLTS(self.getService())
 
     def listCollections(self):
         """Return a dictionary with the list of available products."""
@@ -216,10 +211,18 @@ class WLTS_Controls:
         if parameters['type'] == 'scatter':
             if len(df.point_id.unique()) == 1:
                 plt.figure(figsize=((parameters['width'] + 200) / 100, parameters['height'] / 100))
+                palette_ = {}
+                for collection in list(df['collection']):
+                    system_id = self.description(collection)["classification_system"].get("id")
+                    classification_system = self.lccs_service.classification_system(system = system_id)
+                    palette_.update({
+                        cv.title: cv.color
+                        for cv in classification_system.classes(style_format_name_or_id="SLD-Feature-Point")
+                    })
                 sns.scatterplot(
                     data=df,
                     x='date', y='collection',
-                    hue='class', style='class',
+                    hue='class', palette=palette_, marker="o",
                     s=parameters['marker_size']**2,
                     alpha=parameters['opacity'],
                     linewidth=parameters['marker_line_width']

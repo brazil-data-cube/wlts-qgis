@@ -29,4 +29,6 @@ class Config:
 
     WLTS_HOST = os.getenv("WLTS_HOST", "https://data.inpe.br/bdc/wlts/v1/")
 
+    LCCS_HOST = os.getenv("LCCS_HOST", "https://data.inpe.br/bdc/lccs/v1/")
+
     PYTHONPATH_WLTS_PLUGIN = os.getenv("PYTHONPATH_WLTS_PLUGIN", None)

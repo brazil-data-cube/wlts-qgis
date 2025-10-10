@@ -63,7 +63,7 @@ install_requires = [
     'kaleido<1.0.0',
     'dash>=2.18.2',
     'bdc-config @ git+https://github.com/brazil-data-cube/bdc-config@v0.1.0',
-    'wlts @ git+https://github.com/brazil-data-cube/wlts.py@v1.1.0'
+    'wlts.py==1.3.1'
 ]
 
 packages = find_packages()
@@ -80,10 +80,10 @@ setup(
     long_description=readme + '\n\n' + history,
     long_description_content_type = 'text/x-rst',
     keywords=['Land Use Land Cover', 'GIS', 'QGIS'],
-    license='MIT',
+    license='GPLv3',
     author='Brazil Data Cube Team',
     author_email='bdc.team@inpe.br',
-    url='https://github.com/brazil-data-cube/lccs-db',
+    url='https://github.com/brazil-data-cube/wlts-qgis',
     packages=packages,
     zip_safe=False,
     include_package_data=True,
@@ -98,7 +98,7 @@ setup(
         'Environment :: Web Environment',
         'Intended Audience :: Education',
         'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3.7',
         'Topic :: Software Development :: Libraries :: Python Modules',
