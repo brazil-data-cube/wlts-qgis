@@ -10,6 +10,10 @@
 Python QGIS Plugin for Web Land Trajectory Service
 ==================================================
 
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.17187264.svg
+        :target: https://doi.org/10.5281/zenodo.17187264
+        :alt: doi
+
 .. image:: https://img.shields.io/badge/license-MIT-green
         :target: https://github.com/brazil-data-cube/wtss/blob/master/LICENSE
         :alt: Software License
