@@ -288,7 +288,7 @@ class WLTSQgis:
         for collection in collections:
             description = self.wlts_controls.description(collection)
             self.checks[collection] = QCheckBox(str(description["title"]))
-            if any([c in str(description['name']).lower() for c in ['prodes', 'ibge']]):
+            if any([c in str(description['name']).lower() for c in ['ibge', 'mapbiomas', 'prodes']]):
                 self.checks[collection].setChecked(True)
             self.checks[collection].stateChanged.connect(self.checkFilters)
             self.vbox.addWidget(self.checks.get(collection))
