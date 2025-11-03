@@ -55,7 +55,7 @@ import pystac_client
 lib_paths.append(pystac_client.__file__)
 
 import wlts
-z
+
 lib_paths.append(wlts.__file__)
 
 file = open(Path('scripts') / 'lib-paths.txt', 'w')

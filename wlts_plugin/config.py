@@ -124,7 +124,7 @@ class InstallDependencies:
             [f"{pkg_name}{pkg_version_rule}"]
         )
 
-    def format_(name, to_import=False):
+    def format_(self, name, to_import=False):
         name_ = name.replace('-', '_').replace('<=', '-')  \
             .replace('>=', '-').replace('!=', '-')  \
                 .replace('<', '-').replace('>', '-') \
