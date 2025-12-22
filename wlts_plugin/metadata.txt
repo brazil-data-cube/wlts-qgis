@@ -52,12 +52,16 @@ deprecated = False
 server = False
 
 author = INPE
-version = 0.8.0
+version = 1.0.0
 about = the Web Land Trajectory Service (WLTS) is a service that aims to facilitate the access to these various land use and cover data collections through a tailored API.
     The result is tool that allows researchers and specialists to spend their time in the analytical process,
     once the API provides the integration of these datasets and brings the concept of Land Use and Cover Trajectories as a high level abstraction.
 
-changelog = Version 0.8.0 (2025-09-12)
+changelog = Version 1.0.0 (2025-12-23)
+    - Add as default search the collections PRODES and IBGE (#86);
+    - Add colors on trajectory plot based on classification system of collection using LCCS (#85);
+
+    Version 0.8.0 (2025-09-12)
     - Update documentation (#81);
     - Review source code structure to publish in QGIS plugins web portal (#79);
     - Update and remove unused interface to get trajectories (#78);

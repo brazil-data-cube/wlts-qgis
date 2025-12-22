@@ -19,11 +19,11 @@
 Changes
 =======
 
-Version 1.0.0 (2025-11-28)
+Version 1.0.0 (2025-12-23)
 --------------------------
 
-- Add as default search the collections PRODES and IBGE #86;
-- Add colors on trajectory plot based on classification system of collection using LCCS #85;
+- Add as default search the collections PRODES and IBGE (#86);
+- Add colors on trajectory plot based on classification system of collection using LCCS (#85);
 
 Version 0.8.0 (2025-09-12)
 --------------------------
