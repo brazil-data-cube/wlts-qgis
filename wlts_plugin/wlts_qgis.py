@@ -16,10 +16,10 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
 #
 
-from datetime import datetime
 import json
 import os.path
 import time
+from datetime import datetime
 from pathlib import Path
 
 import qgis.utils
@@ -36,10 +36,10 @@ from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 
 from .config import Config
-# Import files exporting controls
-from .helpers.files_export_helper import FilesExport
 # Import the controls for the plugin
 from .controller.wlts_qgis_controller import Controls, WLTS_Controls
+# Import files exporting controls
+from .helpers.files_export_helper import FilesExport
 # Initialize Qt resources from file resources.py
 from .resources import *
 # Import the code for the dialog
@@ -288,7 +288,8 @@ class WLTSQgis:
         for collection in collections:
             description = self.wlts_controls.description(collection)
             self.checks[collection] = QCheckBox(str(description["title"]))
-            self.checks[collection].setChecked(True)
+            if any([c in str(description['name']).lower() for c in ['ibge', 'mapbiomas', 'prodes']]):
+                self.checks[collection].setChecked(True)
             self.checks[collection].stateChanged.connect(self.checkFilters)
             self.vbox.addWidget(self.checks.get(collection))
         self.widget.setLayout(self.vbox)

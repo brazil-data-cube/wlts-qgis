@@ -40,7 +40,9 @@ then
 
 	docker rmi wlts_qgis/qgis:$QGIS_RELEASE --force
 
-	docker build --build-arg FILE=$ZIPFILE -t wlts_qgis/qgis:$QGIS_RELEASE .
+	mv $ZIPFILE ./scripts
+	cd ./scripts
+	docker build --build-arg FILE="wlts_plugin.zip" -t wlts_qgis/qgis:$QGIS_RELEASE .
 fi
 
 xhost +local:docker
