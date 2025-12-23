@@ -156,7 +156,7 @@ class InstallDependencies:
             "ImportError!",
             (f"{error_msg}\n\n" +
             "Your environment does not have the minimal " +
-            "requirements to run WTSS Plugin, " +
+            "requirements to run WLTS Plugin, " +
             "select an option to install them."),
             checkbox = QCheckBox("Use PYTHONHOME"),
             install_all = ['Install All', QMessageBox.YesRole],
@@ -194,7 +194,7 @@ class InstallDependencies:
                                 "Found conflicts!",
                                 (f"Found existing installation for {pkg_name} version {pkg.__version__} in" +
                                     f"\n\n{pkg.__file__}.\n\n" +
-                                    f"The WTSS Plugin needs version {pkg_version_rule}."),
+                                    f"The WLTS Plugin needs version {pkg_version_rule}."),
                                 update = ['Update', QMessageBox.YesRole],
                                 cancel = ['Cancel', QMessageBox.RejectRole]
                             )
@@ -204,7 +204,7 @@ class InstallDependencies:
                             install_lib, _, buttons_lib = self.warning(
                                 "warning",
                                 "ImportError!",
-                                (f"{error_msg}\n\nThe WTSS Plugin needs package {pkg_name} version {pkg_version_rule}."),
+                                (f"{error_msg}\n\nThe WLTS Plugin needs package {pkg_name} version {pkg_version_rule}."),
                                 install = ['Install', QMessageBox.YesRole],
                                 cancel = ['Cancel', QMessageBox.RejectRole]
                             )

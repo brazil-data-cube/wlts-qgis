@@ -25,7 +25,7 @@ Python QGIS Plugin for Web Land Trajectory Service
         :alt: doi
 
 .. image:: https://img.shields.io/badge/License-GPLv3-blue.svg
-        :target: https://github.com/brazil-data-cube/bdc-catalog/blob/master/LICENSE
+        :target: https://github.com/brazil-data-cube/wlts-qgis/blob/master/LICENSE
         :alt: Software License
 
 .. image:: https://img.shields.io/badge/lifecycle-experimental-orange.svg
